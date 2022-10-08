@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,-z,defs -Wl,-O1 -Wl,--as-needed
+export DEB_CPPFLAGS_MAINT_APPEND = -w
+
+%:
+	dh $@
+
+override_dh_autoreconf:
+	dh_autoreconf --as-needed
+
+override_dh_auto_configure:
+	dh_auto_configure -- --enable-libparted-dmraid --bindir=\$${prefix}/sbin
+
+override_dh_install:
+	dh_install
+	rm -fr $(CURDIR)/debian/gparted/var
+	if dh -l | grep translations ; then dh_translations ; fi
+
+override_dh_auto_test:
+	# Gparted's tests cannot sensibly run in the build environment
+	:
+
+override_dh_missing:
+	dh_missing --fail-missing

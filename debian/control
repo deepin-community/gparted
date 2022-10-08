@@ -1,0 +1,56 @@
+Source: gparted
+Section: gnome
+Priority: optional
+Maintainer: Phillip Susi <phill@thesusis.net>
+Build-Depends: debhelper-compat (= 11),
+ intltool,
+ libgtkmm-3.0-dev,
+ libparted-dev (>= 2.22),
+ parted,
+ pkg-config,
+ policykit-1,
+ uuid-dev,
+ yelp-tools
+Standards-Version: 4.5.0
+Homepage: https://gparted.org
+Vcs-Git: https://salsa.debian.org/debian/gparted.git
+Vcs-Browser: https://salsa.debian.org/debian/gparted
+
+Package: gparted
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends},
+         gparted-common (= ${source:Version}), policykit-1
+Breaks: udisks2 (<< 2.1.5), gparted-common (= 1.0.0-0.1)
+Replaces: gparted-common (= 1.0.0-0.1)
+Suggests:
+ dmraid,
+ dmsetup,
+ dosfstools,
+ e2fsprogs,
+ gpart,
+ jfsutils,
+ kpartx,
+ mtools,
+ ntfs-3g,
+ reiser4progs,
+ reiserfsprogs,
+ udftools,
+ xfsprogs,
+ yelp
+Description: GNOME partition editor
+ GParted uses libparted to detect and manipulate devices and partition
+ tables while several (optional) filesystem tools provide support for
+ filesystems not included in libparted.
+
+Package: gparted-common
+Architecture: all
+Depends: ${misc:Depends}
+Breaks: gparted (<< 1.0.0)
+Replaces: gparted (<< 1.0.0)
+Description: GNOME partition editor -- common data
+ GParted uses libparted to detect and manipulate devices and partition
+ tables while several (optional) filesystem tools provide support for
+ filesystems not included in libparted.
+ .
+ This package contains architecture-independent data, such as documentation and
+ help, icons, and application metadata.
