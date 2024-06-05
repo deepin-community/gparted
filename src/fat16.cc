@@ -190,61 +190,61 @@ void fat16::set_used_sectors( Partition & partition )
 }
 
 
-void fat16::read_label( Partition & partition )
+void fat16::read_label(Partition& partition)
 {
-	if ( ! Utils::execute_command( "mlabel -s :: -i " + Glib::shell_quote( partition.get_path() ),
-	                               output, error, true )                                           )
+	exit_status = Utils::execute_command("mlabel -s -i " + Glib::shell_quote(partition.get_path()) + " ::",
+	                                     output, error, true);
+	if (exit_status != 0)
 	{
-		partition.set_filesystem_label( Utils::trim( Utils::regexp_label( output, "Volume label is ([^(]*)" ) ) );
+		if (! output.empty())
+			partition.push_back_message(output);
+		if (! error.empty())
+			partition.push_back_message(error);
+		return;
 	}
-	else
-	{
-		if ( ! output .empty() )
-			partition.push_back_message( output );
-		
-		if ( ! error .empty() )
-			partition.push_back_message( error );
-	}
+
+	partition.set_filesystem_label(Utils::trim(Utils::regexp_label(output, "Volume label is ([^(]*)")));
 }
+
 
 bool fat16::write_label( const Partition & partition, OperationDetail & operationdetail )
 {
 	Glib::ustring cmd = "" ;
 	if ( partition.get_filesystem_label().empty() )
-		cmd = "mlabel -c :: -i " + Glib::shell_quote( partition.get_path() );
+		cmd = "mlabel -c -i " + Glib::shell_quote(partition.get_path()) + " ::";
 	else
-		cmd = "mlabel ::" + Glib::shell_quote( sanitize_label( partition.get_filesystem_label() ) ) +
-		      " -i " + Glib::shell_quote( partition.get_path() );
+		cmd = "mlabel -i " + Glib::shell_quote(partition.get_path()) +
+		      " ::" + Glib::shell_quote(sanitize_label(partition.get_filesystem_label()));
 
 	return ! execute_command( cmd, operationdetail, EXEC_CHECK_STATUS );
 }
 
-void fat16::read_uuid( Partition & partition )
+
+void fat16::read_uuid(Partition& partition)
 {
-	Glib::ustring cmd = "mdir -f :: -i " + Glib::shell_quote( partition.get_path() );
-
-	if ( ! Utils::execute_command( cmd, output, error, true ) )
+	exit_status = Utils::execute_command("mdir -f -i " + Glib::shell_quote(partition.get_path()) + " ::/",
+	                                     output, error, true);
+	if (exit_status != 0)
 	{
-		partition .uuid = Utils::regexp_label( output, "Volume Serial Number is[[:blank:]]([^[:space:]]+)" ) ;
-		if ( partition .uuid == "0000-0000" )
-			partition .uuid .clear() ;
+		if (! output.empty())
+			partition.push_back_message(output);
+		if (! error.empty())
+			partition.push_back_message(error);
+		return;
 	}
-	else
-	{
-		if ( ! output .empty() )
-			partition.push_back_message( output );
 
-		if ( ! error .empty() )
-			partition.push_back_message( error );
-	}
+	partition.uuid = Utils::regexp_label(output, "Volume Serial Number is[[:blank:]]([^[:space:]]+)");
+	if (partition.uuid == "0000-0000")
+		partition.uuid.clear();
 }
+
 
 bool fat16::write_uuid( const Partition & partition, OperationDetail & operationdetail )
 {
-	Glib::ustring cmd = "mlabel -s -n :: -i " + Glib::shell_quote( partition.get_path() );
-
-	return ! execute_command( cmd, operationdetail, EXEC_CHECK_STATUS );
+	return ! execute_command("mlabel -s -n -i " + Glib::shell_quote(partition.get_path()) + " ::",
+	                         operationdetail, EXEC_CHECK_STATUS);
 }
+
 
 bool fat16::create( const Partition & new_partition, OperationDetail & operationdetail )
 {

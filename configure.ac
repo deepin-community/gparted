@@ -1,4 +1,4 @@
-AC_INIT([gparted],[1.2.0],[https://gitlab.gnome.org/GNOME/gparted/issues])
+AC_INIT([gparted],[1.5.0],[https://gitlab.gnome.org/GNOME/gparted/issues])
 AC_PREREQ([2.50])
 
 AC_CONFIG_SRCDIR([src/main.cc])
@@ -14,7 +14,7 @@ dnl checks for programs
 dnl======================
 AC_PROG_CXX
 AC_PROG_CC
-AC_PROG_LIBTOOL
+LT_INIT
 AC_PROG_AWK
 dnl Check for pkg-config early to avoid splitting message when first used.
 PKG_CHECK_EXISTS
@@ -54,8 +54,9 @@ GETTEXT_PACKAGE=gparted
 AC_SUBST([GETTEXT_PACKAGE])
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], "$GETTEXT_PACKAGE", [description])
 
-AM_GLIB_GNU_GETTEXT
-IT_PROG_INTLTOOL([0.36.0])
+AM_GNU_GETTEXT_VERSION([0.19.8])
+AM_GNU_GETTEXT([external])
+
 
 
 dnl======================
@@ -260,6 +261,18 @@ PKG_CHECK_EXISTS(
 	[gtkmm-3.0 >= 3.22.0],
 	[AC_DEFINE([HAVE_SET_PROPAGATE_NATURAL_WIDTH], 1,
 	           [Define to 1 if gtkmm provides Gtk::ScrolledWindow::set_propagate_natural_width() method.])
+	 AC_MSG_RESULT([yes])
+	],
+	[AC_MSG_RESULT([no])]
+)
+
+
+dnl Check for gtk+-3.0 >= 3.22 to determine availability of gtk_show_uri_on_window() function.
+AC_MSG_CHECKING([for gtk_show_uri_on_window() function])
+PKG_CHECK_EXISTS(
+	[gtk+-3.0 >= 3.22.0],
+	[AC_DEFINE([HAVE_GTK_SHOW_URI_ON_WINDOW], 1,
+	           [Define to 1 if gtk provides gtk_show_uri_on_window function.])
 	 AC_MSG_RESULT([yes])
 	],
 	[AC_MSG_RESULT([no])]

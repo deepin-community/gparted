@@ -19,6 +19,8 @@
 
 #include <glibmm/ustring.h>
 #include <gtkmm/box.h>
+#include <gtkmm/label.h>
+#include <atkmm/relation.h>
 #include <gtkmm/stock.h>
 #include <gtkmm/button.h>
 #include <gtk/gtk.h>
@@ -27,7 +29,7 @@
 namespace GParted
 {
 
-DialogPasswordEntry::DialogPasswordEntry( const Partition & partition )
+DialogPasswordEntry::DialogPasswordEntry(const Partition& partition, const Glib::ustring& reason)
 {
 	this->set_resizable( false );
 	this->set_size_request( 400, -1 );
@@ -41,20 +43,20 @@ DialogPasswordEntry::DialogPasswordEntry( const Partition & partition )
 	vbox->set_spacing( 5 );
 	get_vbox()->pack_start( *vbox, Gtk::PACK_SHRINK );
 
-	// Line 1: "Enter LUKS passphrase to open /dev/sda1"
-	vbox->pack_start( *Utils::mk_label(
-			Glib::ustring::compose( _("Enter LUKS passphrase to open %1"), partition.get_path() ) ),
-			Gtk::PACK_SHRINK );
+	// Line 1: Reason message, e.g. "Enter LUKS passphrase to open /dev/sda1"
+	vbox->pack_start(*Utils::mk_label(reason), Gtk::PACK_SHRINK);
 
 	// Line 2: "Passphrase: [              ]"
 	// (Horizontal box holding prompt and entry box)
 	Gtk::Box *entry_hbox(manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL)));
-	entry_hbox->pack_start( *Utils::mk_label( "<b>"+ Glib::ustring( _("Passphrase:") ) + "</b>" ) );
+	Gtk::Label *label_passphrase = Utils::mk_label("<b>" + Glib::ustring(_("Passphrase:")) + "</b>");
+	entry_hbox->pack_start(*label_passphrase);
 	entry = manage( new Gtk::Entry() );
 	entry->set_width_chars( 30 );
 	entry->set_visibility( false );
 	entry->set_activates_default( true );
 	entry->grab_focus();
+	entry->get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY, label_passphrase->get_accessible());
 	entry_hbox->pack_start( *entry );
 	vbox->pack_start( *entry_hbox );
 

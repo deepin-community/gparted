@@ -23,6 +23,8 @@
 #include "Utils.h"
 
 #include <glibmm/ustring.h>
+#include <gtkmm/label.h>
+#include <atkmm/relation.h>
 
 
 namespace GParted
@@ -33,7 +35,7 @@ Dialog_Partition_New::Dialog_Partition_New( const Device & device,
                                             bool any_extended,
                                             unsigned short new_count,
                                             const std::vector<FS> & FILESYSTEMS )
- : Dialog_Base_Partition(device)
+ : Dialog_Base_Partition(device), default_fs(-1)
 {
 	/*TO TRANSLATORS: dialogtitle */
 	this ->set_title( _("Create new Partition") ) ;
@@ -101,8 +103,9 @@ void Dialog_Partition_New::set_data( const Device & device,
 	hbox_main.pack_start(grid_create, Gtk::PACK_SHRINK);
 
 	/* TO TRANSLATORS: used as label for a list of choices.  Create as: <combo box with choices> */
-	grid_create.attach(*Utils::mk_label(Glib::ustring(_("Create as:")) + "\t"),
-	                   0, 0, 1, 1);
+	Gtk::Label *label_type = Utils::mk_label(Glib::ustring(_("Create as:")) + "\t");
+	grid_create.attach(*label_type, 0, 0, 1, 1);
+	combo_type.get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY, label_type->get_accessible());
 
 	// Fill partition type combo.
 	combo_type.items().push_back(_("Primary Partition"));
@@ -139,8 +142,10 @@ void Dialog_Partition_New::set_data( const Device & device,
 	grid_create.attach(combo_type, 1, 0, 1, 1);
 
 	// Partition name
-	grid_create.attach(*Utils::mk_label(Glib::ustring(_("Partition name:")) + "\t"),
-	                   0, 1, 1, 1);
+	Gtk::Label *partition_name_label = Utils::mk_label(Glib::ustring(_("Partition name:")) + "\t");
+	grid_create.attach(*partition_name_label, 0, 1, 1, 1);
+	partition_name_entry.get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                        partition_name_label->get_accessible());
 	// Initialise text entry box
 	partition_name_entry.set_width_chars( 20 );
 	partition_name_entry.set_sensitive( device.partition_naming_supported() );
@@ -149,8 +154,10 @@ void Dialog_Partition_New::set_data( const Device & device,
 	grid_create.attach(partition_name_entry, 1, 1, 1, 1);
 
 	// File systems to choose from
-	grid_create.attach(*Utils::mk_label(Glib::ustring(_("File system:")) + "\t"),
-	                   0, 1, 2, 3);
+	Gtk::Label *label_filesystem = Utils::mk_label(Glib::ustring(_("File system:")) + "\t");
+	grid_create.attach(*label_filesystem, 0, 1, 2, 3);
+	combo_filesystem.get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                    label_filesystem->get_accessible());
 
 	build_filesystems_combo(device.readonly);
 
@@ -159,7 +166,10 @@ void Dialog_Partition_New::set_data( const Device & device,
 	grid_create.attach(combo_filesystem, 1, 2, 1, 1);
 
 	// Label
-	grid_create.attach(*Utils::mk_label(_("Label:")), 0, 3, 1, 1);
+	Gtk::Label *filesystem_label_label = Utils::mk_label(_("Label:"));
+	grid_create.attach(*filesystem_label_label, 0, 3, 1, 1);
+	filesystem_label_entry.get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                          filesystem_label_label->get_accessible());
 	//Create Text entry box
 	filesystem_label_entry.set_width_chars( 20 );
 	// Add entry box to table
@@ -177,10 +187,12 @@ void Dialog_Partition_New::set_data( const Device & device,
 	TOTAL_MB = Utils::round( Utils::sector_to_unit( selected_partition.get_sector_length(),
 	                                                selected_partition.sector_size, UNIT_MIB ) );
 	MB_PER_PIXEL = TOTAL_MB / 500.00 ;
-	
-	//set first enabled file system
-	combo_filesystem.set_active(first_creatable_fs);
-	combobox_changed(false);
+
+	// Set default creatable file system.
+	// (As the change signal for combo_filesystem has already been connected,
+	// combobox_changed(false) is automatically called by setting the active
+	// selection.  This is needed to initialise everything correctly).
+	combo_filesystem.set_active(default_fs);
 
 	//set spinbuttons initial values
 	spinbutton_after .set_value( 0 ) ;
@@ -325,12 +337,12 @@ const Partition & Dialog_Partition_New::Get_New_Partition()
 }
 
 
-void Dialog_Partition_New::combobox_changed(bool type)
+void Dialog_Partition_New::combobox_changed(bool combo_type_changed)
 {
 	g_assert( new_partition != NULL );  // Bug: Not initialised by constructor calling set_data()
 
 	// combo_type
-	if ( type )
+	if (combo_type_changed)
 	{
 		if (combo_type.get_active_row_number() == TYPE_EXTENDED      &&
 		    combo_filesystem.items().size()    <  FILESYSTEMS.size()   )
@@ -342,14 +354,14 @@ void Dialog_Partition_New::combobox_changed(bool type)
 		else if (combo_type.get_active_row_number() != TYPE_EXTENDED      &&
 		         combo_filesystem.items().size()    == FILESYSTEMS.size()   )
 		{
+			combo_filesystem.set_active(default_fs);
 			combo_filesystem.items().erase(combo_filesystem.items().back());
 			combo_filesystem.set_sensitive(true);
-			combo_filesystem.set_active(first_creatable_fs);
 		}
 	}
-	
+
 	// combo_filesystem and combo_alignment
-	if ( ! type )
+	if (! combo_type_changed)
 	{
 		fs = FILESYSTEMS[combo_filesystem.get_active_row_number()];
 		fs_limits = GParted_Core::get_filesystem_limits(fs.fstype, *new_partition);
@@ -405,17 +417,29 @@ void Dialog_Partition_New::build_filesystems_combo(bool only_unformatted)
 	g_assert( new_partition != NULL );  // Bug: Not initialised by constructor calling set_data()
 	combo_filesystem.items().clear();
 
-	bool set_first=false;
-	//fill the file system menu with the file systems (except for extended) 
+	// Fill the file system combobox
 	for ( unsigned int t = 0 ; t < FILESYSTEMS .size( ) ; t++ ) 
 	{
-		//skip extended
+		// Skip extended which is only added by combobox_changed() while partition
+		// type = extended.
 		if (FILESYSTEMS[t].fstype == FS_EXTENDED)
 			continue ;
+
 		combo_filesystem.items().push_back(Utils::get_filesystem_string(FILESYSTEMS[t].fstype));
-		combo_filesystem.items().back().set_sensitive(
-			! only_unformatted && FILESYSTEMS[ t ] .create &&
-			new_partition->get_byte_length() >= get_filesystem_min_limit(FILESYSTEMS[t].fstype));
+
+		if (FILESYSTEMS[t].fstype == FS_UNFORMATTED)
+		{
+			// Unformatted is always available
+			combo_filesystem.items().back().set_sensitive(true);
+		}
+		else
+		{
+			combo_filesystem.items().back().set_sensitive(
+				! only_unformatted                                                                  &&
+				FILESYSTEMS[t].create                                                               &&
+				new_partition->get_byte_length() >= get_filesystem_min_limit(FILESYSTEMS[t].fstype)   );
+		}
+
 		//use ext4/3/2 as first/second/third choice default file system
 		//(Depends on ordering in FILESYSTEMS for preference)
 		if ((FILESYSTEMS[t].fstype == FS_EXT2 ||
@@ -423,21 +447,18 @@ void Dialog_Partition_New::build_filesystems_combo(bool only_unformatted)
 		     FILESYSTEMS[t].fstype == FS_EXT4   )      &&
 		    combo_filesystem.items().back().sensitive()  )
 		{
-			first_creatable_fs = combo_filesystem.items().size() - 1;
-			set_first=true;
+			default_fs = combo_filesystem.items().size() - 1;
 		}
 	}
-	
-	//unformatted is always available
-	combo_filesystem.items().back().set_sensitive(true);
 
-	if(!set_first)
+	if (default_fs < 0)
 	{
-		//find and set first enabled file system as last choice default
+		// Find and set first enabled file system as last choice default.  Note
+		// that unformatted will always be available.
 		for (unsigned int t = 0; t < combo_filesystem.items().size(); t++)
 			if (combo_filesystem.items()[t].sensitive())
 			{
-				first_creatable_fs = t ;
+				default_fs = t;
 				break ;
 			}
 	}

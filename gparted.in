@@ -39,7 +39,7 @@ fi
 #
 #  Define base command for executing GParted
 #
-BASE_CMD="@sbindir@/gpartedbin $*"
+BASE_CMD="@libexecdir@/gpartedbin $*"
 
 #
 #  For non-root users try to get authorisation to run GParted as root.
@@ -102,15 +102,20 @@ for k in '' `echo "$PATH" | sed 's,:, ,g'`; do
 done
 
 #
-#  Check if udisks2-inhibit exists in known location
+#  Check if udisks2-inhibit exists in a known location
 #  and if appropriate daemon is running.
 #
 HAVE_UDISKS2_INHIBIT=no
-if test -x "/usr/lib/udisks2/udisks2-inhibit"; then
-	if pidof udisksd 1> /dev/null; then
-		HAVE_UDISKS2_INHIBIT=yes
+for k in /usr/libexec/udisks2/udisks2-inhibit \
+         /usr/lib/udisks2/udisks2-inhibit; do
+	if test -x $k; then
+		if pidof udisksd 1> /dev/null; then
+			HAVE_UDISKS2_INHIBIT=yes
+			UDISKS2_INHIBIT_BIN=$k
+			break
+		fi
 	fi
-fi
+done
 
 #
 #  Search PATH to determine if udisks program can be found
@@ -171,29 +176,25 @@ fi
 
 #
 # Create temporary blank overrides for all udev rules which automatically
-# start Linux Software RAID array members.
+# start Linux Software RAID array members and Bcache devices.
 #
 # Udev stores volatile / temporary runtime rules in directory /run/udev/rules.d.
-# Older versions use /dev/.udev/rules.d instead, and even older versions don't
-# have such a directory at all.  Volatile / temporary rules are use to override
-# default rules from /lib/udev/rules.d.  (Permanent local administrative rules
-# in directory /etc/udev/rules.d override all others).  See udev(7) manual page
-# from various versions of udev for details.
+# Volatile / temporary rules are used to override default rules from
+# /lib/udev/rules.d.  (Permanent local administrative rules in directory
+# /etc/udev/rules.d override all others).  See udev(7) manual page for details.
 #
 # Default udev rules containing mdadm to incrementally start array members are
 # found in 64-md-raid.rules and/or 65-md-incremental.rules, depending on the
 # distribution and age.  The rules may be commented out or not exist at all.
 #
-UDEV_TEMP_MDADM_RULES=''  # List of temporary override rules files.
-for udev_temp_d in /run/udev /dev/.udev; do
-	if test -d "$udev_temp_d"; then
-		test ! -d "$udev_temp_d/rules.d" && mkdir "$udev_temp_d/rules.d"
-		udev_mdadm_rules=`egrep -l '^[^#].*mdadm (-I|--incremental)' /lib/udev/rules.d/*.rules 2> /dev/null`
-		UDEV_TEMP_MDADM_RULES=`echo "$udev_mdadm_rules" | sed 's,^/lib/udev,'"$udev_temp_d"','`
-		break
-	fi
-done
-for rule in $UDEV_TEMP_MDADM_RULES; do
+UDEV_TEMP_RULES=''  # List of temporary override rules files.
+if test -d /run/udev; then
+	test ! -d /run/udev/rules.d && mkdir /run/udev/rules.d
+	udev_mdadm_rules=`egrep -l '^[^#].*mdadm (-I|--incremental)' /lib/udev/rules.d/*.rules 2> /dev/null`
+	udev_bcache_rules=`ls /lib/udev/rules.d/*bcache*.rules 2> /dev/null`
+	UDEV_TEMP_RULES=`echo $udev_mdadm_rules $udev_bcache_rules | sed 's,/lib/udev,/run/udev,g'`
+fi
+for rule in $UDEV_TEMP_RULES; do
 	touch "$rule"
 done
 
@@ -206,7 +207,7 @@ done
 #  If the above checks fail then simply run gpartedbin.
 #
 if test "x$HAVE_UDISKS2_INHIBIT" = "xyes"; then
-	/usr/lib/udisks2/udisks2-inhibit $BASE_CMD
+	$UDISKS2_INHIBIT_BIN $BASE_CMD
 elif test "x$HAVE_UDISKS" = "xyes" && test "x$HAVE_HAL_LOCK" = "xyes"; then
 	udisks --inhibit -- \
 		hal-lock --interface org.freedesktop.Hal.Device.Storage --exclusive \
@@ -219,12 +220,13 @@ elif test "x$HAVE_HAL_LOCK" = "xyes"; then
 else
 	$BASE_CMD
 fi
+status=$?
 
 #
 # Clear any temporary override udev rules used to stop udev automatically
-# starting Linux Software RAID array members.
+# starting Linux Software RAID array members and Bcache devices.
 #
-for rule in $UDEV_TEMP_MDADM_RULES; do
+for rule in $UDEV_TEMP_RULES; do
 	rm -f "$rule"
 done
 
@@ -234,3 +236,5 @@ done
 if test "x$HAVE_SYSTEMCTL" = "xyes"; then
 	systemctl --runtime unmask --quiet -- $MOUNTLIST
 fi
+
+exit $status

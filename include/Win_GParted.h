@@ -163,7 +163,7 @@ private:
 	void menu_gparted_quit();
 	void menu_view_harddisk_info();
 	void menu_view_operations();
-	void show_disklabel_unrecognized( Glib::ustring device_name );
+	void show_disklabel_unrecognized(const Glib::ustring& device_name);
 	void show_resize_readonly( const Glib::ustring & path );
 	void show_help(const Glib::ustring & filename, const Glib::ustring & link_id);
 	void menu_help_contents();
@@ -176,6 +176,7 @@ private:
 	bool max_amount_prim_reached() ;
 	
 	void activate_resize(); 
+	bool ask_for_password_for_encrypted_resize_as_required(const Partition& partition);
 	void activate_copy();
 	void activate_paste();
 	void activate_new();
@@ -220,7 +221,6 @@ private:
 	Gtk::Box vbox_main;
 	Gtk::Box vbox_info;
 	Gtk::Box hbox_toolbar;
-	Gtk::Box *hbox;
 	Gtk::Toolbar toolbar_main;
 	Gtk::MenuBar menubar_main;
 	Gtk::ComboBox combo_devices ;

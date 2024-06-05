@@ -20,8 +20,10 @@
 #include "FileSystem.h"
 #include "Mount_Info.h"
 #include "Partition.h"
+#include "Utils.h"
 
 #include <ctype.h>
+#include <glibmm/ustring.h>
 #include <glibmm/miscutils.h>
 #include <glibmm/shell.h>
 
@@ -59,13 +61,15 @@ FS btrfs::get_filesystem_support()
 		//     btrfs filesystem label
 		//     btrfs filesystem resize
 		//     btrfs filesystem show
-		// as they are all available in btrfs-progs >= 3.12.
+		//     btrfs inspect-internal dump-super
+		// as they are all available in btrfs-progs >= 4.5.
 
 		fs.read = FS::EXTERNAL;
 		fs .read_label = FS::EXTERNAL ;
 		fs .read_uuid = FS::EXTERNAL ;
 		fs.check = FS::EXTERNAL;
 		fs.write_label = FS::EXTERNAL;
+		fs.online_write_label = FS::EXTERNAL;
 
 		//Resizing of btrfs requires mount, umount and kernel
 		//  support as well as btrfs filesystem resize
@@ -134,146 +138,129 @@ bool btrfs::check_repair( const Partition & partition, OperationDetail & operati
 	                         operationdetail, EXEC_CHECK_STATUS);
 }
 
-void btrfs::set_used_sectors( Partition & partition )
+
+void btrfs::set_used_sectors(Partition& partition)
 {
-	//Called when the file system is unmounted *and* when mounted.
+	// Called when the file system is unmounted *and* when mounted.
 	//
-	//  Btrfs has a volume manager layer within the file system which allows it to
-	//  provide multiple levels of data redundancy, RAID levels, and use multiple
-	//  devices both of which can be changed while the file system is mounted.  To
-	//  achieve this btrfs has to allocate space at two different levels: (1) chunks
-	//  of 256 MiB or more at the volume manager level; and (2) extents at the file
-	//  data level.
-	//  References:
-	//  *   Btrfs: Working with multiple devices
-	//      https://lwn.net/Articles/577961/
-	//  *   Btrfs wiki: Glossary
-	//      https://btrfs.wiki.kernel.org/index.php/Glossary
+	// Btrfs has a volume manager layer within the file system which allows it to
+	// provide multiple levels of data redundancy, RAID levels, and use multiple
+	// devices both of which can be changed while the file system is mounted.  To
+	// achieve this btrfs has to allocate space at two different levels: (1) chunks of
+	// 256 MiB or more at the volume manager level; and (2) extents at the metadata
+	// and file data level.
+	// References:
+	// *   Btrfs: Working with multiple devices
+	//     https://lwn.net/Articles/577961/
+	// *   Btrfs wiki: Glossary
+	//     https://btrfs.wiki.kernel.org/index.php/Glossary
 	//
-	//  This makes the question of how much disk space is being used in an individual
-	//  device a complicated question to answer.  Further, the current btrfs tools
-	//  don't provide the required information.
+	// This makes the question of how much disk space is being used in an individual
+	// device a complicated question to answer.  Additionally, even if there is a
+	// correct answer for the usage / minimum size a device can be, a multi-device
+	// btrfs can and does relocate extents to other devices allowing it to be shrunk
+	// smaller than it's minimum size (redundancy requirements of chunks permitting).
 	//
-	//  Btrfs filesystem show only provides space usage information at the chunk level
-	//  per device.  At the file extent level only a single figure for the whole file
-	//  system is provided.  It also reports size of the data and metadata being
-	//  stored, not the larger figure of the amount of space taken after redundancy is
-	//  applied.  So it is impossible to answer the question of how much disk space is
-	//  being used in an individual device.  Example output:
+	// Btrfs inspect-internal dump-super provides chunk allocation information for the
+	// current device only and a single file system wide extent level usage figure.
+	// Calculate the per device used figure as the fraction of file system wide extent
+	// usage apportioned per device.
 	//
-	//      Label: none  uuid: 36eb51a2-2927-4c92-820f-b2f0b5cdae50
-	//              Total devices 2 FS bytes used 156.00KB
-	//              devid    2 size 2.00GB used 512.00MB path /dev/sdb2
-	//              devid    1 size 2.00GB used 240.75MB path /dev/sdb1
+	// Example:
+	//     # btrfs filesystem show --raw /dev/sdb1
+	//     Label: none  uuid: 68195e7e-c13f-4095-945f-675af4b1a451
+	//             Total devices 2 FS bytes used 178749440
+	//             devid    1 size 2147483648 used 239861760 path /dev/sdb1
+	//             devid    2 size 2147483648 used 436207616 path /dev/sdc1
 	//
-	//  Guesstimate the per device used figure as the fraction of the file system wide
-	//  extent usage based on chunk usage per device.
+	//     # btrfs inspect-internal dump-super /dev/sdb1 | egrep 'total_bytes|bytes_used|sectorsize|devid'
+	//     total_bytes             4294967296
+	//     bytes_used              178749440
+	//     sectorsize              4096
+	//     dev_item.total_bytes    2147483648
+	//     dev_item.bytes_used     239861760
+	//     dev_item.devid          1
 	//
-	//  Positives:
-	//  1) Per device used figure will correctly be between zero and allocated chunk
-	//     size.
+	// Calculation:
+	//     ptn_fs_size = dev_item_total_bytes
+	//     ptn_fs_used = bytes_used * dev_item_total_bytes / total_bytes
 	//
-	//  Known inaccuracies:
-	//  [for single and multi-device btrfs file systems]
-	//  1) Btrfs filesystem show reports file system wide file extent usage without
-	//     considering redundancy applied to that data.  (By default btrfs stores two
-	//     copies of metadata and one copy of data).
-	//  2) At minimum size when all data has been consolidated there will be a few
-	//     partly filled chunks of 256 MiB or more for data and metadata of each
-	//     storage profile (RAID level).
-	//  [for multi-device btrfs file systems only]
-	//  3) Data may be far from evenly distributed between the chunks on multiple
-	//     devices.
-	//  4) Extents can be and are relocated to other devices within the file system
-	//     when shrinking a device.
-	Utils::execute_command("btrfs filesystem show " + Glib::shell_quote(partition.get_path()),
+	// This calculation also ignores that btrfs allocates chunks at the volume manager
+	// level.  So when fully compacted there will be partially filled chunks for
+	// metadata and data for each storage profile (RAID level) not accounted for.
+	Utils::execute_command("btrfs inspect-internal dump-super " + Glib::shell_quote(partition.get_path()),
 		               output, error, true);
-	//In many cases the exit status doesn't reflect valid output or an error condition
-	//  so rely on parsing the output to determine success.
-
-	//Extract the per device size figure.  Guesstimate the per device used
-	// figure as discussed above.  Example output:
-	//
-	//      Label: none  uuid: 36eb51a2-2927-4c92-820f-b2f0b5cdae50
-	//              Total devices 2 FS bytes used 156.00KB
-	//              devid    2 size 2.00GB used 512.00MB path /dev/sdb2
-	//              devid    1 size 2.00GB used 240.75MB path /dev/sdb1
-	//
-	// Calculations:
-	//      ptn fs size = devid size
-	//      ptn fs used = total fs used * devid used / sum devid used
-
-	Byte_Value ptn_size = partition .get_byte_length() ;
-	Byte_Value total_fs_used = -1 ;  //total fs used
-	Byte_Value sum_devid_used = 0 ;  //sum devid used
-	Byte_Value devid_used = -1 ;     //devid used
-	Byte_Value devid_size = -1 ;     //devid size
-
-	//Btrfs file system wide used bytes (extents and items)
-	Glib::ustring str ;
-	if ( ! ( str = Utils::regexp_label( output, "FS bytes used ([0-9\\.]+( ?[KMGTPE]?i?B)?)" ) ) .empty() )
-		total_fs_used = Utils::round( btrfs_size_to_gdouble( str ) ) ;
-
-	Glib::ustring::size_type offset = 0 ;
-	Glib::ustring::size_type index ;
-	while ( ( index = output .find( "devid ", offset ) ) != Glib::ustring::npos )
+	// btrfs inspect-internal dump-super returns zero exit status for both success and
+	// failure.  Instead use non-empty stderr to identify failure.
+	if (! error.empty())
 	{
-		Glib::ustring devid_path = Utils::regexp_label( output .substr( index ),
-		                                                "devid .* path (/dev/[[:graph:]]+)" ) ;
-		if ( ! devid_path .empty() )
-		{
-			//Btrfs per devid used bytes (chunks)
-			Byte_Value used = -1 ;
-			if ( ! ( str = Utils::regexp_label( output .substr( index ),
-			                                    "devid .* used ([0-9\\.]+( ?[KMGTPE]?i?B)?) path" ) ) .empty() )
-			{
-				used = btrfs_size_to_num( str, ptn_size, false ) ;
-				sum_devid_used += used ;
-				if ( devid_path == partition .get_path() )
-					devid_used = used ;
-			}
-
-			if ( devid_path == partition .get_path() )
-			{
-				//Btrfs per device size bytes (chunks)
-				if ( ! ( str = Utils::regexp_label( output .substr( index ),
-				                                    "devid .* size ([0-9\\.]+( ?[KMGTPE]?i?B)?) used " ) ) .empty() )
-					devid_size = btrfs_size_to_num( str, ptn_size, true ) ;
-			}
-		}
-		offset = index + 5 ;  //Next find starts immediately after current "devid"
+		if (! output.empty())
+			partition.push_back_message(output);
+		if (! error.empty())
+			partition.push_back_message(error);
+		return;
 	}
 
-	if ( total_fs_used > -1 && devid_size > -1 && devid_used > -1 && sum_devid_used > 0 )
-	{
-		T = Utils::round( devid_size / double(partition .sector_size) ) ;               //ptn fs size
-		double ptn_fs_used = total_fs_used * ( devid_used / double(sum_devid_used) ) ;  //ptn fs used
-		N = T - Utils::round( ptn_fs_used / double(partition .sector_size) ) ;
-		partition .set_sector_usage( T, N ) ;
-	}
-	else
-	{
-		if ( ! output .empty() )
-			partition.push_back_message( output );
+	// Btrfs file system wide size (sum of devid sizes)
+	long long total_bytes = -1;
+	Glib::ustring::size_type index = output.find("\ntotal_bytes");
+	if (index < output.length())
+		sscanf(output.substr(index).c_str(), "\ntotal_bytes %lld", &total_bytes);
 
-		if ( ! error .empty() )
-			partition.push_back_message( error );
+	// Btrfs file system wide used bytes
+	long long bytes_used = -1;
+	index = output.find("\nbytes_used");
+	if (index < output.length())
+		sscanf(output.substr(index).c_str(), "\nbytes_used %lld", &bytes_used);
+
+	// Sector size
+	long long sector_size = -1;
+	index = output.find("\nsectorsize");
+	if (index < output.length())
+		sscanf(output.substr(index).c_str(), "\nsectorsize %lld", &sector_size);
+
+	// Btrfs this device size
+	long long dev_item_total_bytes = -1;
+	index = output.find("\ndev_item.total_bytes");
+	if (index < output.length())
+		sscanf(output.substr(index).c_str(), "\ndev_item.total_bytes %lld", &dev_item_total_bytes);
+
+	if (total_bytes > -1 && bytes_used > -1 && dev_item_total_bytes > -1 && sector_size > -1)
+	{
+		Sector ptn_fs_size = dev_item_total_bytes / partition.sector_size;
+		double devid_size_fraction = dev_item_total_bytes / double(total_bytes);
+		Sector ptn_fs_used = Utils::round(bytes_used * devid_size_fraction) / partition.sector_size;
+		Sector ptn_fs_free = ptn_fs_size - ptn_fs_used;
+		partition.set_sector_usage(ptn_fs_size, ptn_fs_free);
+		partition.fs_block_size = sector_size;
 	}
 }
+
 
 bool btrfs::write_label( const Partition & partition, OperationDetail & operationdetail )
 {
-	return ! execute_command( "btrfs filesystem label " + Glib::shell_quote( partition.get_path() ) +
-	                          " " + Glib::shell_quote( partition.get_filesystem_label() ),
-	                          operationdetail, EXEC_CHECK_STATUS );
+	// Use the mount point when labelling a mounted btrfs, or block device containing
+	// the unmounted btrfs.
+	//     btrfs filesystem label '/dev/PTN' 'NEWLABEL'
+	//     btrfs filesystem label '/MNTPNT' 'NEWLABEL'
+	Glib::ustring path;
+	if (partition.busy)
+		path = partition.get_mountpoint();
+	else
+		path = partition.get_path();
+
+	return ! execute_command("btrfs filesystem label " + Glib::shell_quote(path) +
+	                         " " + Glib::shell_quote(partition.get_filesystem_label()),
+	                         operationdetail, EXEC_CHECK_STATUS);
 }
+
 
 bool btrfs::resize( const Partition & partition_new, OperationDetail & operationdetail, bool fill_partition )
 {
 	bool success = true ;
-	Glib::ustring path = partition_new .get_path() ;
+	const Glib::ustring& path = partition_new.get_path();
+	const BTRFS_Device& btrfs_dev = get_cache_entry(path);
 
-	BTRFS_Device btrfs_dev = get_cache_entry( path ) ;
 	if ( btrfs_dev .devid == -1 )
 	{
 		operationdetail .add_child( OperationDetail(
@@ -293,7 +280,17 @@ bool btrfs::resize( const Partition & partition_new, OperationDetail & operation
 		                              operationdetail, EXEC_CHECK_STATUS );
 	}
 	else
-		mount_point = partition_new .get_mountpoint() ;
+	{
+		mount_point = Utils::first_directory(partition_new.get_mountpoints());
+		if (mount_point.empty())
+		{
+			Glib::ustring mount_list = Glib::build_path(", ", partition_new.get_mountpoints());
+			operationdetail.add_child(OperationDetail(
+			                Glib::ustring::compose(_("No directory mount point found in %1"), mount_list),
+			                STATUS_ERROR));
+			return false;
+		}
+	}
 
 	if ( success )
 	{
@@ -318,59 +315,42 @@ bool btrfs::resize( const Partition & partition_new, OperationDetail & operation
 	return success ;
 }
 
-void btrfs::read_label( Partition & partition )
+
+void btrfs::read_label(Partition& partition)
 {
-	Utils::execute_command("btrfs filesystem show " + Glib::shell_quote(partition.get_path()),
-		               output, error, true);
-	//In many cases the exit status doesn't reflect valid output or an error condition
-	//  so rely on parsing the output to determine success.
-
-	if ( output .compare( 0, 18, "Label: none  uuid:" ) == 0 )
+	exit_status = Utils::execute_command("btrfs filesystem label " + Glib::shell_quote(partition.get_path()),
+	                                     output, error, true);
+	if (exit_status != 0)
 	{
-		//Indistinguishable cases of either no label or the label is actually set
-		//  to "none".  Assume no label case.
-		partition.set_filesystem_label( "" );
+		if (! output.empty())
+			partition.push_back_message(output);
+		if (! error.empty())
+			partition.push_back_message(error);
+		return;
 	}
-	else
-	{
-		// Try matching a label enclosed in single quotes, then without quotes, to
-		// handle reporting of mounted file systems by old btrfs-progs 3.12.
-		Glib::ustring label = Utils::regexp_label( output, "^Label: '(.*)'  uuid:" ) ;
-		if ( label .empty() )
-			label = Utils::regexp_label( output, "^Label: (.*)  uuid:" ) ;
 
-		if ( ! label .empty() )
-			partition.set_filesystem_label( label );
-		else
-		{
-			if ( ! output .empty() )
-				partition.push_back_message( output );
-
-			if ( ! error .empty() )
-				partition.push_back_message( error );
-		}
-	}
+	partition.set_filesystem_label(Utils::trim_trailing_new_line(output));
 }
 
-void btrfs::read_uuid( Partition & partition )
+
+void btrfs::read_uuid(Partition& partition)
 {
-	Utils::execute_command("btrfs filesystem show " + Glib::shell_quote(partition.get_path()),
+	Utils::execute_command("btrfs inspect-internal dump-super " + Glib::shell_quote(partition.get_path()),
 		               output, error, true);
-	//In many cases the exit status doesn't reflect valid output or an error condition
-	//  so rely on parsing the output to determine success.
-
-	Glib::ustring uuid_str = Utils::regexp_label( output, "uuid:[[:blank:]]*(" RFC4122_NONE_NIL_UUID_REGEXP ")" ) ;
-	if ( ! uuid_str .empty() )
-		partition .uuid = uuid_str ;
-	else
+	// btrfs inspect-internal dump-super returns zero exit status for both success and
+	// failure.  Instead use non-empty stderr to identify failure.
+	if (! error.empty())
 	{
-		if ( ! output .empty() )
-			partition.push_back_message( output );
-
-		if ( ! error .empty() )
-			partition.push_back_message( error );
+		if (! output.empty())
+			partition.push_back_message(output);
+		if (! error.empty())
+			partition.push_back_message(error);
+		return;
 	}
+
+	partition.uuid = Utils::regexp_label(output, "^fsid[[:blank:]]*(" RFC4122_NONE_NIL_UUID_REGEXP ")");
 }
+
 
 bool btrfs::write_uuid( const Partition & partition, OperationDetail & operationdetail )
 {
@@ -387,7 +367,8 @@ void btrfs::clear_cache()
 //  Return empty string if not found (not mounted).
 Glib::ustring btrfs::get_mount_device( const Glib::ustring & path )
 {
-	BTRFS_Device btrfs_dev = get_cache_entry( path ) ;
+	const BTRFS_Device& btrfs_dev = get_cache_entry(path);
+
 	if ( btrfs_dev .devid == -1 || btrfs_dev .members .empty() )
 	{
 		//WARNING:
@@ -408,7 +389,7 @@ Glib::ustring btrfs::get_mount_device( const Glib::ustring & path )
 
 std::vector<Glib::ustring> btrfs::get_members( const Glib::ustring & path )
 {
-	BTRFS_Device btrfs_dev = get_cache_entry( path ) ;
+	const BTRFS_Device& btrfs_dev = get_cache_entry(path);
 	std::vector<Glib::ustring> membs;
 	for ( unsigned int i = 0 ; i < btrfs_dev.members.size() ; i ++ )
 		membs.push_back( btrfs_dev.members[i].m_name );
@@ -472,94 +453,5 @@ const BTRFS_Device & btrfs::get_cache_entry( const Glib::ustring & path )
 	return btrfs_dev ;
 }
 
-//Return the value of a btrfs tool formatted size, including reversing
-//  changes in certain cases caused by using binary prefix multipliers
-//  and rounding to two decimal places of precision.  E.g. "2.00GB".
-Byte_Value btrfs::btrfs_size_to_num( Glib::ustring str, Byte_Value ptn_bytes, bool scale_up )
-{
-	Byte_Value size_bytes = Utils::round( btrfs_size_to_gdouble( str ) ) ;
-	gdouble delta         = btrfs_size_max_delta( str ) ;
-	Byte_Value upper_size = size_bytes + ceil( delta ) ;
-	Byte_Value lower_size = size_bytes - floor( delta ) ;
-
-	if ( size_bytes > ptn_bytes && lower_size <= ptn_bytes )
-	{
-		//Scale value down to partition size:
-		//  The btrfs tool reported size appears larger than the partition
-		//  size, but the minimum possible size which could have been rounded
-		//  to the reported figure is within the partition size so use the
-		//  smaller partition size instead.  Applied to FS device size and FS
-		//  wide used bytes.
-		//      ............|         ptn_bytes
-		//               [    x    )  size_bytes with upper & lower size
-		//                  x         scaled down size_bytes
-		//  Do this to avoid the FS size or used bytes being larger than the
-		//  partition size and GParted failing to read the file system usage and
-		//  report a warning.
-		size_bytes = ptn_bytes ;
-	}
-	else if ( scale_up && size_bytes < ptn_bytes && upper_size > ptn_bytes )
-	{
-		//Scale value up to partition size:
-		//  The btrfs tool reported size appears smaller than the partition
-		//  size, but the maximum possible size which could have been rounded
-		//  to the reported figure is within the partition size so use the
-		//  larger partition size instead.  Applied to FS device size only.
-		//      ............|     ptn_bytes
-		//           [    x    )  size_bytes with upper & lower size
-		//                  x     scaled up size_bytes
-		//  Make an assumption that the file system actually fills the
-		//  partition, rather than is slightly smaller to avoid false reporting
-		//  of unallocated space.
-		size_bytes = ptn_bytes ;
-	}
-
-	return size_bytes ;
-}
-
-//Return maximum delta for which num +/- delta would be rounded by btrfs
-//  tools to str.  E.g. btrfs_size_max_delta("2.00GB") -> 5368709.12
-gdouble btrfs::btrfs_size_max_delta( Glib::ustring str )
-{
-	Glib::ustring limit_str ;
-	//Create limit_str.  E.g. str = "2.00GB" -> limit_str = "0.005GB"
-	for ( Glib::ustring::iterator p = str .begin() ; p != str .end() ; p ++ )
-	{
-		if ( isdigit( *p ) )
-			limit_str .append( "0" ) ;
-		else if ( *p == '.' )
-			limit_str .append( "." ) ;
-		else
-		{
-			limit_str .append( "5" ) ;
-			limit_str .append( p, str .end() ) ;
-			break ;
-		}
-	}
-	gdouble max_delta = btrfs_size_to_gdouble( limit_str ) ;
-	return max_delta ;
-}
-
-//Return the value of a btrfs tool formatted size.
-//  E.g. btrfs_size_to_gdouble("2.00GB") -> 2147483648.0
-gdouble btrfs::btrfs_size_to_gdouble( Glib::ustring str )
-{
-	gchar * suffix ;
-	gdouble rawN = g_ascii_strtod( str .c_str(), & suffix ) ;
-	while ( isspace( suffix[0] ) )  //Skip white space before suffix
-		suffix ++ ;
-	unsigned long long mult ;
-	switch ( suffix[0] )
-	{
-		case 'K':	mult = KIBIBYTE ;	break ;
-		case 'M':	mult = MEBIBYTE ;	break ;
-		case 'G':	mult = GIBIBYTE ;	break ;
-		case 'T':	mult = TEBIBYTE ;	break ;
-		case 'P':	mult = PEBIBYTE ;	break ;
-		case 'E':	mult = EXBIBYTE ;	break ;
-		default:	mult = 1 ;		break ;
-	}
-	return rawN * mult ;
-}
 
 } //GParted

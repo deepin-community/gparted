@@ -96,18 +96,20 @@ enum FSType
 	// Other recognised file system types
 	FS_APFS            = 28,
 	FS_ATARAID         = 29,
-	FS_BITLOCKER       = 30,
-	FS_GRUB2_CORE_IMG  = 31,
-	FS_ISO9660         = 32,
-	FS_LINUX_SWRAID    = 33,
-	FS_LINUX_SWSUSPEND = 34,
-	FS_REFS            = 35,
-	FS_UFS             = 36,
-	FS_ZFS             = 37,
+	FS_BCACHE          = 30,
+	FS_BITLOCKER       = 31,
+	FS_GRUB2_CORE_IMG  = 32,
+	FS_ISO9660         = 33,
+	FS_JBD             = 34,
+	FS_LINUX_SWRAID    = 35,
+	FS_LINUX_SWSUSPEND = 36,
+	FS_REFS            = 37,
+	FS_UFS             = 38,
+	FS_ZFS             = 39,
 
 	// Partition space usage colours
-	FS_USED            = 38,
-	FS_UNUSED          = 39
+	FS_USED            = 40,
+	FS_UNUSED          = 41
 } ;
 
 enum SIZE_UNIT
@@ -141,11 +143,12 @@ public:
 	static Glib::RefPtr<Gdk::Pixbuf> get_color_as_pixbuf(FSType fstype, int width, int height);
 	static int get_max_partition_name_length( Glib::ustring & tabletype );
 	static int get_filesystem_label_maxlength(FSType fstype);
-	static Glib::ustring get_filesystem_string(FSType fstype);
+	static const Glib::ustring get_filesystem_string(FSType fstype);
 	static const Glib::ustring get_encrypted_string();
 	static const Glib::ustring get_filesystem_string( bool encrypted, FSType fstype );
 	static const Glib::ustring get_filesystem_kernel_name( FSType fstype );
-	static Glib::ustring get_filesystem_software(FSType fstype);
+	static const Glib::ustring get_filesystem_software(FSType fstype);
+	static const Glib::ustring generate_encryption_mapping_name(const Glib::ustring& path);
 	static bool kernel_supports_fs( const Glib::ustring & fs ) ;
 	static bool kernel_version_at_least( int major_ver, int minor_ver, int patch_ver ) ;
 	static Glib::ustring format_size( Sector sectors, Byte_Value sector_size ) ;
@@ -167,6 +170,7 @@ public:
 	                                 , const Glib::ustring & pattern
 	                                 ) ;
 	static Glib::ustring trim( const Glib::ustring & src, const Glib::ustring & c = " \t\r\n" ) ;
+	static Glib::ustring trim_trailing_new_line(const Glib::ustring& src);
 	static Glib::ustring last_line( const Glib::ustring & src );
 	static Glib::ustring get_lang() ;
 	static void tokenize( const Glib::ustring& str,
@@ -180,6 +184,8 @@ public:
 	static int get_mounted_filesystem_usage( const Glib::ustring & mountpoint,
 	                                         Byte_Value & fs_size, Byte_Value & fs_free,
 	                                         Glib::ustring & error_message ) ;
+	static bool is_dev_busy(const Glib::ustring& path);
+	static const Glib::ustring& first_directory(const std::vector<Glib::ustring>& paths);
 	static Byte_Value floor_size( Byte_Value value, Byte_Value rounding_size ) ;
 	static Byte_Value ceil_size( Byte_Value value, Byte_Value rounding_size ) ;
 

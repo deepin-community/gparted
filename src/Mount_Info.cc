@@ -14,7 +14,9 @@
  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #include "Mount_Info.h"
+#include "BlockSpecial.h"
 #include "FS_Info.h"
 #include "Utils.h"
 
@@ -26,6 +28,9 @@
 #include <mntent.h>
 #include <string>
 #include <fstream>
+#include <vector>
+#include <algorithm>
+
 
 namespace GParted
 {
@@ -131,6 +136,18 @@ const std::vector<Glib::ustring> & Mount_Info::get_fstab_mountpoints( const Glib
 	return find( fstab_info, path ).mountpoints;
 }
 
+
+// Return whether the device path, such as /dev/sda3, is mounted at mount point or not
+bool Mount_Info::is_dev_mounted_at(const Glib::ustring& path, const Glib::ustring& mountpoint)
+{
+	const std::vector<Glib::ustring>& mountpoints = get_mounted_mountpoints(path);
+	for (unsigned i = 0; i < mountpoints.size(); i++)
+		if (mountpoint == mountpoints[i])
+			return true;
+	return false;
+}
+
+
 // Private methods
 
 void Mount_Info::read_mountpoints_from_file( const Glib::ustring & filename, MountMapping & map )
@@ -142,28 +159,23 @@ void Mount_Info::read_mountpoints_from_file( const Glib::ustring & filename, Mou
 	struct mntent* p = NULL;
 	while ( ( p = getmntent( fp ) ) != NULL )
 	{
-		Glib::ustring node = p->mnt_fsname;
+		Glib::ustring node = lookup_uuid_or_label(p->mnt_fsname);
+		if (node.empty())
+			node = p->mnt_fsname;
+
 		Glib::ustring mountpoint = p->mnt_dir;
 
-		Glib::ustring uuid = Utils::regexp_label( node, "^UUID=(.*)" );
-		if ( ! uuid.empty() )
-			node = FS_Info::get_path_by_uuid( uuid );
-
-		Glib::ustring label = Utils::regexp_label( node, "^LABEL=(.*)" );
-		if ( ! label.empty() )
-			node = FS_Info::get_path_by_label( label );
-
-		if ( ! node.empty() )
-			add_mountpoint_entry( map, node, mountpoint, parse_readonly_flag( p->mnt_opts ) );
+		add_mountpoint_entry(map, node, parse_readonly_flag(p->mnt_opts), mountpoint);
 	}
 
 	endmntent( fp );
 }
 
-void Mount_Info::add_mountpoint_entry( MountMapping & map,
-                                       Glib::ustring & node,
-                                       Glib::ustring & mountpoint,
-                                       bool readonly )
+
+void Mount_Info::add_mountpoint_entry(MountMapping& map,
+                                      const Glib::ustring& node,
+                                      bool readonly,
+                                      const Glib::ustring& mountpoint)
 {
 	// Only add node path if mount point exists
 	if ( file_test( mountpoint, Glib::FILE_TEST_EXISTS ) )
@@ -241,19 +253,68 @@ void Mount_Info::read_mountpoints_from_mount_command( MountMapping & map )
 			Glib::ustring mountpoint = Utils::regexp_label( lines[ i ], "^[^[:blank:]]+ on ([^[:blank:]]+) " );
 			Glib::ustring mntopts = Utils::regexp_label( lines[i], " type [^[:blank:]]+ \\(([^\\)]*)\\)" );
 			if ( ! node.empty() )
-				add_mountpoint_entry( map, node, mountpoint, parse_readonly_flag( mntopts ) );
+				add_mountpoint_entry(map, node, parse_readonly_flag(mntopts), mountpoint);
 		}
 	}
 }
 
-const MountEntry & Mount_Info::find( const MountMapping & map, const Glib::ustring & path )
+
+const MountEntry& Mount_Info::find(MountMapping& map, const Glib::ustring& path)
 {
-	MountMapping::const_iterator iter_mp = map.find( BlockSpecial( path ) );
+	BlockSpecial bs_path = BlockSpecial(path);
+
+	// 1) Key look up by path.  E.g. BlockSpecial("/dev/sda1").
+	MountMapping::const_iterator iter_mp = map.find(bs_path);
 	if ( iter_mp != map.end() )
 		return iter_mp->second;
+
+	// 2) Not found so iterate over all mount entries resolving UUID= and LABEL=
+	//    references; checking after each for the requested mount entry.
+	//    (Unresolved UUID= and LABEL= references are added by
+	//    read_mountpoints_from_file("/etc/fstab", fstab_info) for open encryption
+	//    mappings as the file system details are only added later into the FS_Info
+	//    cache by GParted_Core::detect_filesystem_in_encryption_mappings()).
+	std::vector<BlockSpecial> ref_nodes;
+	for (iter_mp = map.begin(); iter_mp != map.end(); ++iter_mp)
+	{
+		if (iter_mp->first.m_name.compare(0, 5, "UUID=")  == 0 ||
+		    iter_mp->first.m_name.compare(0, 6, "LABEL=") == 0   )
+		{
+			ref_nodes.push_back(iter_mp->first);
+		}
+	}
+	for (unsigned i = 0; i < ref_nodes.size(); i++)
+	{
+		Glib::ustring node = lookup_uuid_or_label(ref_nodes[i].m_name);
+		if (! node.empty())
+		{
+			// Insert new mount entry and delete the old one.
+			map[BlockSpecial(node)] = map[ref_nodes[i]];
+			map.erase(ref_nodes[i]);
+
+			if (BlockSpecial(node) == bs_path)
+				// This resolved mount entry is the one being searched for.
+				return map[bs_path];
+		}
+	}
 
 	static MountEntry not_mounted = MountEntry();
 	return not_mounted;
 }
+
+
+// Return file system's block device given a UUID=... or LABEL=... reference, or return
+// the empty string when not found.
+Glib::ustring Mount_Info::lookup_uuid_or_label(const Glib::ustring& ref)
+{
+	if (ref.compare(0, 5, "UUID=") == 0)
+		return FS_Info::get_path_by_uuid(ref.substr(5));
+
+	if (ref.compare(0, 6, "LABEL=") == 0)
+		return FS_Info::get_path_by_label(ref.substr(6));
+
+	return "";
+}
+
 
 } //GParted

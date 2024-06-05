@@ -32,22 +32,11 @@
     </publisher>
 
     <abstract role="description">
-      <para lang="en">
-      GParted is the GNOME Partition Editor for creating,
-      reorganizing, and deleting disk partitions.
-      GParted enables you to change the partition organization while preserving
-      the partition contents.
-      </para>
+      <para>GParted (Gnome Partition Editor) — это программа для создания, изменения и удаления дисковых разделов. GParted позволяет изменять организацию разделов на дисковых устройствах без потери данных.</para>
     </abstract>
 
-    <copyright lang="en">
-      <year>2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017</year>
-      <holder>Curtis Gedak</holder>
-    </copyright>
-    <copyright lang="en">
-      <year>2014, 2015, 2017, 2018</year>
-      <holder>Mike Fleetwood</holder>
-    </copyright>
+    <copyright><year>2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017</year> <holder>Curtis Gedak</holder></copyright>
+    <copyright><year>2014, 2015, 2017, 2018</year> <holder>Mike Fleetwood</holder></copyright>
 
 <!-- translators: uncomment this:
     <copyright>
@@ -57,39 +46,12 @@
 -->
 
     <legalnotice>
-      <para lang="en">
-      Permission is granted to copy, distribute and/or modify this document
-      under the terms of the GNU Free Documentation License, Version 1.2
-      or any later version published by the Free Software Foundation;
-      with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
-      Texts.  You can find a copy of the GFDL at this
-      <ulink type="help" url="help:fdl">link</ulink> or at
-      <ulink type="http" url="https://www.fsf.org/licensing/licenses/fdl.html"/>
-      or in the file COPYING-DOCS distributed with this manual.
-      </para>
+      <para>Этот документ распространяется в соответствии с условиями GNU Free Documentation License (GFDL) версии 1.2 или поздней, выпущенной Free Software Foundation; без инвариантных разделов, вступления и заключения. Полный текст лицензии можно прочитать в разделе <ulink type="help" url="help:fdl">link</ulink> или <ulink type="http" url="https://www.fsf.org/licensing/licenses/fdl.html"/> или в файле COPYING-DOCS, распространяемым вместе с данным руководством.</para>
     </legalnotice>
 
     <authorgroup>
-      <author role="maintainer" lang="en">
-        <firstname>Curtis</firstname>
-        <surname>Gedak</surname>
-        <affiliation>
-          <orgname>GParted Project</orgname>
-          <address>
-            <email>gedakc@users.sf.net</email>
-          </address>
-        </affiliation>
-      </author>
-      <author role="developer" lang="en">
-        <firstname>Mike</firstname>
-        <surname>Fleetwood</surname>
-        <affiliation>
-          <orgname>GParted Project</orgname>
-          <address>
-            <email>mike.fleetwood@googlemail.com</email>
-          </address>
-        </affiliation>
-      </author>
+      <author role="maintainer"><firstname>Curtis</firstname> <surname>Gedak</surname> <affiliation> <orgname>GParted Project</orgname> <address> <email>gedakc@users.sf.net</email> </address> </affiliation></author>
+      <author role="developer"><firstname>Mike</firstname> <surname>Fleetwood</surname> <affiliation> <orgname>GParted Project</orgname> <address> <email>mike.fleetwood@googlemail.com</email> </address> </affiliation></author>
 
 <!-- This is appropriate place for other contributors: translators,
      maintainers,  etc. Commented out by default.
@@ -108,194 +70,162 @@
 <!-- According to GNU FDL, revision history is mandatory if you are -->
 <!-- modifying/reusing someone else's document.  If not, you can omit it. -->
     <revhistory>
-      <revision lang="en">
-        <revnumber>GParted Manual V1.12</revnumber>
-        <date>May 2018</date>
-        <revdescription>
-          <para role="author" lang="en">Mike Fleetwood</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.31.0 of GParted</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>GParted Manual V1.11</revnumber>
-        <date>September 2017</date>
-        <revdescription>
-          <para role="author" lang="en">Curtis Gedak &amp; Mike Fleetwood</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.29.0 of GParted</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>GParted Manual V1.10</revnumber>
-        <date>January 2017</date>
-        <revdescription>
-          <para role="author" lang="en">Curtis Gedak &amp; Mike Fleetwood</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.28.0 of GParted</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>GParted Manual V1.9</revnumber>
-        <date>March 2015</date>
-        <revdescription>
-          <para role="author" lang="en">Curtis Gedak &amp; Mike Fleetwood</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.22.0 of GParted</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>GParted Manual V1.8</revnumber>
-        <date>September 2014</date>
-        <revdescription>
-          <para role="author" lang="en">Curtis Gedak</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.20.0 of GParted</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>GParted Manual V1.7</revnumber>
-        <date>February 2014</date>
-        <revdescription>
-          <para role="author" lang="en">Curtis Gedak</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.18.0 of GParted</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>GParted Manual V1.6</revnumber>
-        <date>December 2013</date>
-        <revdescription>
-          <para role="author" lang="en">Curtis Gedak</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.17.0 of GParted</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>GParted Manual V1.5</revnumber>
-        <date>September 2013</date>
-        <revdescription>
-          <para role="author" lang="en">Curtis Gedak</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.16.2 of GParted</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>GParted Manual V1.4</revnumber>
-        <date>February 2012</date>
-        <revdescription>
-          <para role="author" lang="en">Curtis Gedak</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.12.0 of GParted</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>GParted Manual V1.3</revnumber>
-        <date>January 2011</date>
-        <revdescription>
-          <para role="author" lang="en">Curtis Gedak</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.8.0 of GParted</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>GParted Manual V1.2</revnumber>
-        <date>June 2010</date>
-        <revdescription>
-          <para role="author" lang="en">Curtis Gedak</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.6.0 of GParted</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>GParted Manual V1.1</revnumber>
-        <date>July 2009</date>
-        <revdescription>
-          <para role="author" lang="en">Curtis Gedak</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.4.6 of GParted</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>GParted Manual V1.0</revnumber>
-        <date>January 2009</date>
-        <revdescription>
-          <para role="author" lang="en">Curtis Gedak</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.4.2 of GParted</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>GParted Manual V0.3.9</revnumber>
-        <date>September 2008</date>
-        <revdescription>
-          <para role="author" lang="en">Curtis Gedak</para>
-          <para role="publisher" lang="en">GParted Project</para>
-          <para role="annotations" lang="en">Describes version 0.3.9 of GParted</para>
-        </revdescription>
-      </revision>
+      <revision><revnumber>Руководство по GParted V1.12</revnumber> <date>Май 2018</date> <revdescription>
+          <para role="author">Mike Fleetwood</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.31.0</para>
+        </revdescription></revision>
+      <revision><revnumber>Руководство по GParted V1.11</revnumber> <date>Сентябрь 2017</date> <revdescription>
+          <para role="author">Curtis Gedak &amp; Mike Fleetwood</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.29.0</para>
+        </revdescription></revision>
+      <revision><revnumber>Руководство по GParted V1.10</revnumber> <date>Январь 2017</date> <revdescription>
+          <para role="author">Curtis Gedak &amp; Mike Fleetwood</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.28.0</para>
+        </revdescription></revision>
+      <revision><revnumber>Руководство по GParted V1.9</revnumber> <date>Март 2015</date> <revdescription>
+          <para role="author">Curtis Gedak &amp; Mike Fleetwood</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.22.0</para>
+        </revdescription></revision>
+      <revision><revnumber>Руководство по GParted V1.8</revnumber> <date>Сентябрь 2014</date> <revdescription>
+          <para role="author">Куртис Гедак (Curtis Gedak)</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.20.0</para>
+        </revdescription></revision>
+      <revision><revnumber>Руководство по GParted V1.7</revnumber> <date>Февраль 2014</date> <revdescription>
+          <para role="author">Куртис Гедак (Curtis Gedak)</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.18.0</para>
+        </revdescription></revision>
+      <revision><revnumber>Руководство по GParted V1.6</revnumber> <date>Декабрь 2013</date> <revdescription>
+          <para role="author">Куртис Гедак (Curtis Gedak)</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.17.0</para>
+        </revdescription></revision>
+      <revision><revnumber>Руководство по GParted V1.5</revnumber> <date>Сентябрь 2013</date> <revdescription>
+          <para role="author">Куртис Гедак (Curtis Gedak)</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.16.2</para>
+        </revdescription></revision>
+      <revision><revnumber>Руководство по GParted V1.4</revnumber> <date>Февраль 2012</date> <revdescription>
+          <para role="author">Куртис Гедак (Curtis Gedak)</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.12.0</para>
+        </revdescription></revision>
+      <revision><revnumber>Руководство по GParted V1.3</revnumber> <date>Январь 2011</date> <revdescription>
+          <para role="author">Куртис Гедак (Curtis Gedak)</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.8.0</para>
+        </revdescription></revision>
+      <revision><revnumber>Руководство по GParted V1.2</revnumber> <date>Июнь 2010</date> <revdescription>
+          <para role="author">Куртис Гедак (Curtis Gedak)</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.6.0</para>
+        </revdescription></revision>
+      <revision><revnumber>Руководство по GParted V1.1</revnumber> <date>Июль 2009</date> <revdescription>
+          <para role="author">Куртис Гедак (Curtis Gedak)</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.4.6</para>
+        </revdescription></revision>
+      <revision><revnumber>Руководство по GParted V1.0</revnumber> <date>Январь 2009</date> <revdescription>
+          <para role="author">Куртис Гедак (Curtis Gedak)</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.4.2</para>
+        </revdescription></revision>
+      <revision><revnumber>Руководство по GParted V0.3.9</revnumber> <date>Сентябрь 2008</date> <revdescription>
+          <para role="author">Куртис Гедак (Curtis Gedak)</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 0.3.9</para>
+        </revdescription></revision>
     </revhistory>
 
-    <releaseinfo lang="en">
-    This manual describes version 0.31.0 of GParted
-    </releaseinfo>
+    <releaseinfo>Это руководство пользователя описывает GParted версии 0.31.0</releaseinfo>
 
     <legalnotice>
       <title>Обратная связь</title>
-      <para lang="en">
-      To report a bug or make a suggestion regarding the
-      <application>gparted</application> application or this manual,
-      follow the directions at
-      <ulink type="http" url="https://gparted.org/bugs.php"/>.
-      </para>
+      <para>Чтобы сообщить об ошибках или дать любые советы, связанные с программой <application>gparted</application> или с этим руководством пользователя, следуйте инструкциям, указанным на странице <ulink type="http" url="https://gparted.org/bugs.php"/>.</para>
 <!-- Translators may also add here feedback address for translations -->
     </legalnotice>
 
+  
+    <othercredit class="translator">
+      <personname>
+        <firstname>Андрей Германов</firstname>
+      </personname>
+      <email>andrey@it-port.ru</email>
+    </othercredit>
+    <copyright>
+      
+        <year>2011</year>
+      
+      <holder>Андрей Германов</holder>
+    </copyright>
+  
+    <othercredit class="translator">
+      <personname>
+        <firstname>Алексей Кабанов</firstname>
+      </personname>
+      <email>ak099@mail.ru</email>
+    </othercredit>
+    <copyright>
+      
+        <year>2012</year>
+      
+      <holder>Алексей Кабанов</holder>
+    </copyright>
+  
+    <othercredit class="translator">
+      <personname>
+        <firstname>Yuri Myasoedov</firstname>
+      </personname>
+      <email>omerta13@yandex.ru</email>
+    </othercredit>
+    <copyright>
+      
+        <year>2013</year>
+      
+      <holder>Yuri Myasoedov</holder>
+    </copyright>
+  
+    <othercredit class="translator">
+      <personname>
+        <firstname>Ser82-png</firstname>
+      </personname>
+      <email>sw@atrus.ru</email>
+    </othercredit>
+    <copyright>
+      
+        <year>2022</year>
+      
+      <holder>Ser82-png</holder>
+    </copyright>
   </articleinfo>
 
 <!-- ============= Document Body ===================================== -->
 <!-- ============= Introduction ====================================== -->
   <sect1 id="gparted-introduction">
     <title>Введение</title>
-    <para lang="en">
-    The <application>gparted</application> application is the GNOME Partition
-    Editor for creating, reorganizing, and deleting disk partitions.
-    </para>
+    <para>Приложение <application>gparted</application> предназначено для создания, изменения и удаления разделов жёсткого диска.</para>
     <para>Дисковое устройство можно разбивать, создавать на нём различные разделы. Программа <application>gparted</application> позволяет изменять структуру разделов дискового устройства, сохраняя при этом имеющиеся на диске данные.</para>
-    <para lang="en">
-    With <application>gparted</application> you can accomplish the following
-    tasks:
-      <itemizedlist>
+    <para>С помощью <application>gparted</application> можно выполнять следующие задачи: <itemizedlist>
         <listitem>
-          <para lang="en">
-          Create a partition table on a disk device.
-          </para>
+          <para>Создавать таблицы разделов на дисковом устройстве.</para>
         </listitem>
         <listitem>
-          <para lang="en">
-          Enable and disable partition flags such as boot and hidden.
-          </para>
+          <para>Включать и отключать различные флаги разделов, такие как «загрузочный» (boot) или «скрытый» (hidden).</para>
         </listitem>
         <listitem>
-          <para lang="en">
-          Perform actions with partitions such as create, delete,
-          resize, move, check, label, copy, and paste.
-          </para>
+          <para>Выполнять различные действия с разделами: создавать, удалять, изменять размер, перемещать, проверять на ошибки, устанавливать метки, копировать и вставлять.</para>
         </listitem>
-      </itemizedlist>
-    </para>
+      </itemizedlist></para>
     <caution>
       <para>Редактирование разделов является потенциально опасной операцией, которая может привести к ПОТЕРЕ ДАННЫХ НА ЖЁСТКОМ ДИСКЕ.</para>
       <para>Программа <application>gparted</application> позволяет редактировать разделы с минимальным риском потерять данные. Программа GParted была внимательно протестирована и используется командой проекта GParted, однако потеря данных все-таки возможна по другим причинам, связанным с проблемами с оборудованием, потерей питания от электрической сети и различными ошибками в программном обеспечении.</para>
       <para>Чтобы снизить вероятность потери данных, не выполняйте операции монтирования и размонтирования разделов вне <application>gparted</application> во время работы <application>gparted</application>.</para>
-      <para lang="en">
-      You are advised to BACKUP your DATA before using
-      the <application>gparted</application> application.  This is
-      especially true for encrypted data where all of the data can
-      become permanently inaccessible after a failure.  Please refer to
-      <ulink type="http" url="https://gitlab.com/cryptsetup/cryptsetup/wikis/FrequentlyAskedQuestions">The Cryptsetup FAQ</ulink>
-      for backup and recovery advice of encrypted data.
-      </para>
+      <para>Перед использованием приложения <application>gparted</application> рекомендуется сделать резервную копию ваших данных. Это особенно верно для зашифрованных данных, когда все данные могут стать недоступными после сбоя. Пожалуйста, обратитесь к <ulink type="http" url="https://gitlab.com/cryptsetup/cryptsetup/wikis/FrequentlyAskedQuestions">Часто задаваемым вопросам по настройке Cryptsetup</ulink> для получения рекомендаций по резервному копированию и восстановлению зашифрованных данных.</para>
     </caution>
   </sect1>
   
@@ -308,7 +238,7 @@
 <!-- ============= To Start gparted ================================== -->
     <sect2 id="gparted-to-start">
       <title>Запуск gparted</title>
-      <para><application>gparted</application> можно запустить следующими способами:</para>
+      <para>Вы можете запустить <application>gparted</application> следующими способами:</para>
       <variablelist>
         <varlistentry>
           <term>Из меню <guimenu>Приложения</guimenu></term>
@@ -340,14 +270,7 @@
       <figure id="gparted-window">
         <title>Окно gparted</title>
         <screenshot>
-          <mediaobject lang="en">
-            <imageobject>
-              <imagedata fileref="figures/gparted_window.png" format="PNG"/>
-              </imageobject>
-            <textobject>
-              <phrase>Shows gparted main window.</phrase>
-            </textobject>
-          </mediaobject>
+          <mediaobject><imageobject> <imagedata fileref="figures/gparted_window.png" format="PNG"/> </imageobject> <textobject> <phrase>Показано главное окно gparted.</phrase> </textobject></mediaobject>
         </screenshot>
       </figure>
 
@@ -387,7 +310,7 @@
           <term>Панель информации об устройстве</term>
           <listitem>
             <para>Показывает информацию о выбранном дисковом устройстве.</para>
-            <para>По умолчанию панель информации об устройстве не отображается. Чтобы ей показать, выберите в меню <menuchoice><guimenu>Вид</guimenu><guimenuitem>Информация об устройстве</guimenuitem></menuchoice>.</para>
+            <para>По умолчанию панель информации об устройстве не отображается. Чтобы её показать, выберите в меню <menuchoice><guimenu>Вид</guimenu><guimenuitem>Информация об устройстве</guimenuitem></menuchoice>.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -410,7 +333,7 @@
       <para>Вы можете запустить <application>gparted</application> из командной строки, указав одно или несколько дисковых устройств.</para>
       <para>Чтобы запустить gparted из командной строки для работы с несколькими выбранными разделами, выполните следующую команду и нажмите клавишу <keycap>Enter</keycap>:</para>
       <para>
-      <screen lang="en"><prompt>$ </prompt><command>gparted <replaceable>/path-to-your-device1 /path-to-your-device2</replaceable></command></screen>
+      <screen><prompt>$ </prompt><command>gparted <replaceable>/path-to-your-device1 /path-to-your-device2</replaceable></command></screen>
       </para>
     </sect2>
   </sect1>
@@ -437,26 +360,14 @@
 <!-- ============= To View Device Information ======================== -->
     <sect2 id="gparted-view-device-information">
       <title>Просмотр информации об устройстве</title>
-      <para lang="en">
-        To view information about a disk device: 
-        <orderedlist>
+      <para>Чтобы просмотреть информацию о дисковом устройстве: <orderedlist>
           <listitem>
-            <para lang="en">
-            Select a disk device.
-            See <xref linkend="gparted-select-device"/>.
-           </para>
+            <para>Выберите устройство. См. <xref linkend="gparted-select-device"/>.</para>
           </listitem>
           <listitem>
-            <para lang="en">
-            Select:
-            <menuchoice><guimenu>View</guimenu><guimenuitem>Device Information</guimenuitem></menuchoice>.
-            The application opens a side pane in the
-            <application>gparted</application> window
-            and displays information about the device.
-           </para>
+            <para>Выберите в меню <menuchoice><guimenu>Вид</guimenu><guimenuitem>Информация об устройстве</guimenuitem></menuchoice>. Приложение откроет боковую панель и покажет информацию об устройстве.</para>
          </listitem>
-       </orderedlist>
-      </para>
+       </orderedlist></para>
       <para>Чтобы закрыть панель <guilabel>Информация об устройстве</guilabel>, уберите флажок в меню <menuchoice><guimenu>Вид</guimenu><guimenuitem>Информация об устройстве</guimenuitem></menuchoice>.</para>
     </sect2>
 
@@ -469,224 +380,91 @@
 <!-- ============= To Create a New Partition Table =================== -->
     <sect2 id="gparted-create-partition-table">
       <title>Создание новой таблицы разделов</title>
-      <para lang="en">
-      To create a new partition table on a disk device:
-        <orderedlist>
+      <para>Чтобы создать новую таблицу разделов на дисковом устройстве: <orderedlist>
           <listitem>
-            <para lang="en">
-            Select a disk device.
-            See <xref linkend="gparted-select-device"/>.
-           </para>
+            <para>Выберите устройство. См. <xref linkend="gparted-select-device"/>.</para>
           </listitem>
           <listitem>
-            <para lang="en">
-            Choose:
-            <menuchoice><guimenu>Device</guimenu><guimenuitem>Create Partition Table</guimenuitem></menuchoice>.
-            The application displays a
-            <guilabel>Create partition table on <replaceable>/path-to-device</replaceable></guilabel>
-            dialog.
-            </para>
+            <para>Выберите в меню <menuchoice><guimenu>Устройство</guimenu><guimenuitem>Создать таблицу разделов</guimenuitem></menuchoice>. Приложение откроет диалоговое окно <guilabel>Создать таблицу разделов на <replaceable>/путь-к-устройству</replaceable></guilabel>.</para>
           </listitem>
           <listitem>
-            <para lang="en">
-            Optionally select a different partition table type from the
-            list.
-            </para>
+            <para>При желании выберите другой тип таблицы разделов из списка.</para>
             <note>
-              <para lang="en">
-              The default partition table type is
-              <guimenuitem>msdos</guimenuitem> for disks smaller than 2
-              Tebibytes in size (assuming a 512 byte sector size) and
-              <guimenuitem>gpt</guimenuitem> for disks 2 Tebibytes and
-              larger.
-              </para>
-              <para lang="en">
-              See <xref linkend="gparted-specify-partition-type"/> for
-              <guimenuitem>msdos</guimenuitem> partition table
-              limitations.
-              </para>
+              <para>Типом таблицы разделов по умолчанию является <guimenuitem>msdos</guimenuitem> для дисков размером менее 2 Тбайт (при условии размера сектора 512 байт) и <guimenuitem>gpt</guimenuitem> для дисков размером 2 Тбайт и больше.</para>
+              <para>См. <xref linkend="gparted-specify-partition-type"/> ограничения таблицы разделов для <guimenuitem>msdos</guimenuitem>.</para>
             </note>
             <note>
-              <para lang="en">
-              To use a disk without a partition table, choose
-              <guimenuitem>loop</guimenuitem> to create a virtual
-              partition that spans the disk.  Then format to the
-              desired file system.
-              </para>
-              <para lang="en">
-              See <xref linkend="gparted-format-partition"/> to format
-              a virtual partition with a file system.
-              </para>
+              <para>Чтобы использовать диск без таблицы разделов, выберите <guimenuitem>loop</guimenuitem>, чтобы создать виртуальный раздел, охватывающий весь диск. Затем отформатируйте в нужную файловую систему.</para>
+              <para>См. <xref linkend="gparted-format-partition"/> для форматирования виртуального раздела с файловой системой.</para>
             </note>
             <caution>
-              <para lang="en">
-              Many operating systems recognize
-              <guimenuitem>gpt</guimenuitem> and
-              <guimenuitem>msdos</guimenuitem> partition tables, but
-              do not recognize all types of file systems.  This lack
-              of file system recognition means that using a disk
-              without a partition table involves more risk.  For
-              example, some operating systems might prompt to format an
-              unpartitioned disk if the file system is not recognized.
-              </para>
+              <para>Многие операционные системы распознают таблицы разделов <guimenuitem>gpt</guimenuitem> и <guimenuitem>msdos</guimenuitem>, но не все типы файловых систем. Такое отсутствие распознавания файловой системы означает, что использование диска без таблицы разделов сопряжено с большим риском. Например, некоторые операционные системы могут предложить отформатировать диск без разделов, если файловая система не распознана.</para>
             </caution>
           </listitem>
           <listitem>
-            <para lang="en">
-            Click <guibutton>Apply</guibutton> to create the new partition table.
-            The application writes the new partition table to the disk device.
-            The application refreshes the device partition layout in the
-            <application>gparted</application> window.
-            </para>
+            <para>Нажмите <guibutton>Применить</guibutton>, чтобы создать новую таблицу разделов. Приложение запишет новую таблицу разделов на дисковое устройство и обновит информацию о разделах в окне <application>gparted</application>.</para>
           </listitem>
-        </orderedlist>
-      </para>
+        </orderedlist></para>
       <caution>
         <para>ОСТОРОЖНО: эта операция УДАЛИТ ВСЕ ДАННЫЕ СО ВСЕГО ДИСКОВОГО УСТРОЙСТВА.</para>
-        <para>Если таблица разделов была случайно перезаписана, см. <xref linkend="gparted-recover-partition-table"/></para>
+        <para>Если таблица разделов была случайно перезаписана, см. <xref linkend="gparted-recover-partition-table"/>.</para>
       </caution>
     </sect2>
 
 <!-- ============= To Attempt Data Rescue =================== -->
     <sect2 id="gparted-attempt-data-rescue">
       <title>Попытка восстановления данных</title>
-      <para lang="en">
-      To attempt data rescue from a disk device:
-        <orderedlist>
+      <para>Чтобы попытаться восстановить данные на дисковом устройстве: <orderedlist>
           <listitem>
-            <para lang="en">
-            Select a disk device.
-            See <xref linkend="gparted-select-device"/>.
-           </para>
+            <para>Выберите устройство. См. <xref linkend="gparted-select-device"/>.</para>
           </listitem>
           <listitem>
-            <para lang="en">
-            Choose:
-            <menuchoice><guimenu>Device</guimenu><guimenuitem>Attempt Data Rescue</guimenuitem></menuchoice>.
-            The application displays a
-            <guilabel>Search for file systems on <replaceable>/path-to-device</replaceable></guilabel>
-            dialog.
-            </para>
+            <para>Выберите в меню <menuchoice><guimenu>Устройство</guimenu><guimenuitem>Попробовать восстановить данные</guimenuitem></menuchoice>. Приложение откроет диалоговое окно <guilabel>Найти файловые системы на <replaceable>/путь-к-устройству</replaceable></guilabel>.</para>
           </listitem>
           <listitem>
-            <para lang="en">
-            Click <guibutton>OK</guibutton> to start the full disk scan.
-            </para>
+            <para>Нажмите <guibutton>OK</guibutton>, чтобы начать полное сканирование диска.</para>
             <tip>
-              <para lang="en">
-              Large disk devices can take a very long time to scan.
-              If you do not have the time to wait for a full disk scan
-              then click <guibutton>Cancel</guibutton>.
-              </para>
+              <para>Большие дисковые устройства могут сканироваться очень долго. Сканирование можно остановить в любой момент, нажав кнопку <guibutton>Отмена</guibutton>.</para>
             </tip>
             <note>
-              <para lang="en">
-              A maximum of 4 partitions with file systems might be
-              discovered.  If you want to discover more than 4
-              partitions and restore the partition table, see
-              <xref linkend="gparted-recover-partition-table"/>.
-              </para>
+              <para>Эта операция может обнаружить не более 4-х разделов с файловыми системами. Чтобы обнаружить больше 4-х разделов и восстановить таблицу разделов, см. <xref linkend="gparted-recover-partition-table"/>.</para>
             </note>
           </listitem>
           <listitem>
-            <para lang="en">
-            When the full disk scan completes one of two possible
-            dialogs is displayed:
-              <itemizedlist>
+            <para>После завершения процесса полного сканирования диска будет открыто одно из двух диалоговых окон: <itemizedlist>
                 <listitem>
-                  <para lang="en">
-                  <guilabel>No file systems found
-                  on <replaceable>/path-to-device</replaceable>
-                  </guilabel>
-                  </para>
-                  <para lang="en">
-                  If no file systems are found, you have other options
-                  to try to rescue your data.
-                  The <application>photorec</application> application
-                  is designed to help recover many different types of
-                  lost files.  For more information
-                  about <application>photorec</application>, see
-                  <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.
-                  </para>
-                  <para lang="en">
-                  Click <guibutton>OK</guibutton> to close the dialog
-                  box, and end this attempt to rescue data.
-                  </para>
+                  <para><guilabel>Нет файловых систем на <replaceable>/путь-к-устройству</replaceable> </guilabel></para>
+                  <para>Если не было обнаружено ни одной файловой системы, можно попробовать другие способы восстановления данных. В частности, в этом может помочь программа <application>photorec</application>, которая позволяет решать множество различных проблем с потерянными файлами. Подробнее о приложении <application>photorec</application> можно узнать по адресу <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.</para>
+                  <para>Нажмите <guibutton>OK</guibutton>, чтобы закрыть диалоговое окно и завершить попытку восстановления данных.</para>
                 </listitem>
                 <listitem>
-                  <para lang="en">
-                  <guilabel>File systems found
-                  on <replaceable>/path-to-device</replaceable>
-                  </guilabel>
-                  </para>
-                  <para lang="en">
-                  If file systems are found, each file system is
-                  displayed in a list along with
-                  a <guibutton>View</guibutton> button.  The dialog
-                  will indicate if there are data inconsistencies.
-                  Inconsistencies in the data might prevent you from
-                  viewing the data.
-                  </para>
+                  <para><guilabel>Обнаружены файловые системы на <replaceable>/путь-к-устройству</replaceable> </guilabel></para>
+                  <para>При обнаружении файловых систем они будут отображены в списке вместе с кнопкой <guibutton>Обзор</guibutton>. Диалоговое окно покажет оповещение в случае нарушения целостности данных. При наличии нарушений целостности данных приложение может не позволить просмотреть данные.</para>
                 </listitem>
-              </itemizedlist>
-            </para>
+              </itemizedlist></para>
           </listitem>
           <listitem>
-            <para lang="en">
-            To rescue data, use the following steps for each file system:
-              <orderedlist numeration="upperalpha">
+            <para>Чтобы восстановить данные, следуйте следующим инструкциям для каждой файловой системы: <orderedlist numeration="upperalpha">
                 <listitem>
-                  <para lang="en">
-                  Click <guibutton>View</guibutton> to mount and display
-                  the file system.  Your default file manager is opened
-                  and displays a read-only view of the file system.
-                  </para>
+                  <para>Нажмите <guibutton>Обзор</guibutton>, чтобы подключить и показать файловую систему. Откроется используемый по умолчанию файловый менеджер, который покажет файловую систему, доступную только для чтения.</para>
                   <note>
-                    <para lang="en">
-                    If the dialog <guilabel>Unable to open the default
-                    file manager</guilabel> is displayed, then you
-                    will need to open a file manager and navigate to
-                    the mount point for the file system.
-                    </para>
-                    <para lang="en">
-                    The mount point is shown in the dialog, for
-                    example "/tmp/gparted-roview-XXXXXX".
-                    </para>
-                    <para lang="en">
-                    Click <guibutton>OK</guibutton> to close the
-                    <guilabel>Unable to open the
-                    default file manager</guilabel> dialog.
-                    </para>
+                    <para>Если откроется диалоговое окно <guilabel>Не удалось открыть файловый менеджер по умолчанию</guilabel>, необходимо открыть файловый менеджер и перейти к точке монтирования файловой системы.</para>
+                    <para>Точка монтирования показана в диалоговом окне, например «/tmp/gparted-roview-XXXXXX».</para>
+                    <para>Нажмите <guibutton>OK</guibutton>, чтобы закрыть диалоговое окно<guilabel>Не удалось открыть файловый менеджер по умолчанию</guilabel>.</para>
                   </note>
                 </listitem>
                 <listitem>
-                  <para lang="en">
-                  Use the file manager to copy your data to other
-                  storage media.
-                  </para>
+                  <para>Используйте файловый менеджер, чтобы скопировать ваши данные на другой носитель.</para>
                 </listitem>
                 <listitem>
-                  <para lang="en">
-                  When you are finished copying your data, close the
-                  file manager.
-                  </para>
+                  <para>После завершения копирования данных, закройте файловый менеджер.</para>
                 </listitem>
-              </orderedlist>
-            </para>
+              </orderedlist></para>
           </listitem>
           <listitem>
-            <para lang="en">
-            When you are finished rescuing data,
-            click <guibutton>Close</guibutton> to end this attempt to
-            rescue data.  The application umounts any file systems
-            that were mounted for viewing.  Then the application
-            rescans all the disk devices and refreshes the device
-            partition layout in the <application>gparted</application>
-            window.
-            </para>
+            <para>После завершения восстановления данных нажмите кнопку <guibutton>Закрыть</guibutton>, чтобы завершить попытку восстановления данных. Приложение отмонтирует все обнаруженные файловые системы. Затем, оно пересканирует все дисковые устройства и обновит информацию о разделах в окне <application>gparted</application>.</para>
           </listitem>
-        </orderedlist>
-      </para>
+        </orderedlist></para>
     </sect2>
 
   </sect1>
@@ -698,55 +476,36 @@
 <!-- ============= Basic Partition Actions =========================== -->
     <sect2 id="gparted-basic-partition-actions">
       <title>Действия низкой сложности с разделами</title>
-      <para>Эти действия не влияют на разделы на дисковом устройстве.</para>
+      <para>Эти действия не изменяют разделы на дисковом устройстве.</para>
 
 <!-- ============= To Select a Partition ============================= -->
       <sect3 id="gparted-select-partition">
         <title>Выбор раздела</title>
-        <para lang="en">
-        To select a partition, use one of the following:
-          <itemizedlist>
+        <para>Чтобы выбрать раздел, выполните одно из следующих действий: <itemizedlist>
             <listitem>
-              <para lang="en">
-              Click on a partition in the graphic display area.
-              </para>
+              <para>Щёлкните левой кнопкой мыши по разделу в графической области диска.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Click on a partition in the text display area.
-              </para>
+              <para>Щёлкните левой кнопкой мыши по разделу в текстовой области диска.</para>
             </listitem>
-          </itemizedlist>
-        </para>
+          </itemizedlist></para>
         <para>Приложение подсветит раздел и в графической, и в текстовой области в окне <application>gparted</application>.</para>
         <note>
-          <para lang="en">
-          Partition operations such as delete, move, copy, format,
-          check, label, and often resize require the partition to be
-          unmounted.
-          See <xref linkend="gparted-unmount-partition"/>.
-          </para>
+          <para>Операции над разделами, такие как удаление, перемещение, копирование, проверка и установка метки и, зачастую, изменение размера, требуют, чтобы раздел был отмонтирован. См. <xref linkend="gparted-unmount-partition"/>.</para>
         </note>
       </sect3>
 
 <!-- ============= To Select Unallocated Space ======================= -->
       <sect3 id="gparted-select-unallocated">
         <title>Выбор неразмеченной области</title>
-        <para lang="en">
-        To select unallocated space, use one of the following:
-          <itemizedlist>
+        <para>Чтобы выбрать неразмеченную область, выполните одно и следующих действий: <itemizedlist>
             <listitem>
-              <para lang="en">
-              Click on <guilabel>unallocated</guilabel> in the graphic display area.
-              </para>
+              <para>Щёлкните по <guilabel>не размечено</guilabel> в графической области диска.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Click on <guilabel>unallocated</guilabel> in the text display area.
-              </para>
+              <para>Щёлкните по <guilabel>не размечено</guilabel> в текстовой области диска.</para>
             </listitem>
-          </itemizedlist>
-        </para>
+          </itemizedlist></para>
         <para>Приложение подсветит неразмеченную область и в графической, и в текстовой области в окне <application>gparted</application>.</para>
         <tip>
           <para>Если у вас нет дисковых устройств с неразмеченными областями, можно попробовать следующее:</para>
@@ -764,52 +523,28 @@
 <!-- ============= To View Partition Information ===================== -->
     <sect3 id="gparted-view-partition-information">
         <title>Просмотр информации о разделе</title>
-        <para lang="en">
-        To view information about a partition:
-          <orderedlist>
+        <para>Чтобы посмотреть информацию о разделе: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select a partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Выберите раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>Information</guimenuitem></menuchoice>.
-              The application opens an <guilabel>Information about
-              <replaceable>/path-to-partition</replaceable></guilabel> dialog.
-              </para>
+              <para>Выберите в меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Информация</guimenuitem></menuchoice>. Приложение откроет диалоговое окно <guilabel>Информация о <replaceable>/путь-к-разделу</replaceable></guilabel>.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
         <para>Чтобы закрыть диалоговое окно <guilabel>Информация о <replaceable>/путь-к-разделу</replaceable></guilabel>, нажмите кнопку <guibutton>Закрыть</guibutton>.</para>
       </sect3>
 
 <!-- ============= To Mount a Partition ============================== -->
       <sect3 id="gparted-mount-partition">
         <title>Монтирование раздела</title>
-        <para lang="en">
-        To mount a partition:
-          <orderedlist>
+        <para>Чтобы смонтировать раздел: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select an unmounted partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Выберите ещё не смонтированный раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>Mount</guimenuitem></menuchoice>
-              and select a mount point from the list.
-              The application mounts the partition on the mount point and
-              refreshes the device partition layout in the
-              <application>gparted</application> window.
-              </para>
+              <para>Выберите в меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Монтировать</guimenuitem></menuchoice>, выберите точку монтирования из списка. Приложение смонтирует раздел к указанной точке монтирования и обновит информацию о разделах в окне <application>gparted</application>.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
         <note>
           <para>Если пункт меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Монтировать</guimenuitem></menuchoice> не виден, значит <application>gparted</application> не знает, к какой точке монтировать раздел.</para>
         </note>
@@ -817,102 +552,51 @@
 
 <!-- ============= To Unmount a Partition ============================ -->
       <sect3 id="gparted-unmount-partition">
-        <title>Размонтирование раздела</title>
-        <para lang="en">
-        To unmount a partition:
-          <orderedlist>
+        <title>Отмонтирование раздела</title>
+        <para>Чтобы отмонтировать раздел: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select a mounted partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Выберите смонтированный раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>Unmount</guimenuitem></menuchoice>.
-              The application unmounts the partition from the mount point and
-              refreshes the device partition layout in the
-              <application>gparted</application> window.
-              </para>
+              <para>Выберите в меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Отмонтировать</guimenuitem></menuchoice>. Приложение отмонтирует раздел от точки монтирования и обновит информацию о разделах в окне <application>gparted</application>.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
         <tip>
-          <para>Если операция <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Размонтировать</guimenuitem></menuchoice> не выполнилась, то, скорее всего, раздел в данный момент используется другими процессами и по этой причине не может быть размонтирован.</para>
-          <para>Если нужно, чтобы все разделы были размонтированы и доступны для операций редактирования, загрузитесь с Live CD и используйте приложение <application>gparted</application>. См. <xref linkend="gparted-acquire-livecd"/></para>
+          <para>Если операция <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Отмонтировать</guimenuitem></menuchoice> не выполнилась, то, скорее всего, раздел в данный момент используется другими процессами.</para>
+          <para>Если нужно, чтобы все разделы были отмонтированы и доступны для операций редактирования, загрузитесь с Live CD и используйте приложение <application>gparted</application>. См. <xref linkend="gparted-acquire-livecd"/></para>
         </tip>
       </sect3>
 
 <!-- ============= To Open an Encrypted Partition ==================== -->
       <sect3 id="gparted-open-encrypted-partition">
-        <title lang="en">Opening an Encrypted Partition</title>
-        <para lang="en">
-        To open a LUKS encrypted partition:
-          <orderedlist>
+        <title>Открытие зашифрованного раздела</title>
+        <para>Чтобы открыть зашифрованный LUKS раздел: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select a closed LUKS encrypted partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Отметьте закрытый зашифрованный LUKS раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>Open Encryption</guimenuitem></menuchoice>.
-              </para>
-              <para lang="en">
-              If <application>gparted</application> doesn't yet know the
-              LUKS Passphrase it will open a <guilabel>LUKS Passphrase
-              <replaceable>/path-to-partition</replaceable></guilabel>
-              dialog.  Type the LUKS Passphrase into the
-              <guilabel>Passphrase</guilabel> text box and click
-              <guibutton>Unlock</guibutton>.
-              </para>
-              <para lang="en">
-              The application opens the encrypted partition and
-              refreshes the device partition layout in the
-              <application>gparted</application> window.
-              </para>
+              <para>Выберите: <menuchoice><guimenu>Разделы</guimenu><guimenuitem>Открыть шифрование</guimenuitem></menuchoice>.</para>
+              <para>Если <application>gparted</application> ещё не знает пароль LUKS, откроется диалоговое окно <guilabel>Пароль LUKS <replaceable>/путь-к-разделу</replaceable></guilabel>. Введите пароль LUKS в поле <guilabel>Пароль</guilabel> и нажмите <guibutton>Разблокировать</guibutton>.</para>
+              <para>Приложение откроет зашифрованный раздел и обновит информацию о разделах в окне <application>gparted</application>.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
         <note>
-          <para lang="en">
-          <application>gparted</application> remembers each LUKS
-          Passphrase in the computer's memory for as long as it is
-          running.  This is so that it doesn't have to prompt when
-          reopening the same encrypted partition again.  When
-          <application>gparted</application> is closed all remembered LUKS
-          Passphrases are cleared from memory and forgotten.
-          </para>
+          <para><application>gparted</application> будет хранить все пароли LUKS в памяти компьютера, пока будет работать программа. Это сделано для того, чтобы программе не приходилось отправлять вам повторные запросы на открытие одного и того же зашифрованного раздела. После закрытия окна <application>gparted</application> все сохранённые пароли LUKS будет удалены из памяти и забыты.</para>
         </note>
       </sect3>
 
 
 <!-- ============= To Close an Encrypted Partition =================== -->
       <sect3 id="gparted-close-encrypted-partition">
-        <title lang="en">Closing an Encrypted Partition</title>
-        <para lang="en">
-        To close a LUKS encrypted partition:
-          <orderedlist>
+        <title>Закрытие зашифрованного раздела</title>
+        <para>Чтобы закрыть зашифрованный LUKS раздел: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select an unmounted and LUKS encrypted partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Выберите ещё не смонтированный и зашифрованный LUKS раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>Close Encryption</guimenuitem></menuchoice>.
-              The application closes the LUKS encryption and refreshes
-              the device partition layout in the
-              <application>gparted</application> window.
-              </para>
+              <para>Выберите в меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Закрыть шифрование</guimenuitem></menuchoice>. Приложение закроет шифрование LUKS и обновит информацию о разделах устройства в окне <application>gparted</application>.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
       </sect3>
 
     </sect2>
@@ -926,94 +610,48 @@
 <!-- ============= Creating a New Partition ========================== -->
       <sect3 id="gparted-create-new-partition">
         <title>Создание нового раздела</title>
-        <para lang="en">
-        To create a new partition:
-          <orderedlist>
+        <para>Чтобы создать новый раздел: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select an unallocated space on the disk device.
-              See <xref linkend="gparted-select-unallocated"/>.
-              </para>
+              <para>Выберите свободное пространство на дисковом устройстве. См. <xref linkend="gparted-select-unallocated"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>New</guimenuitem></menuchoice>.
-              The application displays the <guilabel>Create new Partition</guilabel> dialog.
-              </para>
+              <para>Выберите в меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Новый</guimenuitem></menuchoice>. Приложение откроет диалоговое окно <guilabel>Создать новый раздел</guilabel>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Specify the size and the location for the partition.
-              See <xref linkend="gparted-specify-partition-size-and-location"/>.
-              </para>
+              <para>Укажите размер и расположение раздела. См. See <xref linkend="gparted-specify-partition-size-and-location"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Specify the alignment for the partition.
-              See <xref linkend="gparted-specify-partition-alignment"/>.
-              </para>
+              <para>Укажите выравнивание раздела. См. <xref linkend="gparted-specify-partition-alignment"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Specify the type of partition.
-              See <xref linkend="gparted-specify-partition-type"/>.
-              </para>
+              <para>Укажите тип раздела. См. <xref linkend="gparted-specify-partition-type"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Specify the name of the partition when the field is
-              enabled.
-              See <xref linkend="gparted-specify-partition-name"/>.
-              </para>
+              <para>Укажите имя раздела, если соответствующее поле включено. См. <xref linkend="gparted-specify-partition-name"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Specify the type of file system for the partition.
-              See <xref linkend="gparted-specify-partition-file-system"/>.
-              </para>
+              <para>Укажите тип файловой системы для раздела. См. <xref linkend="gparted-specify-partition-file-system"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Specify the label of the file system for the partition.
-              See <xref linkend="gparted-specify-partition-file-system-label"/>.
-              </para>
+              <para>Укажите метку файловой системы для раздела. См. <xref linkend="gparted-specify-partition-file-system-label"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Click <guibutton>Add</guibutton> to add the create partition
-              operation to the operation queue.
-              The application displays the create partition operation
-              in the <guilabel>Pending Operations</guilabel> pane
-              in the <application>gparted</application> window.
-              </para>
+              <para>Нажмите кнопку <guibutton>Добавить</guibutton>, чтобы добавить операцию создания раздела в очередь заданий. Приложение покажет операцию создания раздела в панели <guilabel>Запланированные операции</guilabel>.</para>
             </listitem>
-          </orderedlist>
-        </para> 
+          </orderedlist></para> 
       </sect3>
 
 <!-- ============= To Delete a Partition ============================= -->
       <sect3 id="gparted-delete-partition">
         <title>Удаление раздела</title>
-        <para lang="en">
-        To delete a partition:
-          <orderedlist>
+        <para>Чтобы удалить раздел: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select an unmounted partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Выберите ещё не смонтированный раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>Delete</guimenuitem></menuchoice>.
-              The application displays the delete partition operation in
-              the <guilabel>Pending Operations</guilabel> pane.
-              </para>
+              <para>Выберите в меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Удалить</guimenuitem></menuchoice>. Приложение покажет операцию удаления раздела в панели <guilabel>Запланированные операции</guilabel>.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
         <caution>
           <para>Если удаляется логический раздел, то после удаления этого логического раздела, системные имена всех остальных логических разделов изменятся.</para>
           <para>Предположим, что расширенный раздел содержит логические разделы A, B, C и D. Эти логические разделы определяются в операционной системе как:</para>
@@ -1043,89 +681,43 @@
               <para>Раздел D как /dev/sda7. Имя изменилось.</para>
             </listitem>
           </itemizedlist>
-          <para lang="en">
-          Changes in a device name can cause problems if a
-          partition is mounted using a device name.
-          You can avoid the problem by using the file system label or
-          Universally Unique Identifier (UUID) of
-          the partition when mounting the partition.
-          </para>
-          <para lang="en">
-          Changes in a device name might adversely affect the
-          following files:
-            <itemizedlist>
+          <para>В случае, если раздел был примонтирован с использованием имени устройства, при изменении имени устройства могут возникнуть проблемы. Чтобы избежать таких проблем, при монтировании используйте либо метку файловой системы, либо уникальный универсальный идентификатор (UUID).</para>
+          <para>Изменение имени устройства может повлиять на следующие файлы: <itemizedlist>
               <listitem>
-                <para lang="en">
-                /etc/fstab - Contains a list of file systems to mount.
-                </para>
+                <para>/etc/fstab — содержит список монтируемых файловых систем.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                /boot/grub/menu.lst - Contains operating system boot
-                instructions for the <application>grub</application>
-                boot loader.
-                </para>
+                <para>/boot/grub/menu.lst — содержит инструкции по загрузке операционной системы для загрузчика <application>grub</application>.</para>
               </listitem>
-            </itemizedlist>
-          </para>
+            </itemizedlist></para>
         </caution>
         <note>
-          <para lang="en">
-          Disks with <guimenuitem>loop</guimenuitem> or
-          <guimenuitem>none</guimenuitem> partition tables do not
-          contain a partition table, and do not contain partitions.  A
-          file system on a disk without a partition table is
-          represented in GParted by a virtual partition.
-          </para>
-          <para lang="en">
-          To delete the file system and virtual partition, choose
-          format to <guimenuitem>cleared</guimenuitem>.
-          </para>
-          <para lang="en">
-          See <xref linkend="gparted-format-partition"/>.
-          </para>
+          <para>Диски с таблицами разделов <guimenuitem>loop</guimenuitem> или <guimenuitem>none</guimenuitem> не содержат таблицы разделов и самих разделов. Файловая система на диске без таблицы разделов представлена в GParted виртуальным разделом.</para>
+          <para>Чтобы удалить файловую систему и виртуальный раздел, выберите формат <guimenuitem>очищены</guimenuitem>.</para>
+          <para>Смотрите <xref linkend="gparted-format-partition"/>.</para>
         </note>
       </sect3>
 
 <!-- ============= To Name a Partition =============================== -->
       <sect3 id="gparted-name-partition">
-        <title lang="en">Naming a Partition</title>
+        <title>Именование раздела</title>
         <note>
-          <para lang="en">
-          Naming of partitions is only available with GUID partition
-          tables (GPT).
-          </para>
-          <para lang="en">
-          Also see <xref linkend="gparted-create-partition-table"/>.
-          </para>
+          <para>Именование разделов доступно только для таблиц разделов GUID (GPT).</para>
+          <para>Также смотрите <xref linkend="gparted-create-partition-table"/>.</para>
         </note>
-        <para lang="en">
-        To set a name of a partition:
-        </para>
+        <para>Чтобы задать имя раздела:</para>
           <orderedlist>
             <listitem>
               <para>Выберите ещё не смонтированный раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu>
-              <guimenuitem>Name Partition</guimenuitem></menuchoice>.
-              The application opens a <guilabel>Set partition name on
-              <replaceable>/path-to-partition</replaceable></guilabel> dialog.
-              </para>
+              <para>Выберите: <menuchoice><guimenu>Раздел</guimenu> <guimenuitem>Задать имя раздела</guimenuitem></menuchoice>. Приложение открывает диалоговое окно <guilabel>Установить имя раздела на <replaceable>/путь-к-разделу</replaceable></guilabel>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Type a partition name in the <guilabel>Name</guilabel> text box.
-              </para>
+              <para>Введите имя раздела в поле <guilabel>Имя</guilabel>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Click <guibutton>OK</guibutton>.
-              The application displays the set partition name operation
-              in the <guilabel>Operations Pending</guilabel> pane.
-              </para>
+              <para>Нажмите <guibutton>OK</guibutton>. Приложение покажет операцию установки имени раздела в панели <guilabel>Запланированные операции</guilabel>.</para>
             </listitem>
           </orderedlist>
       </sect3>
@@ -1133,138 +725,58 @@
 <!-- ============= To Format a Partition ============================= -->
       <sect3 id="gparted-format-partition">
         <title>Форматирование раздела</title>
-        <para lang="en">
-        To format a partition:
-          <orderedlist>
+        <para>Чтобы отформатировать раздел: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select an unmounted partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Выберите ещё не смонтированный раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>Format to</guimenuitem></menuchoice>,
-              and select a type of file system from the list.
-              The application displays the format partition operation
-              in the <guilabel>Operations Pending</guilabel> pane.
-              </para>
-              <para lang="en">
-              See <xref linkend="gparted-specify-partition-file-system"/>
-              for the meaning of the <guimenuitem>cleared</guimenuitem>
-              file system type.
-              </para>
+              <para>Выберите в меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Форматировать в</guimenuitem></menuchoice>, выберите тип файловой системы из списка. Приложение покажет операцию форматирования раздела в панели <guilabel>Запланированные операции</guilabel>.</para>
+              <para>Смотрите раздел <xref linkend="gparted-specify-partition-file-system"/> для определения значения типа файловой системы <guimenuitem>очищены</guimenuitem>.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
       </sect3>
 
 <!-- ============= To Set a Partition File System Label ============== -->
       <sect3 id="gparted-setting-partition-file-system-label">
-        <title lang="en">Setting a Partition File System Label</title>
-        <para lang="en">
-        To set a label or a volume name of a file system in a partition:
-          <orderedlist>
+        <title>Установка метки файловой системы раздела</title>
+        <para>Чтобы установить метку или название для файловой системы в разделе: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select an unmounted partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Выберите ещё не смонтированный раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu>
-              <guimenuitem>Label File System</guimenuitem></menuchoice>.
-              The application opens a <guilabel>Set file system label on
-              <replaceable>/path-to-partition</replaceable></guilabel> dialog.
-              </para>
+              <para>Выберите: <menuchoice><guimenu>Раздел</guimenu> <guimenuitem>Установить метку файловой системы</guimenuitem></menuchoice>. Приложение откроет диалоговое окно <guilabel>Установить метку файловой системы на <replaceable>/путь-к-разделу</replaceable></guilabel>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Type a label name in the <guilabel>Label</guilabel> text box.
-              </para>
+              <para>Введите имя метки в поле <guilabel>Метка</guilabel>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Click <guibutton>OK</guibutton>.
-              The application displays the set file system label operation
-              in the <guilabel>Operations Pending</guilabel> pane.
-              </para>
+              <para>Нажмите <guibutton>OK</guibutton>. Приложение покажет операцию установки метки файловой системы в панели <guilabel>Запланированные операции</guilabel>.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
       </sect3>
 
 <!-- ============= To Change a Partition's UUID ========================== -->
       <sect3 id="gparted-changing-partition-uuid">
         <title>Изменение UUID раздела</title>
-        <para lang="en">
-        To change the Universally Unique Identifier (UUID) of a partition:
-          <orderedlist>
+        <para>Чтобы изменить глобальный уникальный идентификатор (UUID) раздела: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select an unmounted partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Выберите ещё не смонтированный раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu>
-              <guimenuitem>New UUID</guimenuitem></menuchoice>.
-              The application displays the set a new random UUID
-              operation in the <guilabel>Operations Pending</guilabel>
-              pane.
-              </para>
+              <para>Выберите: <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Новый UUID</guimenuitem></menuchoice>. Приложение покажет операцию назначения нового случайного UUID в панели <guilabel>Запланированных операций</guilabel>.</para>
               <warning>
-                <para lang="en">
-                Changing the UUID might invalidate the Windows Product
-                Activation key (WPA).
-                </para>
-                <para lang="en">
-                On FAT and NTFS file systems, the Volume Serial Number
-                is used as UUID.  Changing the Volume Serial
-                Number on the Windows system partition, normally C:,
-                might invalidate the WPA key.  An invalid WPA key will
-                prevent login until you reactivate Windows.
-                </para>
-                <para lang="en">
-                In an attempt to avoid invalidating the WPA key, on
-                NTFS file systems only half of the UUID is set to a
-                new random value. On FAT file systems, such a precaution
-                is not possible.
-                </para>
-                <para lang="en">
-                The WPA key should not be affected by changing the
-                UUID of data partitions or removable media partitions.
-                In rare cases, a partition that is present
-                at boot time might be an exception to this rule.
-                </para>
+                <para>Изменение UUID может сделать недействительным ключ активации Windows (WPA).</para>
+                <para>В файловых системах FAT и NTFS в качестве UUID используется серийный номер тома. Изменение серийного номера тома системного раздела Windows (обычно C:) может сделать недействительным ключ WPA. Недействительный ключ WPA не позволит войти в систему, пока вы не выполните повторную активацию Windows.</para>
+                <para>Чтобы предотвратить порчу ключа WPA, в файловых системах NTFS только половина UUID заменяется новым случайным значением. В файловых системах FAT подобная мера предосторожности невозможна.</para>
+                <para>Ключ WPA не должен стать недействительным при изменении UUID разделов с данными или разделов съёмных носителей. В редких случаях раздел, присутствующий во время загрузки, может стать исключением из этого правила.</para>
               </warning>
               <warning>
-                <para lang="en">
-                Changing the UUID when there is no need to do so might
-                cause a GNU/Linux system to fail to boot, or to fail
-                to mount a file system.
-                </para>
-                <para lang="en">
-                Changing the UUID is only required after copying a
-                partition.  The UUID change is needed to prevent
-                duplicate UUIDs when both the source and the copy of
-                the partition are used on the same computer.
-                </para>
-                <para lang="en">
-                If boot or mount problems occur you might need to edit
-                configuration files, such as /etc/fstab, and
-                regenerate the grub menu to ensure that the correct
-                UUID is specified.
-                </para>
+                <para>Изменение UUID без особой необходимости может привести к ошибке при загрузке системы GNU/Linux или невозможности монтирования файловой системы.</para>
+                <para>Изменение UUID требуется только после копирования раздела. Оно необходимо, чтобы предотвратить дублирование UUID при одновременном использовании исходного раздела и его копии на одном и том же компьютере.</para>
+                <para>Если при загрузке или монтировании возникнут проблемы, может потребоваться изменить конфигурационные файлы, такие как /etc/fstab, и повторно сгенерировать меню grub, чтобы убедиться в том, что указан правильный UUID.</para>
               </warning>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
       </sect3>
 
 <!-- ============= Specifying Partition Details ====================== -->
@@ -1275,54 +787,34 @@
 <!-- ============= To Specify a Partition Size and Location ========== -->
         <sect4 id="gparted-specify-partition-size-and-location">
           <title>Указание размера и расположения раздела</title>
-          <para lang="en">
-          To specify the size and the location of the partition,
-          use one or a combination of the following:
-            <itemizedlist>
+          <para>Чтобы указать размер и расположение раздела, используйте одно из следующих действий или их комбинацию: <itemizedlist>
               <listitem>
-                <para lang="en">
-                Click-and-hold the arrow at either end of the graphic area.
-                Drag the arrow left or right within the display range.
-                </para>
+                <para>Зажмите левую кнопку мыши, когда её указатель будет находиться над стрелкой в начале или в конце раздела на графической схеме диска, и не отпуская левой кнопки мыши перетащите стрелку влево или вправо.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Click-and-hold the middle of the partition in the graphic area.
-                Drag the partition left or right within the display range.
-                </para>
+                <para>Зажмите левую кнопку мыши, когда её указатель будет находиться над разделом на графической схеме диска, и не отпуская левой кнопки мыши перетащите раздел влево или вправо.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Click the spin button arrows, or type numeric values
-                to adjust the following fields:
-                  <itemizedlist>
+                <para>Измените значения следующих полей, введя значения вручную или с помощью кнопок счётчика: <itemizedlist>
                     <listitem>
-                      <para lang="en">
-                      <guilabel>Free Space Preceding</guilabel>
-                      </para>
+                      <para><guilabel>Свободное место перед разделом</guilabel></para>
                     </listitem>
                     <listitem>
-                      <para lang="en">
-                      <guilabel>New Size</guilabel>
-                      </para>
+                      <para><guilabel>Новый раздел</guilabel></para>
                     </listitem>
                     <listitem>
-                      <para lang="en">
-                      <guilabel>Free Space Following</guilabel>
-                      </para>
+                      <para><guilabel>Свободное место за разделом</guilabel></para>
                     </listitem>
-                  </itemizedlist>
-                </para>
+                  </itemizedlist></para>
               </listitem>
-            </itemizedlist>
-          </para>
+            </itemizedlist></para>
           <para>Программа обновит графическую схему раздела и значения в этих трёх полях.</para>
         </sect4>
 
 <!-- ============= To Specify a Partition Alignment ================== -->
         <sect4 id="gparted-specify-partition-alignment">
           <title>Выравнивание размера раздела</title>
-          <para>Чтобы округлить размер раздела, нажмите кнопку <guilabel>Выровнять по</guilabel> и выберите элемент из списка.</para>
+          <para>Чтобы выровнять размер раздела, нажмите кнопку <guilabel>Выровнять по</guilabel> и выберите элемент из списка.</para>
           <itemizedlist>
             <listitem>
               <para>Для современных операционных систем используйте <guilabel>МиБ</guilabel>. Это выровнит разделы до мебибайта (1,048,576 байт). Такое выравнивание может дать прирост в производительности при использовании дисковых массивов RAID и USB-флэш накопителей.</para>
@@ -1344,34 +836,18 @@
           <title>Указание типа раздела</title>
           <para>Чтобы указать тип раздела, нажмите кнопку <guilabel>Создать как</guilabel> и выберите элемент из списка.</para>
           <note>
-            <para lang="en">
-            The msdos partition table limits partitions as follows:
-              <itemizedlist>
+            <para>Таблица разделов msdos накладывает следующие ограничения: <itemizedlist>
                 <listitem>
-                  <para lang="en">
-                  Maximum of 4 primary partitions.
-                  </para>
+                  <para>Максимум — 4 главных раздела.</para>
                 </listitem>
                 <listitem>
-                  <para lang="en">
-                  Maximum of 3 primary partitions, and 1 extended partition.
-                  </para>
-                  <para lang="en">
-                  The extended partition can contain multiple logical
-                  partitions.
-                  Some GNU/Linux distributions support accessing at most
-                  15 partitions on a disk device.
-                  </para>
+                  <para>Максимум — 3 главных раздела и 1 расширенный раздел.</para>
+                  <para>Расширенный раздел может содержать несколько логических разделов. Некоторые дистрибутивы GNU/Linux поддерживают работу с максимум 15 разделами на дисковом устройстве.</para>
                 </listitem>
                 <listitem>
-                  <para lang="en">
-                  Maximum size of a partition is 2 Tebibytes using
-                  a sector size of 512 bytes.  The partition must also
-                  start within the first 2 Tebibytes of the disk device.
-                  </para>
+                  <para>Максимальный размер раздела: 2 терабайта с размером сектора 512 байт. Также, начало раздела должно находится в пределах первых двух терабайт дискового устройства.</para>
                 </listitem>
-              </itemizedlist>
-            </para>
+              </itemizedlist></para>
           </note>
           <tip>
             <para>Основные разделы проще восстанавливать при сбоях, потому что их границы расположены в известных местах дискового устройства.</para>
@@ -1380,21 +856,12 @@
 
 <!-- ============= To Specify a Partition Name ======================= -->
         <sect4 id="gparted-specify-partition-name">
-          <title lang="en">Specifying Partition Name</title>
+          <title>Указание имени раздела</title>
           <note>
-            <para lang="en">
-            Naming of partitions is only available with GUID partition
-            tables (GPT).  Therefore the field is only enabled on disk
-            devices partitioned using GPT.
-            </para>
-            <para lang="en">
-            Also see <xref linkend="gparted-create-partition-table"/>.
-            </para>
+            <para>Именование разделов доступно только при использовании таблиц разделов GUID (GPT). Именно поэтому это поле будет включено только для дисковых устройств, которые были разделены на разделы с использованием GPT.</para>
+            <para>Также смотрите <xref linkend="gparted-create-partition-table"/>.</para>
           </note>
-          <para lang="en">
-          To specify the partition name, type the name in the
-          <guilabel>Partition name</guilabel> text box.
-          </para>
+          <para>Чтобы указать имя раздела, введите его в текстовое поле <guilabel>Имя</guilabel>.</para>
         </sect4>
 
 <!-- ============= To Specify a Partition File System ================ -->
@@ -1402,63 +869,32 @@
           <title>Указание файловой системы разделов</title>
           <para>Чтобы указать тип файловой системы раздела, нажмите кнопку <guilabel>Файловая система</guilabel> и выберите элемент из списка.</para>
           <note>
-            <para lang="en">
-            Examples of uses for some file systems are as follows:
-              <itemizedlist>
+            <para>Некоторые варианты файловых систем: <itemizedlist>
                 <listitem>
-                  <para lang="en">
-                  <guimenuitem>ext2</guimenuitem>,
-                  <guimenuitem>ext3</guimenuitem> and
-                  <guimenuitem>ext4</guimenuitem> file systems can be
-                  used for installing GNU/Linux, and for data.
-                  </para>
+                  <para><guimenuitem>ext2</guimenuitem>, <guimenuitem>ext3</guimenuitem> and <guimenuitem>ext4</guimenuitem> файловые системы можно использовать для установки GNU/Linux и для сохранения данных.</para>
                 </listitem>
                 <listitem>
-                  <para lang="en">
-                  <guimenuitem>linux-swap</guimenuitem> can be used with
-                  GNU/Linux to increase the virtual memory of your
-                  computer.
-                  </para>
+                  <para><guimenuitem>linux-swap</guimenuitem> используется для раздела подкачки GNU/Linux, который позволяет увеличить виртуальную память компьютера.</para>
                 </listitem>
                 <listitem>
-                  <para lang="en">
-                  <guimenuitem>fat16</guimenuitem> and
-                  <guimenuitem>fat32</guimenuitem> file systems can be
-                  used to share data between free and commercial
-                  operating systems.
-                  </para>
+                  <para>Файловые системы <guimenuitem>fat16</guimenuitem> и <guimenuitem>fat32</guimenuitem> можно использовать для обмена данными между свободными и коммерческими операционными системами.</para>
                 </listitem>
                 <listitem>
-                  <para lang="en">
-                  <guimenuitem>cleared</guimenuitem> can be used to
-                  clear any existing file system signatures and ensure
-                  that the partition is recognised as empty.
-                  </para>
+                  <para><guimenuitem>очищены</guimenuitem> может использоваться для очистки любых существующих сигнатур файловой системы и обеспечения того, чтобы раздел распознавался как пустой.</para>
                 </listitem>
                 <listitem>
-                  <para lang="en">
-                  <guimenuitem>unformatted</guimenuitem> can be used to
-                  just create a partition without writing a file system.
-                  </para>
+                  <para><guimenuitem>неформатированный</guimenuitem> можно использовать только для создания раздела без записи файловой системы.</para>
                 </listitem>
-              </itemizedlist>
-            </para>
+              </itemizedlist></para>
           </note>
         </sect4>
 
 <!-- ============= To Specify a Partition Label ====================== -->
         <sect4 id="gparted-specify-partition-file-system-label">
-          <title lang="en">Specifying Partition File System Label</title>
-          <para lang="en">
-          To specify the file system label in the partition, also known
-          as a volume label, type a label name in the
-          <guilabel>Label</guilabel> text box.
-          </para>
+          <title>Указание метки файловой системы раздела</title>
+          <para>Чтобы назначить метку файловой системе в разделе, которую также называют «метка тома», укажите имя метки в поле <guilabel>Метка</guilabel>.</para>
           <tip>
-            <para lang="en">
-            File system labels can be used to help you remember what is
-            stored in the partition.
-            </para>
+            <para>Метки файловой системы могут использоваться, чтобы помочь вам вспомнить, что хранится в разделе.</para>
             <para>Уникальные метки можно использовать при монтировании файловых систем в GNU/Linux.</para>
           </tip>
         </sect4>
@@ -1472,103 +908,48 @@
 <!-- ============= Advanced Partition Actions ======================== -->
     <sect2 id="gparted-advanced-partition-actions">
       <title>Действия повышенной сложности с разделами</title>
-      <para>Эти действия изменяют разделы на дисковом устройстве. Эти действия могут изменять границы существующих разделов, кроме того, они могут привести к проблемам при загрузке операционной системы.</para>
+      <para>Эти действия изменяют разделы на дисковом устройстве. Они могут изменять границы существующих разделов и, кроме того, привести к проблемам при загрузке операционной системы.</para>
 
 <!-- ============= To Resize a Partition ============================= -->
       <sect3 id="gparted-resize-partition">
         <title>Изменение размера раздела</title>
         <para>Процедуры изменения размера раздела и перемещение раздела могут выполняться в <application>gparted</application> одной операцией.</para>
-        <para lang="en">
-        To resize a partition:
-          <orderedlist>
+        <para>Чтобы изменить размер раздела: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select a partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Выберите раздел. См. <xref linkend="gparted-select-partition"/>.</para>
               <tip>
-                <para lang="en">
-                Unmounted or inactive partitions enable the most
-                resize options.
-                </para>
-                <para lang="en">
-                Support is available for online resize of some
-                mounted or otherwise active partitions.  However this
-                support is often limited to grow only.
-                </para>
+                <para>Отмонтированные или неактивные разделы включают большинство параметров изменения размера.</para>
+                <para>Доступна поддержка онлайн-изменения размера некоторых смонтированных или иным образом активных разделов. Однако эта поддержка часто ограничивается только увеличением.</para>
               </tip>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>Resize/Move</guimenuitem></menuchoice>.
-              The application displays the
-              <guilabel>Resize/Move <replaceable>/path-to-partition</replaceable></guilabel>
-              dialog.
-              </para>
+              <para>Выберите в меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Изменить размер или переместить</guimenuitem></menuchoice>. Приложение откроет диалоговое окно <guilabel>Изменить размер или переместить<replaceable>/путь-к-разделу</replaceable></guilabel>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Adjust the size of the partition.
-              See <xref linkend="gparted-specify-partition-size-and-location"/>.
-              </para>
+              <para>Установите размер раздела. См. <xref linkend="gparted-specify-partition-size-and-location"/>.</para>
               <tip>
-                <para lang="en">
-                If you do not want the start of an existing partition
-                to move, then do not change the <guilabel>free space
-                preceding</guilabel> value.  If the partition is
-                mounted or otherwise active, then you will not be able
-                to change the <guilabel>free space
-                preceding</guilabel> value.
-                </para>
+                <para>Если не нужно перемещать начало существующего раздела, не меняйте значение поля <guilabel>Свободное место до</guilabel>. Если раздел смонтирован или иным образом активен, вы не сможете изменить предшествующее значение <guilabel>Свободного места</guilabel>.</para>
               </tip>
             </listitem>
             <listitem>
-              <para lang="en">
-              Specify the alignment of the partition.
-              See <xref linkend="gparted-specify-partition-alignment"/>.
-              </para>
+              <para>Укажите выравнивание раздела. См. <xref linkend="gparted-specify-partition-alignment"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Click <guibutton>Resize/Move</guibutton>.
-              The application displays the resize/move partition operation
-              in the <guilabel>Pending Operations</guilabel> pane.
-              </para>
+              <para>Нажмите кнопку <guibutton>Изменить размер или переместить</guibutton>. Приложение покажет операцию изменения или перемещения раздела в панели <guilabel>Запланированные операции</guilabel>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Examine the operation that was added to the
-              <guilabel>Pending Operations</guilabel> pane.
-              </para>
-              <para lang="en">
-              If the operation involves a move step, then
-              consider the following:
-                <itemizedlist>
+              <para>Проанализируйте добавленную операцию в панели <guilabel>Запланированные операции</guilabel>.</para>
+              <para>Если операция потребует перемещения, обратите внимание на следующее: <itemizedlist>
                   <listitem>
-                    <para lang="en">
-                    A move step might take a long time
-                    to complete.
-                    </para>
+                    <para>Операция перемещения может занять много времени.</para>
                   </listitem>
                   <listitem>
-                    <para lang="en">
-                    If the partition is an operating system boot partition,
-                    then a move step might cause the operating system
-                    to fail to boot.
-                    </para>
+                    <para>Если перемещаемый раздел является загрузочным, то эта операция может привести к тому, что операционная система не сможет с него загрузиться.</para>
                   </listitem>
-                </itemizedlist>
-              </para>
-              <para lang="en">
-              If you are not prepared to wait
-              or to fix potential operating system boot problems,
-              then you might want to undo the operation.
-              See <xref linkend="gparted-undo-last-operation"/>.
-              </para>
+                </itemizedlist></para>
+              <para>Если вы не хотите ждать или исправлять возможные проблемы с загрузкой операционной системы, можно отменить операцию. См. <xref linkend="gparted-undo-last-operation"/>.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
         <tip>
           <para>Чтобы расширить или переместить раздел, необходимо чтобы до или после этого раздела было свободное пространство.</para>
           <para>Чтобы увеличить размер логического раздела, свободное пространство должно быть внутри расширенного раздела, в котором находится этот логический раздел.</para>
@@ -1576,77 +957,33 @@
           <para>Можно переместить свободное пространство внутрь расширенного раздела или вынести его из расширенного раздела путём изменения границ расширенного раздела.</para>
         </tip>
         <tip>
-          <para lang="en">
-          A LUKS encrypted partition and the file system within can only
-          be resized when the encryption mapping is open.
-          </para>
+          <para>Зашифрованный раздел LUKS и файловая система внутри могут быть изменены только тогда, когда шифрование открыто.</para>
         </tip>
         <tip>
-          <para lang="en">
-          To improve the ability to shrink NTFS partitions, you
-          might consider one or more of the following:
-            <itemizedlist>
+          <para>Чтобы добиться лучшего результата при уменьшении разделов NTFS, обратите внимание на следующее: <itemizedlist>
               <listitem>
-                <para lang="en">
-                Defragment the file system.
-                </para>
-                <para lang="en">
-                Booting into Safe Mode with the
-                commercial operating system that uses NTFS
-                can improve the ability to defragment
-                the file system.
-                To enter Safe Mode press <keycap>F8</keycap>
-                while your computer is booting
-                the operating system.
-                </para>
+                <para>Дефрагментация файловой системы.</para>
+                <para>Загрузка коммерческой операционной системы, использующей NTFS в безопасном режиме может расширить возможности дефрагментации файловой системы. Чтобы войти в безопасный режим, нажмите <keycap>F8</keycap> при загрузке компьютера.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Check the partition for errors with the following command:
-                <screen lang="en"><prompt>C:&gt; </prompt><command>chkdsk</command> /f /r</screen>
-                Remember to reboot back into the commercial operating system
-                that uses NTFS to allow the <command>chkdsk</command> command
-                to execute.
-                </para>
+                <para>Проверьте раздел на ошибки с помощью команды:<screen><prompt>C:&gt; </prompt><command>chkdsk</command> /f /r</screen>. Не забудьте перезагрузиться обратно в коммерческую операционную систему, использующую NTFS, чтобы разрешить выполнить команду <command>chkdsk</command>.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Temporarily disable the paging file.
-                The paging file occupies a fixed location
-                in the partition that the defragmentation
-                process is unable to move.
-                </para>
+                <para>Временно отключите файл подкачки. Файл подкачки занимает фиксированное пространство на диске, которое не может быть перемещено в процессе дефрагментации.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Temporarily move large files to another partition
-                or disk device.  Large files are defined as greater
-                than a few hundred Megabytes (MB).
-                </para>
+                <para>Временно переместите большие файлы (более нескольких сотен мегабайт) на другой раздел диска.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Ensure a proper shut down of the commercial operating
-                system that uses NTFS before you resize the NTFS
-                partition
-                </para>
+                <para>Прежде чем изменять размер раздела NTFS, удостоверьтесь что коммерческая система, использующая этот раздел, до этого правильно завершила свою работу</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Leave at least 10 percent unused space in the NTFS partition.
-                If you shrink the partition too much,
-                then the commercial operating system might have difficulty
-                functioning properly.
-                </para>
+                <para>10 процентов пространства раздела NTFS должны оставаться свободными. При сильном уменьшении размера раздела при работе коммерческой операционной системы возможно ошибки.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Reboot twice into the commercial operating system that
-                uses NTFS after shrinking the NTFS partition. 
-                </para>
+                <para>Дважды перезагрузите коммерческую операционную систему, использующую NTFS, после уменьшения раздела NTFS.</para>
               </listitem>
-            </itemizedlist>
-          </para>
+            </itemizedlist></para>
         </tip>
       </sect3>
 
@@ -1654,421 +991,195 @@
       <sect3 id="gparted-move-partition">
         <title>Перемещение раздела</title>
         <para>Перемещение и изменение размера раздела могут выполняться в <application>gparted</application> одной операцией.</para>
-        <para lang="en">
-        To move a partition:
-          <orderedlist>
+        <para>Чтобы переместить раздел: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select an unmounted partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Выберите ещё не смонтированный раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>Resize/Move</guimenuitem></menuchoice>.
-              The application displays the
-              <guilabel>Resize/Move <replaceable>/path-to-partition</replaceable></guilabel>
-              dialog.
-              </para>
+              <para>Выберите в меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Изменить размер или переместить</guimenuitem></menuchoice>. Приложение откроет диалоговое окно <guilabel>Изменить размер или переместить<replaceable>/путь-к-разделу</replaceable></guilabel>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Adjust the location of the partition.
-              See <xref linkend="gparted-specify-partition-size-and-location"/>.
-              </para>
+              <para>Настройте расположение раздела. См. <xref linkend="gparted-specify-partition-size-and-location"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Specify the alignment of the partition.
-              See <xref linkend="gparted-specify-partition-alignment"/>.
-              </para>
+              <para>Укажите выравнивание раздела. См. <xref linkend="gparted-specify-partition-alignment"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Click <guibutton>Resize/Move</guibutton>.
-              The application displays the resize/move partition operation
-              in the <guilabel>Pending Operations</guilabel> pane.
-              </para>
+              <para>Нажмите кнопку <guibutton>Изменить размер или переместить</guibutton>. Приложение покажет операцию изменения или перемещения раздела в панели <guilabel>Запланированные операции</guilabel>.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
         <tip>
           <para>Если перемещаемый раздел является загрузочным, операционная система может не загрузиться после операции перемещения.</para>
           <para>Если операционная система не загружается, см. <xref linkend="gparted-fix-operating-system-boot-problems"/>.</para>
         </tip>
         <tip>
-          <para lang="en">
-          A LUKS encrypted partition can only be moved when the
-          encryption mapping is closed.
-          </para>
+          <para>Зашифрованный раздел LUKS можно перемещать, только если шифрование закрыто.</para>
         </tip>
       </sect3>
 
 <!-- ============= To Copy and Paste a Partition ===================== -->
       <sect3 id="gparted-copy-and-paste-partition">
         <title>Копирование и вставка раздела</title>
-        <para lang="en">
-        To copy a partition:
-          <orderedlist>
+        <para>Чтобы скопировать раздел: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select an unmounted partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Выберите ещё не смонтированный раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>Copy</guimenuitem></menuchoice>.
-              The application marks the partition as the
-              source partition.
-              </para>
+              <para>Выберите в меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Копировать</guimenuitem></menuchoice>. Приложение отметит раздел в качестве раздела-источника.</para>
             </listitem>
-          </orderedlist>
-        </para>
-        <para lang="en">
-        To Paste a partition:
-          <orderedlist>
+          </orderedlist></para>
+        <para>Чтобы вставить раздел: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select an unallocated space on a disk device.
-              See <xref linkend="gparted-select-unallocated"/>.
-              </para>
+              <para>Выделите свободное пространство на дисковом устройстве: См. <xref linkend="gparted-select-unallocated"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>Paste</guimenuitem></menuchoice>.
-              The application displays the
-              <guilabel>Paste <replaceable>/path-to-partition</replaceable></guilabel>
-              dialog.
-              </para>
+              <para>Выполните в меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Вставить</guimenuitem></menuchoice>. Приложение откроет диалоговое окно <guilabel>Вставить <replaceable>/путь-к-разделу</replaceable></guilabel>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              If you want you can adjust the size and location of the partition.
-              See <xref linkend="gparted-specify-partition-size-and-location"/>.
-              </para>
+              <para>Чтобы настроить размер и размещение раздела, см. <xref linkend="gparted-specify-partition-size-and-location"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              If you want you can specify the alignment of partition.
-              See <xref linkend="gparted-specify-partition-alignment"/>.
-              </para>
+              <para>Чтобы указать выравнивание размера раздела, см. <xref linkend="gparted-specify-partition-alignment"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Click <guibutton>Paste</guibutton>.
-              The application displays the copy partition operation
-              in the <guilabel>Pending Operations</guilabel> pane.
-              </para>
+              <para>Нажмите кнопку <guibutton>Вставить</guibutton>. Приложение добавить операцию копирования раздела в панель <guilabel>Запланированные операции</guilabel>.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
         <caution>
-          <para lang="en">
-          The copy of the partition has the same file system label
-          and Universally Unique Identifier (UUID) as the source
-          partition.
-          This can cause a problem when booting, or when mount actions
-          use the file system label or UUID to identify the partition.
-          </para>
+          <para>Копия раздела имеет такую же метку файловой системы и уникальный идентификатор (UUID), как и исходный раздел. Это может привести к проблемам при загрузке или выполнении операций монтирования, если для идентификации раздела используется метка файловой системы или UUID.</para>
           <para>Проблема в том, что операционная система будет случайным образом выбирать монтирование либо исходного раздела, либо его копии. Например, при первом монтировании может быть смонтирован исходный раздел. В следующий раз может быть смонтирована копия раздела. Со временем такое случайное монтирование разделов может привести к «мистическому» появлению или исчезновению файлов, в зависимости от того, какой из разделов смонтирован. Оно также может вызвать серьёзные повреждения или потерю данных.</para>
-          <para lang="en">
-          To avoid the problem you are advised to do one of the
-          following:
-            <itemizedlist>
+          <para>Чтобы избежать проблем, рекомендуем сделать что-либо из нижеследующего: <itemizedlist>
               <listitem>
-                <para lang="en">
-                After you have queued or applied the copy operation:
-                  <orderedlist>
+                <para>После того, как вы поставили в очередь или применили операцию копирования: <orderedlist>
                     <listitem>
-                      <para lang="en">
-                      Change the UUID of either the source, or the copy
-                      of the partition.
-                      See <xref linkend="gparted-changing-partition-uuid"/>.
-                      </para>
+                      <para>Измените UUID исходного раздела или копии. См. <xref linkend="gparted-changing-partition-uuid"/>.</para>
                     </listitem>
                     <listitem>
-                      <para lang="en">
-                      If the file system label is not blank then change
-                      the file system label of either the source, or the
-                      copy of the partition.
-                      See <xref linkend="gparted-setting-partition-file-system-label"/>.
-                      </para>
+                      <para>Если метка файловой системы не пуста, измените метку файловой системы или исходного раздела, или его копии. См. <xref linkend="gparted-setting-partition-file-system-label"/>.</para>
                     </listitem>
-                  </orderedlist>
-                </para>
+                  </orderedlist></para>
               </listitem>
               <listitem>
-                <para lang="en">
-                After you have applied the copy operation, delete or
-                reformat the source partition.
-                </para>
+                <para>После выполнения операции копирования удалите или переформатируйте исходный раздел.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Use some other method to ensure that the source
-                partition and the copy of the partition are not used
-                on the same computer at the same time.  For example,
-                if the copy of the partition is on a separate drive
-                then remove the drive from the computer.
-                </para>
+                <para>Используйте какой-нибудь другой способ удостовериться, что копия и оригинал не используются одновременно на одном и том же компьютере. Например, если раздел скопирован на отдельный диск, извлеките диск из компьютера.</para>
               </listitem>
-            </itemizedlist>
-          </para>
+            </itemizedlist></para>
         </caution>
         <tip>
-          <para lang="en">
-          The file system within a LUKS encrypted partition can only be
-          copied when the encryption mapping is open.
-          </para>
+          <para>Файловая система в зашифрованном разделе LUKS может быть скопирована, только если шифрование открыто.</para>
         </tip>
         <note>
-          <para lang="en">
-          To prevent unintended decryption of data, pasting into
-          unallocated space creating a new partition is not permitted.
-          However a LUKS encrypted partition can be pasted into an
-          existing open LUKS encrypted partition maintaining an
-          encrypted, or pasted into a plain partition making an
-          unencrypted copy of the file system.
-          </para>
+          <para>Чтобы предотвратить непреднамеренную расшифровку данных, вставка в нераспределённое пространство с созданием нового раздела не допускается. Однако зашифрованный раздел LUKS можно вставить в существующий открытый зашифрованный раздел LUKS с сохранением шифрования или вставить в обычный раздел с созданием незашифрованной копии файловой системы.</para>
         </note>
       </sect3>
 
 <!-- ============= To Manage Partition Flags ========================= -->
       <sect3 id="gparted-manage-partition-flags">
         <title>Управление флагами разделов</title>
-        <para lang="en">
-        To manage partition flags:
-          <orderedlist>
+        <para>Чтобы изменить флаги раздела: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select a partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Выберите раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>Manage Flags</guimenuitem></menuchoice>.
-              The application opens a <guilabel>Manage flags on
-              <replaceable>/path-to-partition</replaceable></guilabel> dialog.
-              </para>
+              <para>Выберите в меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Управление флагами</guimenuitem></menuchoice>. Приложение откроет диалоговое окно <guilabel>Управление флагами на <replaceable>/путь-к-разделу</replaceable></guilabel>.</para>
               <para>
                 <itemizedlist>
                   <listitem>
-                    <para lang="en">
-                    To enable a flag, select the check box beside the flag.
-                    The application writes the enabled flag to the partition
-                    and refreshes the <guilabel>Manage flags on
-                    <replaceable>/path-to-partition</replaceable></guilabel> dialog.
-                    </para>
+                    <para>Чтобы включить определённый флаг, используйте соответствующие им флаговые кнопки. Приложение запишет включённый флаг для раздела и обновит диалоговое окно <guilabel>Управление флагами на <replaceable>/путь-к-разделу</replaceable></guilabel>.</para>
                   </listitem>
                   <listitem>
-                    <para lang="en">
-                    To disable a flag, deselect the check box beside the flag.
-                    The application writes the disabled flag to the partition
-                    and refreshes the <guilabel>Manage flags on
-                    <replaceable>/path-to-partition</replaceable></guilabel> dialog.
-                    </para>
+                    <para>Чтобы выключить флаг, снимите соответствующую отметку. Приложение запишет отключение флага для раздела и обновит диалоговое окно <guilabel>Управление флагами на <replaceable>/путь-к-разделу</replaceable></guilabel>.</para>
                   </listitem>
                 </itemizedlist>
               </para>
               <note>
-                <para lang="en">
-                <guimenuitem>Manage Flags</guimenuitem> is only
-                available for disks with partition tables.  Disks with
-                <guimenuitem>loop</guimenuitem> or
-                <guimenuitem>none</guimenuitem> partition tables do
-                not contain a partition table, and do not have
-                partition flags.
-                </para>
-                <para lang="en">
-                See <xref linkend="gparted-view-device-information"/>
-                to view the type of partition table.
-                </para>
+                <para><guimenuitem>Управление флагами</guimenuitem> доступно только для дисков с таблицами разделов. Диски с таблицами разделов <guimenuitem>loop</guimenuitem> или <guimenuitem>none</guimenuitem> не содержат таблицы разделов и им не доступны флаги разделов.</para>
+                <para>См. <xref linkend="gparted-view-device-information"/>, чтобы просмотреть тип таблицы разделов.</para>
               </note>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
         <para>Чтобы закрыть диалоговое окно <guilabel>Управление флагами на <replaceable>/путь-к-разделу</replaceable></guilabel>, нажмите кнопку <guibutton>Закрыть</guibutton>.</para>
         <note>
-          <para lang="en">
-          A description of flags in an msdos partition table
-          follows:
-            <itemizedlist>
+          <para>Далее следует описание флагов, используемых в таблице разделов msdos: <itemizedlist>
               <listitem>
-                <para lang="en">
-                Boot is used by some commercial operating system
-                boot loaders.
-                The boot flag indicates the partition is active
-                or bootable.
-                Only one partition on a disk device can be active.
-                </para>
+                <para>Флаг «boot» используется некоторыми менеджерами загрузки коммерческих операционных систем. Этот флаг помечает раздел как активный или загрузочный. Только один из разделов диска может быть активным.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Diag is used to indicate the partition is used for
-                diagnostics / recovery.
-                </para>
+                <para>Флаг «diag» используют для обозначения того, что раздел использован для диагностики или восстановления данных.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                ESP indicates an EFI System Partition used to boot
-                computers with the Unified Extensible Firmware
-                Interface (UEFI) class 2 that includes compatibility
-                support for BIOS functions including the MBR partition
-                structure.
-                </para>
+                <para>Флаг «esp» обозначает системный раздел EFI, используемый для загрузки компьютеров с унифицированным расширяемым интерфейсом встроенного ПО (UEFI) класса 2, который включает поддержку совместимости для функций BIOS, включая структуру разделов MBR.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Hidden is used by some commercial operating systems.
-                The hidden flag makes the partition invisible to the
-                operating system.
-                </para>
+                <para>Флаг «hidden» используется некоторыми коммерческими операционными системами. Этот флаг делает раздел невидимым для операционной системы.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Irst identifies an Intel Rapid Start Technology
-                partition.
-                </para>
+                <para>Флаг «irst» идентифицирует раздел Intel Rapid Start Technology.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                LBA is used by some commercial operating system
-                boot loaders.
-                The LBA flag indicates the partition should be
-                accessed using Logical Block Addressing (LBA), instead
-                of Cylinder-Head-Sector (CHS) addressing.
-                </para>
+                <para>Флаг «lba» используется некоторыми загрузчиками коммерческих операционных систем. Этот флаг говорит о том, что доступ к разделу осуществляется с использованием адресации LBA (Logical Block Addressing), а не CHS (Cylinder-Head-Sector).</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                LVM is used to indicate the partition is used by a
-                Logical Volume Manager (LVM).
-                </para>
+                <para>Флаг «lvm» используется для указания того, что раздел является томом для LVM (Logical Volume Manager).</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Palo is used by the Precision Architecture - 
-                Reduced Instruction Set Computing (PA-RISC)
-                boot loader, palo.
-                </para>
+                <para>Флаг «palo» используется менеджером загрузки «palo» для систем PA-RISC (Precission Architecture - Reduced Instruction Set Computing).</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Prep is used to indicate the boot partition
-                on Power Performance Computing (PowerPC) hardware.
-                </para>
+                <para>Флаг «prep» используется загрузочными разделами компьютеров PowerPC.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                RAID is used to indicate the partition is used in a
-                Redundant Array of Inexpensive Disks (RAID).
-                </para>
+                <para>Флаг «raid» используется для указания того, что раздел доступен для использования в массиве RAID.</para>
               </listitem>
-            </itemizedlist>
-          </para>
+            </itemizedlist></para>
         </note>
         <note>
-          <para lang="en">
-          A description of flags in a gpt partition table follows:
-            <itemizedlist>
+          <para>Далее приводится описание флагов, используемых в таблице разделов gpt: <itemizedlist>
               <listitem>
-                <para lang="en">
-                Atvrecv is used to indicate an Apple TV Recovery
-                partition.
-                </para>
+                <para>Флаг «atvrecv» используется для обозначения раздела Apple TV Recovery.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                BIOS_GRUB indicates a BIOS boot partition often used
-                by the GRUB 2 boot loader.
-                </para>
+                <para>Флаг «bios_grub» указывает загрузочный раздел BIOS, часто используемый загрузчиком GRUB 2.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Boot is used by some commercial operating system
-                boot loaders.
-                The boot flag indicates the partition is active
-                or bootable.
-                Only one partition on a disk device can be active.
-                </para>
+                <para>Флаг «boot» используется некоторыми менеджерами загрузки коммерческих операционных систем. Этот флаг помечает раздел как активный или загрузочный. Только один из разделов диска может быть активным.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Diag indicates the partition is used for diagnostics
-                or recovery.
-                </para>
+                <para>Флаг «diag» показывает, что раздел используется для диагностики и восстановления.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                ESP indicates an EFI System Partition used to boot
-                computers with Extensible Firmware Interface (EFI)
-                class 1 or Unified Extensible Firmware Interface
-                (UEFI) class 2 or UEFI class 3.
-                </para>
+                <para>Флаг «esp» указывает системный раздел EFI, используемый для загрузки компьютеров с расширяемым интерфейсом встроенного ПО (EFI) класса 1 или унифицированным расширяемым интерфейсом встроенного ПО (UEFI) класса 2 или UEFI класса 3.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Hidden is used by some commercial operating systems.
-                The hidden flag makes the partition invisible to the
-                operating system.
-                </para>
+                <para>Флаг «hidden» используется некоторыми коммерческими операционными системами. Этот флаг делает раздел невидимым для операционной системы.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                HP-service is used to indicate a Hewlett Packard
-                service partition.
-                </para>
+                <para>Флаг «hp-service» используется для обозначения служебного раздела Hewlett Packard.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Irst identifies an Intel Rapid Start Technology
-                partition.
-                </para>
+                <para>Флаг «irst» идентифицирует раздел Intel Rapid Start Technology.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Legacy_boot is used by some special purpose software
-                to indicate the partition might be bootable.
-                </para>
+                <para>Флаг «legacy_boot» используется некоторыми специальными программами для обозначения того, что с раздела можно загружать операционную систему.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                LVM indicates the partition is used by a Logical
-                Volume Manager (LVM).
-                </para>
+                <para>Флаг «lvm» показывает, что раздел является томом для LVM (Logical Volume Manager).</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Msftdata identifies partitions that contain Microsoft
-                file systems such as NTFS or FAT.
-                </para>
+                <para>Флаг «msftdata» идентифицирует разделы, содержащие файловые системы Microsoft, такие как NTFS или FAT.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Msftres is used to indicate a Microsoft Reserved
-                partition.
-                </para>
+                <para>Флаг «msftres» используется для обозначения резервного раздела Microsoft.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                Prep is used to indicate the boot partition
-                on Power Performance Computing (PowerPC) hardware.
-                </para>
+                <para>Флаг «prep» используется загрузочными разделами компьютеров PowerPC.</para>
               </listitem>
               <listitem>
-                <para lang="en">
-                RAID indicates the partition is used in a Redundant
-                Array of Inexpensive Disks (RAID).
-                </para>
+                <para>Флаг «raid» показывает, что раздел используется в избыточном массиве недорогих дисков (RAID).</para>
               </listitem>
-            </itemizedlist>
-          </para>
+            </itemizedlist></para>
         </note>
       </sect3>
 
@@ -2076,25 +1187,14 @@
       <sect3 id="gparted-Check-partition">
         <title>Проверка раздела</title>
         <para>Операция проверки раздела попытается найти и исправить проблемы в файловой системой. Операция проверки раздела попытается расширить файловую систему, чтобы она занимала весь раздел.</para>
-        <para lang="en">
-        To check a partition:
-          <orderedlist>
+        <para>Чтобы проверить раздел на ошибки: <orderedlist>
             <listitem>
-              <para lang="en">
-              Select an unmounted partition.
-              See <xref linkend="gparted-select-partition"/>.
-              </para>
+              <para>Выберите ещё не смонтированный раздел. См. <xref linkend="gparted-select-partition"/>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Partition</guimenu><guimenuitem>Check</guimenuitem></menuchoice>.
-              The application displays the check partition operation
-              in the <guilabel>Pending Operations</guilabel> pane.
-              </para>
+              <para>Выберите в меню <menuchoice><guimenu>Раздел</guimenu><guimenuitem>Проверить</guimenuitem></menuchoice>. Приложение добавит операцию проверки раздела на ошибки в панель <guilabel>Запланированные операции</guilabel>.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
       </sect3>
 
 <!-- ============= End of Advanced Partition Actions ================= -->
@@ -2119,155 +1219,56 @@
 <!-- ============= To Apply All Operations =========================== -->
       <sect3 id="gparted-apply-all-operations">
         <title>Применение всех операций</title>
-        <para lang="en">
-        To apply all operations:
-          <orderedlist>
+        <para>Чтобы выполнить все операции: <orderedlist>
             <listitem>
-              <para lang="en">
-              Choose:
-              <menuchoice><guimenu>Edit</guimenu><guimenuitem>Apply All Operations</guimenuitem></menuchoice>.
-              The application displays an
-              <guilabel>Apply operations to device</guilabel> dialog.
-              </para>
+              <para>Выполните в меню <menuchoice><guimenu>Правка</guimenu><guimenuitem>Применить все операции</guimenuitem></menuchoice>. Приложение откроет диалоговое окно <guilabel>Применить операции к устройству</guilabel>.</para>
               <caution>
-                <para lang="en">
-                Editing partitions has the potential to cause LOSS of DATA.
-                You are advised to backup your data before applying your
-                partition editing operations.
-                </para>
+                <para>Редактирование разделов потенциально может привести к ПОТЕРЕ ДАННЫХ. Рекомендуется создать резервную копию данных, прежде чем выполнять операции, которые изменяют разделы.</para>
               </caution>
             </listitem>
             <listitem>
-              <para lang="en">
-              Click <guibutton>Apply</guibutton>.
-              The application displays an
-              <guilabel>Applying pending operations</guilabel> dialog.
-              The application applies each pending operation
-              in the order you created the operations.
-              The application displays a status update when each
-              operation is completed.
-                <itemizedlist>
+              <para>Нажмите кнопку <guibutton>Применить</guibutton>. Приложение откроет диалоговое окно <guilabel>Применение запланированных операций</guilabel>. Приложение выполняет операции в той последовательности, в которой они были созданы. Приложение показывает состояние выполнения каждой операции. <itemizedlist>
                   <listitem>
-                    <para lang="en">
-                    To view more information,
-                    click <guibutton>Details</guibutton>.
-                    The application displays more details about operations.
-                    </para>
-                    <para lang="en">
-                    To view more information about the steps in each operation,
-                    click the arrow button beside each step.
-                    </para>
+                    <para>Для вывода дополнительной информации нажмите кнопку <guibutton>Подробности</guibutton>. Приложение покажет информацию об операциях.</para>
+                    <para>Чтобы детализировать информацию о шаге операции, нажмите на стрелку слева от этого шага.</para>
                   </listitem>
                   <listitem>
-                    <para lang="en">
-                    To stop the operations while they are executing,
-                    click <guibutton>Cancel</guibutton>.
-                    The application displays a disabled
-                    <guibutton>Force Cancel (5)</guibutton> button and
-                    counts down for 5 seconds.
-                    </para>
+                    <para>Чтобы остановить операции в процессе выполнения, нажмите кнопку <guibutton>Отмена</guibutton>. Приложение покажет отключенную кнопку <guibutton>Принудительно отменить (5)</guibutton> и начнёт обратный отсчет в течение 5 секунд.</para>
                     <note>
-                      <para lang="en">
-                      <guibutton>Cancel</guibutton> instructs the
-                      application to stop or roll back operations
-                      as necessary to ensure data integrity.
-                      </para>
+                      <para>Нажатие кнопки <guibutton>Отмена</guibutton> укажет приложению остановить или отменить операции, если это необходимо для обеспечения целостности данных.</para>
                     </note>
-                    <para lang="en">
-                    If operations have not halted after 5 seconds the
-                    application enables the <guibutton>Force
-                    Cancel</guibutton> button.
-                    </para>
-                    <para lang="en">
-                    To force the operations to stop, click
-                    <guibutton>Force Cancel</guibutton>.
-                    The application displays a warning dialog.
-                    </para>
-                    <para lang="en">
-                    Click <guibutton>Continue Operation</guibutton> to
-                    allow the roll back operations to complete, or
-                    click <guibutton>Cancel Operation</guibutton> to
-                    cancel the roll back operations.
-                    </para>
+                    <para>Если в течение 5 секунд операции не были остановлены, приложение активирует кнопку <guibutton>Принудительно отменить</guibutton>.</para>
+                    <para>Чтобы принудительно остановить выполнение операций, нажмите кнопку <guibutton>Принудительно отменить</guibutton>. Приложение покажет диалоговое окно с предупреждением.</para>
+                    <para>Щёлкните кнопку <guibutton>Продолжить выполнение</guibutton>, чтобы завершить операции восстановления исходного состояния, или нажмите <guibutton>Прервать выполнение</guibutton>, чтобы отменить действие по восстановлению исходного состояния.</para>
                     <warning>
-                      <para lang="en">
-                      <guibutton>Cancel Operation</guibutton>
-                      terminates the safe roll back of operations and
-                      might cause SEVERE file system damage and data
-                      loss.  You are advised to click
-                      <guibutton>Continue Operation</guibutton> to
-                      allow the roll back to complete.
-                      </para>
+                      <para>Кнопка <guibutton>Прервать выполнение</guibutton> прерывает безопасный откат к исходному состоянию и может привести к СЕРЬЕЗНОМУ повреждению файловой системы и потере данных. Рекомендуется нажать <guibutton>Продолжить выполнение</guibutton>, чтобы завершить восстановление исходного состояния.</para>
                     </warning>
-                    <para lang="en">
-                    When the application finishes performing operations,
-                    the application displays the
-                    <guibutton>Save Details</guibutton> button and the
-                    <guibutton>Close</guibutton> button.
-                    </para>
+                    <para>После того, как приложение завершит выполнение операций, появится кнопка <guibutton>Сохранить подробности</guibutton> и кнопка <guibutton>Закрыть</guibutton>.</para>
                   </listitem>
-                </itemizedlist>
-              </para>
+                </itemizedlist></para>
             </listitem>
             <listitem>
-              <para lang="en">
-              If you want to save the details from applying all operations,
-              then click <guibutton>Save Details</guibutton>.
-              The application displays a <guilabel>Save Details</guilabel>
-              dialog.
-                <orderedlist numeration="loweralpha">
+              <para>Если нужно сохранить подробную информацию о выполнении всех операций, нажмите кнопку <guibutton>Сохранить подробности</guibutton>. Приложение откроет диалоговое окно <guilabel>Сохранить подробности</guilabel>. <orderedlist numeration="loweralpha">
                   <listitem>
-                    <para lang="en">
-                    If you want to change the default file name,
-                    then type a file name in the
-                    <guilabel>Name</guilabel> text box.
-                    </para>
+                    <para>Если нужно изменить имя файла по умолчанию, введите имя файла в поле <guilabel>Имя</guilabel>.</para>
                   </listitem>
                   <listitem>
-                    <para lang="en">
-                    If you want to save the file in a folder
-                    different than /root,
-                    Click <guibutton>Browse for other folders</guibutton>.
-                    The application displays a file system navigator.
-                    </para>
-                    <para lang="en">
-                    Use the file system navigator to select a folder.
-                    </para>
+                    <para>Если нужно сохранить файл не в каталоге /root, а в другом каталоге, нажмите <guibutton>Обзор других папок</guibutton>. Приложение откроет интерфейс для навигации по файловой системе.</para>
+                    <para>Выберите нужную папку.</para>
                   </listitem>
                   <listitem>
-                    <para lang="en">
-                    Click <guibutton>Save</guibutton> to save the file.
-                    The application saves the details file.
-                    </para>
+                    <para>Нажмите кнопку <guibutton>Сохранить</guibutton>. Приложение сохранит файл с отчётом о выполненных операциях.</para>
                   </listitem>
-                </orderedlist>
-              </para>
+                </orderedlist></para>
               <caution>
-                <para lang="en">
-                If you use <application>gparted</application> from a Live CD, then
-                the root file system exists in RAM memory.  All files saved
-                to the Live CD root file system will be lost when you shut down
-                the computer.
-                </para>
-                <para lang="en">
-                If you saved the gparted details to the Live CD root file system,
-                then you need to copy the file to more permanent storage.
-                Examples of more permanent storage are a hard disk drive
-                or a USB flash memory drive.
-                </para>
+                <para>Если программа <application>gparted</application> используется с Live CD, то корневая файловая система находится в оперативной памяти. Все файлы, сохранённые в корневой файловой системе Live CD будут потеряны после выключения компьютера.</para>
+                <para>После сохранения информации о выполненных операциях в файловой системе Live CD, нужно переписать этот файл на другой носитель, например, на жёсткий диск или USB-носитель.</para>
               </caution>
             </listitem>
             <listitem>
-              <para lang="en">
-              Click <guibutton>Close</guibutton>.
-              The application closes the
-              <guilabel>Applying pending operations</guilabel> dialog.
-              The application rescans all the disk devices and refreshes the device
-              partition layout in the <application>gparted</application> window.
-              </para>
+              <para>Нажмите кнопку <guibutton>Закрыть</guibutton>. Приложение закроет диалоговое окно <guilabel>Применение запланированных операций</guilabel>. Приложение просканирует все дисковые устройства и обновит информацию о разделах диска в окне <application>gparted</application>.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
       </sect3>
 
 <!-- ============= End of Working with the Operation Queue =========== -->
@@ -2279,52 +1280,26 @@
   <sect1 id="gparted-acquire-livecd">
     <title>Получение GParted на Live CD</title>
     <para>Live CD — это компакт-диск, содержащий загружаемую операционную систему. С помощью Live CD можно загрузить компьютер с этого диска.</para>
-    <para lang="en">
-    Using <application>gparted</application> from a Live CD
-    has the following advantages:
-      <itemizedlist>
+    <para>Использование <application>gparted</application> c Live CD имеет следующие преимущества: <itemizedlist>
         <listitem>
-          <para lang="en">
-          You can edit all of your partitions
-          because the partitions are not mounted.
-          </para>
+          <para>С помощью Live CD можно изменять разделы, т. к. они не были примонтированы.</para>
         </listitem>
         <listitem>
-          <para lang="en">
-          You can edit partitions on computers that
-          do not have a bootable operating system.
-          </para>
+          <para>Можно изменять разделы на компьютерах, на которых нет загружаемой операционной системы.</para>
         </listitem>
-      </itemizedlist>
-    </para>
+      </itemizedlist></para>
     <para>Приложение <application>gparted</application> есть в составе Live CD многих дистрибутивов.</para>
-    <para lang="en">
-    You can download a Live CD image containing
-    <application>gparted</application> from the following web sites:
-      <itemizedlist>
+    <para>Образ Live CD, содержащий <application>gparted</application>, можно загрузить со следующих веб-сайтов: <itemizedlist>
         <listitem>
-          <para lang="en">
-          GParted Live CD
-          <ulink type="http" url="https://gparted.org/livecd.php"/>
-          </para>
+          <para>GParted Live CD <ulink type="http" url="https://gparted.org/livecd.php"/></para>
         </listitem>
         <listitem>
-          <para lang="en">
-          System Rescue CD
-          <ulink type="http" url="http://www.system-rescue-cd.org"/>
-          </para>
+          <para>SystemRescue (также известный как SystemRescueCD) <ulink type="http" url="https://www.system-rescue.org"/></para>
         </listitem>
-      </itemizedlist>
-    </para>
+      </itemizedlist></para>
     <tip>
-      <para lang="en">
-      The GParted Live CD image can be written to a USB flash drive.
-      </para>
-      <para lang="en">
-      If your computer can boot from Universal Serial Bus (USB) then
-      you might prefer to boot and use
-      <application>gparted</application> from a USB flash drive.
-      </para>
+      <para>Образ GParted Live CD можно записать на флэш-накопитель USB.</para>
+      <para>Если ваш компьютер может загружаться с Universal Serial Bus (USB), вы можете предпочесть загрузку и использование <application>gparted</application> с USB-накопителя.</para>
     </tip>
     <tip>
       <para>Чтобы не испортить чистый компакт-диск, обратите внимание на следующие рекомендации:</para>
@@ -2342,321 +1317,134 @@
 <!-- ============= Fixing Operating System Boot Problems ============= -->
   <sect1 id="gparted-fix-operating-system-boot-problems">
     <title>Решение проблем с загрузкой операционной системы</title>
-    <para lang="en">
-    Your computer might fail to boot an operating system
-    when you perform one of the following actions:
-      <itemizedlist>
+    <para>Компьютер может не загрузить операционную систему после следующих действий: <itemizedlist>
         <listitem>
-          <para lang="en">
-          Delete a partition.
-          </para>
+          <para>Удаление раздела.</para>
         </listitem>
         <listitem>
-          <para lang="en">
-          Move a partition.
-          </para>
+          <para>Перемещение раздела.</para>
         </listitem>
         <listitem>
-          <para lang="en">
-          Install another operating system and
-          overwrite the Master Boot Record (MBR).
-          </para>
+          <para>Установка другой операционной системы, которая привела к перезаписи основной загрузочной записи (MBR).</para>
         </listitem>
-      </itemizedlist>
-    </para>
-    <para lang="en">
-    Fortunately the failure to boot can be often be fixed.
-    </para>
-    <para lang="en">
-    If your computer uses the GRUB boot loader,
-    see <xref linkend="gparted-fix-grub-boot-problem"/>
-    to restore the ability to boot.
-    </para>
-    <para lang="en">
-    If your computer does not use GRUB then you are advised to consult
-    documentation for your boot loader to learn how to fix the
-    problem.
-    You might consult the
-    <ulink type="http" url="https://gparted.org/faq.php">GParted FAQ</ulink>,
-    or the
-    <ulink type="http" url="https://gparted.org/forum.php">GParted forum</ulink>.
-    You might also search the Internet to learn how other people have
-    solved similar problems.
-    </para>
+      </itemizedlist></para>
+    <para>К счастью, сбой загрузки часто можно исправить.</para>
+    <para>Если компьютер использует загрузчик GRUB, смотрите <xref linkend="gparted-fix-grub-boot-problem"/>, чтобы узнать возможности восстановления загрузки.</para>
+    <para>Если ваш компьютер не использует GRUB, то рекомендуется обратиться к документации по вашему загрузчику, чтобы узнать, как решить проблему. Вы можете обратиться к <ulink type="http" url="https://gparted.org/faq.php">GParted FAQ</ulink> или <ulink type="http" url="https:// gparted.org/forum.php">Форум GParted</ulink>. Вы также можете поискать в интернете информацию о том, как другие люди решали подобные проблемы.</para>
 
 <!-- ============= Fixing GRUB Boot Problem ========================== -->
     <sect2 id="gparted-fix-grub-boot-problem">
       <title>Исправление проблем с загрузкой GRUB</title>
-      <para lang="en">
-      The Grand Unified Boot loader (GRUB) is used by many GNU/Linux
-      distributions.  To fix GRUB boot problems you start by
-      determining which major version of GRUB was used.
-      </para>
-      <para lang="en">
-      There are two major versions of GRUB:
-        <itemizedlist>
+      <para>Загрузчик Grand Unified Boot loader (GRUB) используется во многих дистрибутивах GNU/Linux. Чтобы исправить проблемы с загрузкой GRUB, начните с определения того, какая версия GRUB использовалась.</para>
+      <para>Существует две основные версии GRUB: <itemizedlist>
           <listitem>
-            <para lang="en">
-            GRUB, also known as GRUB 2, covers versions 1.98 and
-            higher.  GRUB 2 works with both GUID partition tables
-            (GPT) and msdos partition tables.
-            </para>
+            <para>GRUB, также известный как GRUB 2, поддерживает версии 1.98 и выше. GRUB 2 работает как с таблицами разделов GUID (GPT), так и с таблицами разделов msdos.</para>
           </listitem>
           <listitem>
-            <para lang="en">
-            GRUB Legacy, traditionally known as GRUB, covers versions
-            0.9x and earlier.  GRUB Legacy works with msdos partition
-            tables only.
-            </para>
+            <para>GRUB Legacy, традиционно известный как GRUB, охватывает версии 0.9x и более ранние. GRUB Legacy работает только с таблицами разделов msdos.</para>
           </listitem>
-        </itemizedlist>
-      </para>
-      <para lang="en">
-      GRUB 2 is used as the default boot loader in the following
-      GNU/Linux distributions:
-        <itemizedlist>
+        </itemizedlist></para>
+      <para>GRUB 2 используется в качестве загрузчика по умолчанию в следующих дистрибутивах GNU/Linux: <itemizedlist>
           <listitem>
-            <para lang="en">
-            CentOS 7 and higher
-            </para>
+            <para>CentOS 7 и выше</para>
           </listitem>
           <listitem>
-            <para lang="en">
-            Debian 6 (Squeeze) and higher
-            </para>
+            <para>Debian 6 (Squeeze) и выше</para>
           </listitem>
           <listitem>
-            <para lang="en">
-            Fedora 16 (Verne) and higher
-            </para>
+            <para>Fedora 16 (Verne) и выше</para>
           </listitem>
           <listitem>
-            <para lang="en">
-            openSUSE 12.2 and higher
-            </para>
+            <para>openSUSE 12.2 и выше</para>
           </listitem>
           <listitem>
-            <para lang="en">
-            Ubuntu 9.10 (Karmic Koala) and higher
-            </para>
+            <para>Ubuntu 9.10 (Кармическая коала) и выше</para>
           </listitem>
-        </itemizedlist>
-      </para>
-      <para lang="en">
-      If you are unsure whether your computer uses GRUB 2 or GRUB
-      Legacy, you might try searching for the answer on the Internet.
-      </para>
+        </itemizedlist></para>
+      <para>Если вы не уверены, использует ли ваш компьютер GRUB 2 или GRUB Legacy, попробуйте поискать ответ в Интернете.</para>
 
 <!-- ============= To Restore GRUB 2 ================================= -->
       <sect3 id="gparted-restore-grub-2">
-        <title lang="en">Restoring GRUB 2 Boot Loader</title>
-        <para lang="en">
-        Use the following steps to restore the GRUB 2 boot loader:
-          <orderedlist>
+        <title>Восстановление загрузчика GRUB 2</title>
+        <para>Используйте следующие шаги для восстановления загрузчика GRUB 2: <orderedlist>
             <listitem>
-              <para lang="en">
-              Boot from Live media such as GParted Live or your
-              GNU/Linux distribution image.  Open a terminal window.
-              </para>
+              <para>Загрузитесь с носителя Live-образа системы, такого как GParted Live или образа вашего дистрибутива GNU/Linux. Откройте окно терминала.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Determine which partition contains the / file system for
-              your GNU/Linux distribution.
-              </para>
-              <para lang="en">
-              Use GParted to list the partitions on your disk device.
-              Look for a partition that contains your GNU/Linux / file
-              system.  This Linux partition will likely use a file
-              system such as ext2, ext3, ext4, or btrfs.
-              </para>
+              <para>Определите, какой раздел содержит файловую систему / для вашего дистрибутива GNU/Linux.</para>
+              <para>Используйте GParted, чтобы получить список разделов на вашем дисковом устройстве. Найдите раздел, содержащий вашу GNU/Linux / файловую систему. Этот раздел Linux, скорее всего, будет использовать файловую систему, такую как ext2, ext3, ext4 или btrfs.</para>
               <note>
-                <para lang="en">
-                If the / partition is on LVM then the Logical Volume
-                Manager must be active.  LVM can be started with the
-                command:
-                <screen lang="en"><prompt># </prompt><command>vgchange</command> -a y</screen>
-                </para>
-                <para lang="en">
-                With LVM, the equivalent of a disk partition is a
-                Logical Volume.  Logical Volumes can be listed with
-                the command:
-                <screen lang="en"><prompt># </prompt><command>lvscan</command></screen>
-                </para>
+                <para>Если раздел / находится в LVM, то должен быть активен менеджер логических томов. LVM можно запустить командой: <screen><prompt># </prompt><command>vgchange</command> -a y</screen></para>
+                <para>В LVM эквивалентом раздела диска является логический том. Логические тома можно просмотреть с помощью команды: <screen><prompt># </prompt><command>lvscan</command></screen></para>
               </note>
               <note>
-                <para lang="en">
-                If the / partition is on RAID, then the RAID must be
-                active.  Linux Software RAID can be started with the
-                command:
-                <screen lang="en"><prompt># </prompt><command>mdadm</command> --assemble --scan</screen>
-                </para>
+                <para>Если раздел / находится на RAID, то RAID должен быть активным. Linux Software RAID можно запустить с помощью команды: <screen><prompt># </prompt><command>mdadm</command> --assemble --scan</screen></para>
               </note>
             </listitem>
             <listitem>
-              <para lang="en">
-              Create a mount point directory by entering (as root):
-              <screen lang="en"><prompt># </prompt><command>mkdir</command> /tmp/mydir</screen>
-              </para>
+              <para>Создайте каталог точки монтирования, введя (от имени root): <screen><prompt># </prompt><command>mkdir</command> /tmp/mydir</screen></para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Mount the / partition on the mount point directory.  For
-              example assume the / file system is contained in the
-              /dev/sda5 partition.  Enter (as root):
-              <screen lang="en"><prompt># </prompt><command>mount</command> <replaceable>/dev/sda5</replaceable> /tmp/mydir</screen>
-              </para>
+              <para>Смонтируйте раздел / в каталоге точки монтирования. Например, предположим, что файловая система / находится в разделе /dev/sda5. Введите (от имени root): <screen><prompt># </prompt><command>mount</command> <replaceable>/dev/sda5</replaceable> /tmp/mydir</screen></para>
             </listitem>
             <listitem>
-              <para lang="en">
-              If you have a separate /boot partition, for example at
-              /dev/sda3, then an extra step is required.  Mount the
-              /boot partition at /tmp/mydir/boot by entering (as
-              root):
-              <screen lang="en"><prompt># </prompt><command>mount</command> <replaceable>/dev/sda3</replaceable> /tmp/mydir/boot</screen>
-              </para>
+              <para>Если у вас есть отдельный раздел /boot, например, на /dev/sda3, то потребуется дополнительный шаг. Смонтируйте раздел /boot в /tmp/mydir/boot, введя (от имени root): <screen><prompt># </prompt><command>mount</command> <replaceable>/dev/sda3</replaceable> /tmp/mydir/boot</screen></para>
               <note>
-                <para lang="en">
-                If you do not know whether you have a separate boot
-                partition then you probably do not and can ignore this
-                step.
-                </para>
+                <para>Если вы не знаете, есть ли у вас отдельный загрузочный раздел, то, вероятно, не сможете сделать данное действие и можете проигнорировать этот шаг.</para>
               </note>
             </listitem>
             <listitem>
-              <para lang="en">
-              Prepare to change the root environment by entering (as
-              root):
-              <screen lang="en"><prompt># </prompt><command>mount</command> --bind /dev /tmp/mydir/dev</screen>
-              <screen lang="en"><prompt># </prompt><command>mount</command> --bind /proc /tmp/mydir/proc</screen>
-              <screen lang="en"><prompt># </prompt><command>mount</command> --bind /sys /tmp/mydir/sys</screen>
-              </para>
+              <para>Подготовьтесь к изменению корневой среды, введя (от имени root): <screen><prompt># </prompt><command>mount</command> --bind /dev /tmp/mydir/dev</screen> <screen><prompt># </prompt><command>mount</command> --bind /proc /tmp/mydir/proc</screen> <screen><prompt># </prompt><command>mount</command> --bind /sys /tmp/mydir/sys</screen></para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Change the root environment by entering (as root):
-              <screen lang="en"><prompt># </prompt><command>chroot</command> /tmp/mydir</screen>
-              </para>
+              <para>Измените среду корневого каталога введя (от имени root): <screen><prompt># </prompt><command>chroot</command> /tmp/mydir</screen></para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Reinstall GRUB 2 on the boot device.  Note that the
-              device name is used and not the partition name.  For
-              example, if the / partition is /dev/sda5 then the device
-              is /dev/sda.
-              </para>
-              <para lang="en">
-              For Debian, Ubuntu, and other offshoot GNU/Linux
-              distributions, enter the command (as root):
-              <screen lang="en"><prompt># </prompt><command>grub-install</command> <replaceable>/dev/sda</replaceable></screen>
-              </para>
-              <para lang="en">
-              For CentOS, Fedora, openSUSE and other offshoot
-              GNU/Linux distributions, enter the command (as root):
-              <screen lang="en"><prompt># </prompt><command>grub2-install</command> <replaceable>/dev/sda</replaceable></screen>
-              </para>
+              <para>Переустановите GRUB 2 на загрузочном устройстве. Обратите внимание, что используется имя устройства, а не имя раздела. Например, если раздел / — /dev/sda5, то устройство — /dev/sda.</para>
+              <para>Для Debian, Ubuntu и других производных дистрибутивов GNU/Linux введите команду (от имени root): <screen><prompt># </prompt><command>grub-install</command> <replaceable>/dev/sda</replaceable></screen></para>
+              <para>Для CentOS, Fedora, openSUSE и других производных дистрибутивов GNU/Linux введите команду (от имени root): <screen><prompt># </prompt><command>grub2-install</command> <replaceable>/dev/sda</replaceable></screen></para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Exit the chroot environment by entering (as root):
-              <screen lang="en"><prompt># </prompt><command>exit</command></screen>
-              </para>
+              <para>Выйдите из среды chroot, введя (от имени root): <screen><prompt># </prompt><command>exit</command></screen></para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Reboot your computer.
-              </para>
+              <para>Перезагрузите компьютер.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
       </sect3>
 
 <!-- ============= To Restore GRUB Legacy ============================ -->
       <sect3 id="gparted-restore-grub-legacy">
-        <title lang="en">Restoring GRUB Legacy Boot Loader</title>
-        <para lang="en">
-        Use the following steps to restore the GRUB Legacy boot
-        loader:
-          <orderedlist>
+        <title>Восстановление загрузчика GRUB Legacy</title>
+        <para>Используйте следующие шаги, чтобы восстановить загрузчик GRUB Legacy: <orderedlist>
             <listitem>
-              <para lang="en">
-              Boot from Live media such as your GNU/Linux distribution
-              image.  Open a terminal window.
-              </para>
+              <para>Загрузитесь с носителя Live-образа системы, такого как образ вашего дистрибутива GNU/Linux. Откройте окно терминала.</para>
               <note>
-                <para lang="en">
-                The Live media must contain the GRUB Legacy boot
-                loader.  If your GNU/Linux distribution uses GRUB
-                Legacy, then the distribution Live media will also
-                contain GRUB Legacy.
-                </para>
+                <para>Live-образ системы должен содержать загрузчик GRUB Legacy. Если ваш дистрибутив GNU/Linux использует GRUB Legacy, то носитель Live-образа дистрибутива также будет содержать GRUB Legacy.</para>
               </note>
             </listitem>
             <listitem>
-              <para lang="en">
-              Start the <application>grub</application> application
-              from the command line (as root).
-              <screen lang="en"><prompt># </prompt><command>grub</command></screen>
-              </para>
+              <para>Запустите приложение <application>grub</application> из командной строки (от имени root). <screen><prompt># </prompt><command>grub</command></screen></para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Find where <application>grub</application> stage1 is
-              located by using one of the following:
-              </para>
-              <para lang="en">
-              If the /boot folder is stored in the / partition,
-              use the command:
-              <screen lang="en"><prompt>grub&gt; </prompt><command>find</command> /boot/grub/stage1</screen>
-              If the /boot folder is stored in a partition
-              different than the / partition, use the command:
-            <screen lang="en"><prompt>grub&gt; </prompt><command>find</command> /grub/stage1</screen>
-              </para>
-              <para lang="en">
-              The output from the <command>find</command> command
-              might look like the following:
-              <screen lang="en"><computeroutput> <replaceable>(hd0,0)</replaceable></computeroutput></screen>
-              If more than one line is listed in the command output,
-              you will need to decide which device you use for
-              <application>grub</application>.
-              </para>
+              <para>Определите, где расположен файл <application>grub</application> stage1:</para>
+              <para>Если папка /boot расположена в разделе /, используйте команду: <screen><prompt>grub&gt; </prompt><command>find</command> /boot/grub/stage1</screen> Если папка /boot расположена в отличном от раздела / месте, то воспользуйтесь командой: <screen><prompt>grub&gt; </prompt><command>find</command> /grub/stage1</screen></para>
+              <para>Вывод команды <command>find</command> может выглядеть следующим образом: <screen><computeroutput> <replaceable>(hd0,0)</replaceable></computeroutput></screen> Если в выводе команды более одной строки, нужно выбрать, какое устройство будет использоваться для <application>grub</application>.</para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Set the <application>grub</application> root device by
-              specifying the device returned by the
-              <command>find</command> command.  This should be the
-              partition containing the boot directory.
-              <screen lang="en"><prompt>grub&gt; </prompt>root <replaceable>(hd0,0)</replaceable></screen>
-              </para>
+              <para>Задайте корневое устройство для <application>grub</application>, указав устройство на основе вывода команды <command>find</command>. Это должен быть раздел, содержащий загрузочный каталог. <screen><prompt>grub&gt; </prompt>root <replaceable>(hd0,0)</replaceable></screen></para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Reinstall the <application>grub</application> boot
-              loader into the Master Boot Record (MBR) with:
-              <screen lang="en"><prompt>grub&gt; </prompt>setup <replaceable>(hd0)</replaceable></screen>
-              </para>
-              <para lang="en">
-              If you want to install the
-              <application>grub</application> boat loader into the
-              boot sector of a partition, instead specify a partition
-              with:
-              <screen lang="en"><prompt>grub&gt; </prompt>setup <replaceable>(hd0,0)</replaceable></screen>
-              </para>
+              <para>Переустановите загрузчик <application>grub</application> в основную загрузочную запись (MBR) с помощью: <screen><prompt>grub&gt; </prompt>setup <replaceable>(hd0)</replaceable></screen></para>
+              <para>Если вы хотите установить загрузчик <application>grub</application> в загрузочный сектор раздела, вместо этого укажите раздел с помощью: <screen><prompt>grub&gt; </prompt>setup <replaceable>(hd0,0)</replaceable></screen></para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Exit <application>grub</application>.
-              <screen lang="en"><prompt>grub&gt; </prompt>quit</screen>
-              </para>
+              <para>Выйдите из <application>grub</application>. <screen><prompt>grub&gt; </prompt>quit</screen></para>
             </listitem>
             <listitem>
-              <para lang="en">
-              Reboot your computer.
-              </para>
+              <para>Перезагрузите компьютер.</para>
             </listitem>
-          </orderedlist>
-        </para>
+          </orderedlist></para>
       </sect3>
     </sect2>
 
@@ -2667,13 +1455,8 @@
   <sect1 id="gparted-recover-partition-table">
     <title>Восстановление таблиц разделов</title>
     <para>Если таблица разделов была случайно перезаписана, возможно её получится восстановить.</para>
-    <para lang="en">
-    The <application>testdisk</application> application is designed to help
-    recover lost partitions.  For more information about 
-    <application>testdisk</application>, see
-    <ulink type="http" url="https://www.cgsecurity.org/wiki/TestDisk"/>.
-    </para>
-    <para>Приложение <application>testdisk</application> есть на каждом из Live CD, которые перечислены в <xref linkend="gparted-acquire-livecd"/>.</para>
+    <para>Для восстановления потерянных разделов может помочь приложение <application>testdisk</application>, о котором можно узнать на странице <ulink type="http" url="https://www.cgsecurity.org/wiki/TestDisk"/>.</para>
+    <para>Приложение <application>testdisk</application> есть на каждом из Live CD, которые перечислены в <xref linkend="gparted-acquire-livecd"/></para>
   </sect1>
 
 </article>

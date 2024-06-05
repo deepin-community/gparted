@@ -58,12 +58,12 @@ public:
 			 OperationDetailStatus status = STATUS_EXECUTE,
 			 Font font = FONT_NORMAL ) ;
 	void set_description( const Glib::ustring & description, Font font = FONT_NORMAL ) ;
-	Glib::ustring get_description() const ;
+	const Glib::ustring& get_description() const;
 	void set_status( OperationDetailStatus status ) ;
 	void set_success_and_capture_errors( bool success );
 	OperationDetailStatus get_status() const ;
 	void set_treepath( const Glib::ustring & treepath ) ;
-	Glib::ustring get_treepath() const ;
+	const Glib::ustring& get_treepath() const;
 	Glib::ustring get_elapsed_time() const ;
 	
 	void add_child( const OperationDetail & operationdetail ) ;

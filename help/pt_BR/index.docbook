@@ -191,7 +191,9 @@
       
         <year>2013</year>
       
-        <year>2015.</year>
+        <year>2015</year>
+      
+        <year>2021.</year>
       
       <holder>Enrico Nicoletto</holder>
     </copyright>
@@ -1259,7 +1261,7 @@
                     <para>Se você quiser alterar o nome de arquivo padrão, digite um nome de arquivo na caixa de texto <guilabel>Nome</guilabel>.</para>
                   </listitem>
                   <listitem>
-                    <para>Se você quiser salvar o arquivo em uma pasta diferente de /root, clique em <guibutton>Navegar em outras pastas</guibutton>. O aplicativo exibirá um navegador do sistema de arquivos.</para>
+                    <para>Se você quiser salvar o arquivo em uma pasta diferente de /root, clique em <guibutton>Navegar em outras pastas</guibutton>. O aplicativo exibirá um navegador de sistema de arquivos.</para>
                     <para>Use o navegador do sistema de arquivos para selecionar uma pasta.</para>
                   </listitem>
                   <listitem>
@@ -1300,7 +1302,7 @@
           <para>Live CD do GParted <ulink type="http" url="https://gparted.org/livecd.php"/></para>
         </listitem>
         <listitem>
-          <para>System Rescue CD <ulink type="http" url="http://www.system-rescue-cd.org"/></para>
+          <para>SystemRescue (também conhecido como SystemRescueCD) <ulink type="http" url="https://www.system-rescue.org"/></para>
         </listitem>
       </itemizedlist></para>
     <tip>

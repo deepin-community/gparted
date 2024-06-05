@@ -150,49 +150,6 @@
 <!-- Translators may also add here feedback address for translations -->
     </legalnotice>
 
-  
-    <othercredit class="translator">
-      <personname>
-        <firstname>Julien Hardelin</firstname>
-      </personname>
-      <email>jm.hardATwanadooDOTfr</email>
-    </othercredit>
-    <copyright>
-      
-        <year>2009</year>
-      
-        <year>2011</year>
-      
-        <year>2017</year>
-      
-      <holder>Julien Hardelin</holder>
-    </copyright>
-  
-    <othercredit class="translator">
-      <personname>
-        <firstname>Claude Paroz</firstname>
-      </personname>
-      <email>claude@2xlibre.net</email>
-    </othercredit>
-    <copyright>
-      
-        <year>2009-2019</year>
-      
-      <holder>Claude Paroz</holder>
-    </copyright>
-  
-    <othercredit class="translator">
-      <personname>
-        <firstname>Bruno Brouard</firstname>
-      </personname>
-      <email>annoa.b@gmail.com</email>
-    </othercredit>
-    <copyright>
-      
-        <year>2012</year>
-      
-      <holder>Bruno Brouard</holder>
-    </copyright>
   </articleinfo>
 
 <!-- ============= Document Body ===================================== -->
@@ -1285,7 +1242,7 @@
           <para>CD autonome GParted <ulink type="http" url="https://gparted.org/livecd.php"/></para>
         </listitem>
         <listitem>
-          <para>CD de sauvetage de système <ulink type="http" url="http://www.system-rescue-cd.org"/></para>
+          <para>SystemRescue (aussi connu comme SystemRescueCD) <ulink type="http" url="https://www.system-rescue.org"/></para>
         </listitem>
       </itemizedlist></para>
     <tip>

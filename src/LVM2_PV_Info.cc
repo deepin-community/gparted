@@ -87,10 +87,11 @@ void LVM2_PV_Info::clear_cache()
 	lvm2_pv_info_cache_initialized = false;
 }
 
-Glib::ustring LVM2_PV_Info::get_vg_name( const Glib::ustring & path )
+
+const Glib::ustring& LVM2_PV_Info::get_vg_name(const Glib::ustring& path)
 {
 	initialize_if_required() ;
-	LVM2_PV pv = get_pv_cache_entry_by_name( path );
+	const LVM2_PV& pv = get_pv_cache_entry_by_name(path);
 	return pv.vg_name;
 }
 
@@ -98,7 +99,7 @@ Glib::ustring LVM2_PV_Info::get_vg_name( const Glib::ustring & path )
 Byte_Value LVM2_PV_Info::get_size_bytes( const Glib::ustring & path )
 {
 	initialize_if_required() ;
-	LVM2_PV pv = get_pv_cache_entry_by_name( path );
+	const LVM2_PV& pv = get_pv_cache_entry_by_name(path);
 	return pv.pv_size;
 }
 
@@ -106,7 +107,7 @@ Byte_Value LVM2_PV_Info::get_size_bytes( const Glib::ustring & path )
 Byte_Value LVM2_PV_Info::get_free_bytes( const Glib::ustring & path )
 {
 	initialize_if_required() ;
-	LVM2_PV pv = get_pv_cache_entry_by_name( path );
+	const LVM2_PV& pv = get_pv_cache_entry_by_name(path);
 	return pv.pv_free;
 }
 
@@ -114,7 +115,7 @@ Byte_Value LVM2_PV_Info::get_free_bytes( const Glib::ustring & path )
 bool LVM2_PV_Info::has_active_lvs( const Glib::ustring & path )
 {
 	initialize_if_required() ;
-	LVM2_PV pv = get_pv_cache_entry_by_name( path );
+	const LVM2_PV& pv = get_pv_cache_entry_by_name(path);
 	if ( pv.vg_name == "" )
 		// PV not yet included in any VG or PV not found in cache
 		return false ;
@@ -135,7 +136,7 @@ bool LVM2_PV_Info::has_active_lvs( const Glib::ustring & path )
 bool LVM2_PV_Info::is_vg_exported( const Glib::ustring & vgname )
 {
 	initialize_if_required() ;
-	LVM2_VG vg = get_vg_cache_entry_by_name( vgname );
+	const LVM2_VG& vg = get_vg_cache_entry_by_name(vgname);
 	return bit_set( vg.vg_attr, VGBIT_EXPORTED );
 }
 
@@ -189,8 +190,8 @@ std::vector<Glib::ustring> LVM2_PV_Info::get_error_messages( const Glib::ustring
 	Glib::ustring temp ;
 
 	//Check for partition specific message: partial VG
-	LVM2_PV pv = get_pv_cache_entry_by_name( path );
-	LVM2_VG vg = get_vg_cache_entry_by_name( pv.vg_name );
+	const LVM2_PV& pv = get_pv_cache_entry_by_name(path);
+	const LVM2_VG& vg = get_vg_cache_entry_by_name(pv.vg_name);
 	if ( bit_set( vg.vg_attr, VGBIT_PARTIAL ) )
 	{
 		temp = _("One or more Physical Volumes belonging to the Volume Group is missing.") ;
@@ -358,9 +359,10 @@ const LVM2_VG & LVM2_PV_Info::get_vg_cache_entry_by_name( const Glib::ustring & 
 	return vg;
 }
 
-//Return string converted to a number, or -1 for error.
-//Used to convert PVs size or free bytes.
-Byte_Value LVM2_PV_Info::lvm2_pv_size_to_num( const Glib::ustring str )
+
+// Return string converted to a number, or -1 for error.
+// Used to convert PVs size or free bytes.
+Byte_Value LVM2_PV_Info::lvm2_pv_size_to_num(const Glib::ustring& str)
 {
 	Byte_Value num = -1 ;
 	if ( str != "" )

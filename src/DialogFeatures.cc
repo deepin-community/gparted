@@ -65,7 +65,10 @@ DialogFeatures::DialogFeatures()
 	treeview_filesystems .append_column( _("Move"), treeview_filesystems_columns .move );
 	treeview_filesystems .append_column( _("Copy"), treeview_filesystems_columns .copy );
 	treeview_filesystems .append_column( _("Check"), treeview_filesystems_columns .check );
-	treeview_filesystems .append_column( _("Label"), treeview_filesystems_columns .label );
+	col = manage(new Gtk::TreeView::Column(_("Label")));
+	col->pack_start(treeview_filesystems_columns.label, false);
+	col->pack_start(treeview_filesystems_columns.online_label, false);
+	treeview_filesystems.append_column(*col);
 	treeview_filesystems .append_column( _("UUID"), treeview_filesystems_columns .uuid );
 	treeview_filesystems .append_column( _("Required Software"), treeview_filesystems_columns .software );
 	treeview_filesystems .get_selection() ->set_mode( Gtk::SELECTION_NONE );
@@ -188,19 +191,20 @@ void DialogFeatures::load_filesystems(const std::vector<FS>& fss)
 
 void DialogFeatures::load_one_filesystem(const FS& fs)
 {
-	treerow = *( liststore_filesystems ->append() );
+	treerow = *(liststore_filesystems->append());
 	treerow[treeview_filesystems_columns.fsname] = Utils::get_filesystem_string(fs.fstype);
 
-	treerow[ treeview_filesystems_columns .create ] = fs .create ? icon_yes : icon_no ; 
-	treerow[ treeview_filesystems_columns .grow ] = fs .grow ? icon_yes : icon_no ; 
-	treerow[ treeview_filesystems_columns .online_grow ] = fs .online_grow ? icon_yes : icon_blank ;
-	treerow[ treeview_filesystems_columns .shrink ] = fs .shrink ? icon_yes : icon_no ; 
-	treerow[ treeview_filesystems_columns .online_shrink ] = fs .online_shrink ? icon_yes : icon_blank ;
-	treerow[ treeview_filesystems_columns .move ] = fs .move ? icon_yes : icon_no ;  
-	treerow[ treeview_filesystems_columns .copy ] = fs .copy ? icon_yes : icon_no ; 
-	treerow[ treeview_filesystems_columns .check ] = fs .check ? icon_yes : icon_no ; 
-	treerow[ treeview_filesystems_columns .label ] = fs .write_label ? icon_yes : icon_no ; 
-	treerow[ treeview_filesystems_columns .uuid ] = fs .write_uuid ? icon_yes : icon_no ;
+	treerow[treeview_filesystems_columns.create       ] = fs.create             ? icon_yes : icon_no;
+	treerow[treeview_filesystems_columns.grow         ] = fs.grow               ? icon_yes : icon_no;
+	treerow[treeview_filesystems_columns.online_grow  ] = fs.online_grow        ? icon_yes : icon_blank;
+	treerow[treeview_filesystems_columns.shrink       ] = fs.shrink             ? icon_yes : icon_no;
+	treerow[treeview_filesystems_columns.online_shrink] = fs.online_shrink      ? icon_yes : icon_blank;
+	treerow[treeview_filesystems_columns.move         ] = fs.move               ? icon_yes : icon_no;
+	treerow[treeview_filesystems_columns.copy         ] = fs.copy               ? icon_yes : icon_no;
+	treerow[treeview_filesystems_columns.check        ] = fs.check              ? icon_yes : icon_no;
+	treerow[treeview_filesystems_columns.label        ] = fs.write_label        ? icon_yes : icon_no;
+	treerow[treeview_filesystems_columns.online_label ] = fs.online_write_label ? icon_yes : icon_blank;
+	treerow[treeview_filesystems_columns.uuid         ] = fs.write_uuid         ? icon_yes : icon_no;
 
 	treerow[treeview_filesystems_columns.software] = Utils::get_filesystem_software(fs.fstype);
 }

@@ -62,11 +62,12 @@ private:
 	Gtk::Entry filesystem_label_entry;
 
 	std::vector<FS> FILESYSTEMS ;
-	
-	//signal handlers
-	void combobox_changed(bool);
 
-	unsigned short new_count, first_creatable_fs ;
+	//signal handlers
+	void combobox_changed(bool combo_type_changed);
+
+	unsigned short new_count;
+	int default_fs;
 };
 
 } //GParted

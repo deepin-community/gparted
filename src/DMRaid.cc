@@ -435,7 +435,7 @@ void DMRaid::get_partition_dev_map_entries( const Partition & partition, std::ve
 
 bool DMRaid::delete_affected_dev_map_entries( const Partition & partition, OperationDetail & operationdetail )
 {
-	//Delete all affected dev mapper entries (logical partitions >= specificied partition)
+	// Delete all affected dev mapper entries (logical partitions >= specified partition)
 
 	std::vector<Glib::ustring> affected_entries ;
 	Glib::ustring command ;
@@ -572,11 +572,8 @@ std::vector<Glib::ustring> DMRaid::lookup_dmraid_members(const Glib::ustring& ar
 	Glib::ustring error;
 	Utils::execute_command("udevadm info --query=name " + Glib::shell_quote(array),
 	                       output, error, true);
-
 	// Strip terminating new line from output.
-	size_t len = output.length();
-	if (len > 0 && output[len-1] == '\n')
-		output.resize(len-1);
+	output = Utils::trim_trailing_new_line(output);
 
 	if (output.empty())
 		return members;  // Empty vector

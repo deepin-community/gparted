@@ -1,4 +1,197 @@
 ============================
+GParted 1.5.0   (2023-02-21)
+============================
+
+Release Notes
+-------------
+  This release of GParted includes enhancements, bug fixes and
+  language translation updates.
+
+### Key changes include:
+
+  * Fix path used to resize btrfs needs to be a directory
+  * Fix crash when copying NTFS to starting beyond 2 TiB
+  * Enable repair when checking exfat file systems
+
+Bug Fixes
+---------
+  * Fix undeclared identifier 'basename' build failure with musl libc (!99)
+  * Fix NULL == 0 assumption in call to ped_partition_flag_next() (!100)
+  * Fix path used to resize btrfs needs to be a directory (#193, !102)
+  * Fix make distcheck failure found in GitLab CI job unbuntu_test (!103)
+  * Add Alpine Linux CI jobs and resolve FAT16/32 label and UUID issues (!104)
+  * Update used btrfs file system commands, btrfs-progs 4.5 required (!105)
+  * Update AC_PROG_LIBTOOL to LT_INIT in configure.ac (!106)
+  * Migrate from intltool to gettext translation (!107)
+  * Fix crash when copying NTFS to starting beyond 2 TiB (#164, !108)
+  * Enable repair when checking exfat file systems (!109)
+  * Increase minimum XFS size to 300 MiB (#217, !110)
+  * Erase all Promise FastTrack RAID signatures (#220, !111)
+
+Code Credits
+------------
+  Code enhancements are courtesy of Markus Volk, Dominika Liberda and
+  Mike Fleetwood.
+
+Translations (new/updated)
+--------------------------
+  ca(Jordi Mas), da(Alan Mortensen), de(Jürgen Benvenuti),
+  fr(Irénée Thirion), he(Yaron Shahrabani, Yosef Or Boczko),
+  hr(Goran Vidović), hu(Balázs Úr), id(Andika Triwidada, Kukuh Syafaat),
+  ka(Temuri Doghonadze, Zurab Kargareteli), ko(Seong-ho Cho),
+  nl(Nathan Follens), pl(Piotr Drąg), pt(Hugo Carvalho),
+  pt_BR(Rafael Fontenelle, Enrico Nicoletto), ru(Aleksandr Melman, Sergej A),
+  sk(Dušan Kazik), sl(Matej Urbančič), sr(Мирослав Николић),
+  sv(Anders Jonsson, Luna Jernberg), tr(Sabri Ünal, Muhammet Kara),
+  uk(Yuri Chornoivan)
+
+Dependencies (new/updated)
+--------------------------
+  * btrfs-progs >= 4.5 package is required for btrfs file system support.
+
+
+============================
+GParted 1.4.0   (2022-03-28)
+============================
+
+Release Notes
+-------------
+  This release of GParted includes enhancements, bug fixes and
+  language translation updates.
+
+### Key changes include:
+
+  * Add labelling of mounted btrfs, ext2/3/4 and xfs file systems
+  * Fix detection of mount points for encrypted file systems
+  * Fix crash scrolling quickly in the drive selection combobox
+  * Add bcache detection
+  * Add JBD external EXT3/4 journal detection
+
+Bug Fixes
+---------
+  * Add labelling of mounted btrfs, ext2/3/4 and xfs file systems (#163, !87)
+  * Fix detection of mount points for encrypted file systems (#162, !88)
+  * Fix unmount error when unmounting below a bind mount point (!89)
+  * Fix crash scrolling quickly in the drive selection combobox (#165, !91)
+  * Add initial Indonesian translation of help (!90)
+  * Add accessibility relations for screen readers like Orca (!92)
+  * Fix partition creation at sector 2048 if partition before it (#172, !93)
+  * Make more getter methods use return-by-constant-reference (!94)
+  * Check copy destination instead of source (!95)
+  * Add bcache detection (#183, !96)
+  * Add JBD external EXT3/4 journal detection (#89, !97)
+  * Fix translation of DocBook markup tag of the GParted Manual (!98)
+
+Code Credits
+------------
+  Code enhancements are courtesy of Movie Ma, Pascal Engélibert, and
+  Mike Fleetwood.
+
+Translations (new/updated)
+--------------------------
+  cs(Marek Černocký), da(Alan Mortensen), eu(Asier Sarasua Garmendia),
+  fur(Fabio Tomat), he(Yaron Shahrabani), hr(Goran Vidović),
+  hu(Balázs Úr), id(Andika Triwidada), it(Milo Casagrande),
+  ko(Seong-ho Cho), lt(Aurimas Černius), lv(Rūdolfs Mazurs),
+  nb(Kjell Cato Heskjestad), nl(Nathan Follens), pa(A S Alam),
+  pt(Hugo Carvalho), ru(Aleksandr Melman, Sergej A), sk(Dušan Kazik),
+  sl(Matej Urbančič), sr(Мирослав Николић), zh_CN(Luming Zh)
+
+Dependencies (new/updated)
+--------------------------
+  * n/a
+
+
+============================
+GParted 1.3.1   (2021-07-19)
+============================
+
+Release Notes
+-------------
+  This release of GParted includes bug fixes and language translation
+  updates.
+
+### Key changes include:
+
+  * Fix recognition of SD/MMC device names
+  * Make XFS copy duplicate the file system label and UUID
+
+Bug Fixes
+---------
+  * Replace deprecated gtk_show_uri() method for help window (!82)
+  * Fix recognition of SD/MMC device names (!83)
+  * Handle change in path for udisks2-inhibit executable (!84)
+  * Make XFS copy duplicate the file system label and UUID (!85)
+
+Code Credits
+------------
+  Code enhancements are courtesy of Mike Fleetwood and Curtis Gedak.
+
+Translations (new/updated)
+--------------------------
+  da(Ask Hjorth Larsen), de(Wolfgang Stöggl, Philipp Kiemle),
+  es(Daniel Mustieles), fr(Claude Paroz), id(Andika Triwidada),
+  kk(Baurzhan Muftakhidinov), ko(Seong-ho Cho), pl(Piotr Drąg),
+  pt(Hugo Carvalho), pt_BR(Rafael Fontenelle, Enrico Nicoletto),
+  ro(Daniel Șerbănescu), sv(Anders Jonsson), uk(Yuri Chornoivan),
+  vi(Ngọc Quân Trần)
+
+Dependencies (new/updated)
+--------------------------
+  * n/a
+
+
+============================
+GParted 1.3.0   (2021-05-03)
+============================
+
+Release Notes
+-------------
+  This release of GParted includes enhancements, bug fixes and
+  language translation updates.
+
+### Key changes include:
+
+  * Support resizing open LUKS2 encryption mappings
+  * Improve exFAT support such as read FS usage and set UUID
+  * Fix crash in Create New Partition dialog when changing type
+  * Avoid GParted hanging when non-named device is hung
+
+Bug Fixes
+---------
+  * Stop GParted hanging when non-named device is hung (#131, !65)
+  * Avoid detecting exfat-utils commands as exfatprogs commands (#137, !66)
+  * Add support for reading exFAT usage and updating the UUID (!67)
+  * Fix minor typos in docs (!68) and comments (!71)
+  * Add Ukrainian translation of docs (!69, !70)
+  * Fix test suite failing in test_PipeCapture (#136, !72)
+  * Fix crash in Create New Partition dialog when changing type (#101, !73)
+  * Install gpartedbin under /usr/libexec instead of /usr/sbin (#85, !75)
+  * Exclude more GitLab CI file system tests needing loop devices (#147, !76)
+  * Ignore test failure when reiser4 reports null UUID (#145, !77)
+  * Restore detection of encrypted file systems (#148, !78)
+  * Fix crash probing libparted unrecognised encrypted file system (#152, !79)
+  * Support resizing open LUKS2 encryption mappings with passphrase (#59, !80)
+
+Code Credits
+------------
+  Code enhancements are courtesy of Yuri Chornoivan and Mike Fleetwood.
+
+Translations (new/updated)
+--------------------------
+  ca(Jordi Mas), es(Daniel Mustieles), fi(Jiri Grönroos),
+  fr(Claude Paroz), gl(Fran Dieguez), hu(Balázs Úr),
+  id(Kukuh Syafaat), kk(Baurzhan Muftakhidinov), lt(Aurimas Černius),
+  nl(Hannie Dumoleyn), pl(Piotr Drąg), pt(Hugo Carvalho),
+  pt_BR(Rafael Fontenelle), ro(Daniel Șerbănescu), sk(Dušan Kazik),
+  sv(Anders Jonsson), uk(Yuri Chornoivan), vi(Ngọc Quân Trần)
+
+Dependencies (new/updated)
+--------------------------
+  * n/a
+
+
+============================
 GParted 1.2.0   (2021-01-25)
 ============================
 

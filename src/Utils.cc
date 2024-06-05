@@ -30,6 +30,7 @@
 #include <glibmm/ustring.h>
 #include <glibmm/stringutils.h>
 #include <glibmm/shell.h>
+#include <glibmm/fileutils.h>
 #include <gtkmm/main.h>
 #include <gtkmm/enums.h>
 #include <gtkmm/stock.h>
@@ -166,26 +167,28 @@ Glib::ustring Utils::get_color(FSType fstype)
 		case FS_FAT32:           return "#46A046";  // Accent Green
 		case FS_HFS:             return "#D59FD4";  // Magenta Hilight [*]
 		case FS_HFSPLUS:         return "#B173B0";  // Magenta Medium [*]
-		case FS_JFS:             return "#E0C39E";  // Face Skin Medium
+		case FS_JFS:             return "#D6B129";  // Accent Yellow Dark [+]
 		case FS_LINUX_SWAP:      return "#C1665A";  // Red Medium
 		case FS_LUKS:            return "#625B81";  // Purple Dark
 		case FS_LVM2_PV:         return "#B39169";  // Face Skin Dark
 		case FS_MINIX:           return "#9DB8D2";  // Blue Highlight
-		case FS_NILFS2:          return "#826647";  // Face Skin Shadow
+		case FS_NILFS2:          return "#990000";  // Accent Red Dark
 		case FS_NTFS:            return "#70D2B1";  // Aquamarine Medium [*]
 		case FS_REISER4:         return "#887FA3";  // Purple Medium
 		case FS_REISERFS:        return "#ADA7C8";  // Purple Hilight
 		case FS_UDF:             return "#105210";  // Accent Green Shadow [+]
 		case FS_XFS:             return "#EED680";  // Accent Yellow
 		case FS_APFS:            return "#874986";  // Magenta Dark [*]
-		case FS_ATARAID:         return "#5A4733";  // Dark brown [*]
+		case FS_ATARAID:         return "#5A4733";  // Brown Dark [+]
+		case FS_BCACHE:          return "#E0C39E";  // Face Skin Medium
 		case FS_BITLOCKER:       return "#494066";  // Purple Shadow
 		case FS_GRUB2_CORE_IMG:  return "#666666";  // Dark Gray [*]
 		case FS_ISO9660:         return "#D3D3D3";  // Light Gray [*]
-		case FS_LINUX_SWRAID:    return "#5A4733";  // Dark brown [*]
+		case FS_JBD:             return "#314E6C";  // Blue Shadow
+		case FS_LINUX_SWRAID:    return "#826647";  // Face Skin Shadow
 		case FS_LINUX_SWSUSPEND: return "#884631";  // Red Dark
 		case FS_REFS:            return "#3EA281";  // Aquamarine Dark [*]
-		case FS_UFS:             return "#D1940C";  // Accent Yellow Dark
+		case FS_UFS:             return "#AA8F2C";  // Accent Yellow Shadow [+]
 		case FS_ZFS:             return "#C26825";  // Orange Dark [*]
 		case FS_USED:            return "#F8F8BA";  // Light Tan Yellow [*]
 		case FS_UNUSED:          return "#FFFFFF";  // White
@@ -308,7 +311,7 @@ int Utils::get_filesystem_label_maxlength(FSType fstype)
 
 
 // Return libparted file system name / GParted display name
-Glib::ustring Utils::get_filesystem_string(FSType fstype)
+const Glib::ustring Utils::get_filesystem_string(FSType fstype)
 {
 	switch (fstype)
 	{
@@ -371,9 +374,11 @@ Glib::ustring Utils::get_filesystem_string(FSType fstype)
 		case FS_XFS:             return "xfs";
 		case FS_APFS:            return "apfs";
 		case FS_ATARAID:         return "ataraid";
+		case FS_BCACHE:          return "bcache";
 		case FS_BITLOCKER:       return "bitlocker";
 		case FS_GRUB2_CORE_IMG:  return "grub2 core.img";
 		case FS_ISO9660:         return "iso9660";
+		case FS_JBD:             return "jbd";
 		case FS_LINUX_SWRAID:    return "linux-raid";
 		case FS_LINUX_SWSUSPEND: return "linux-suspend";
 		case FS_REFS:            return "refs";
@@ -428,7 +433,7 @@ const Glib::ustring Utils::get_filesystem_kernel_name( FSType fstype )
 }
 
 
-Glib::ustring Utils::get_filesystem_software(FSType fstype)
+const Glib::ustring Utils::get_filesystem_software(FSType fstype)
 {
 	switch (fstype)
 	{
@@ -455,6 +460,21 @@ Glib::ustring Utils::get_filesystem_software(FSType fstype)
 		case FS_XFS:        return "xfsprogs, xfsdump";
 		default:            return "";
 	}
+}
+
+
+// Return the encryption mapping name GParted will use when opening it, given it's block
+// device name.
+// E.g., generate_encryption_mapping_name("/dev/sdb1") -> "sdb1_crypt"
+const Glib::ustring Utils::generate_encryption_mapping_name(const Glib::ustring& path)
+{
+	Glib::ustring mapping_name = path;
+
+	Glib::ustring::size_type last_slash = path.rfind("/");
+	if (last_slash != Glib::ustring::npos)
+		mapping_name = path.substr(last_slash + 1);
+
+	return mapping_name + "_crypt";
 }
 
 
@@ -789,6 +809,17 @@ Glib::ustring Utils::trim( const Glib::ustring & src, const Glib::ustring & c /*
 	return src.substr(p1, (p2-p1)+1);
 }
 
+
+// Return string with optional trailing new line character removed.
+Glib::ustring Utils::trim_trailing_new_line(const Glib::ustring& src)
+{
+	Glib::ustring::size_type len = src.length();
+	if (len > 0 && src[len-1] == '\n')
+		len --;
+	return src.substr(0, len);
+}
+
+
 // Return portion of string after the last carriage return character or
 // the whole string when there is no carriage return character.
 Glib::ustring Utils::last_line( const Glib::ustring & src )
@@ -909,6 +940,32 @@ int Utils::get_mounted_filesystem_usage( const Glib::ustring & mountpoint,
 
 	return ret ;
 }
+
+
+// Report whether the kernel considers the device busy or not.
+bool Utils::is_dev_busy(const Glib::ustring& path)
+{
+	int fd = open(path.c_str(), O_RDONLY|O_EXCL);
+	if (fd == -1 && errno == EBUSY)
+		return true;
+	else if (fd >= 0)
+		close(fd);
+
+	return false;
+}
+
+
+// Return the first path that is a directory, or the empty string.
+const Glib::ustring& Utils::first_directory(const std::vector<Glib::ustring>& paths)
+{
+	for (unsigned int i = 0; i < paths.size(); i++)
+		if (file_test(paths[i], Glib::FILE_TEST_IS_DIR))
+			return paths[i];
+
+	static const Glib::ustring not_found;
+	return not_found;
+}
+
 
 //Round down to multiple of rounding_size
 Byte_Value Utils::floor_size( Byte_Value value, Byte_Value rounding_size )

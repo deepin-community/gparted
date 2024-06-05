@@ -86,27 +86,29 @@ FSType SWRaid_Info::get_fstype(const Glib::ustring& member_path)
 
 // Return array /dev entry (e.g. "/dev/md1") containing the specified member, or "" if the
 // array is not running or there is no such member.
-Glib::ustring SWRaid_Info::get_array( const Glib::ustring & member_path )
+const Glib::ustring& SWRaid_Info::get_array(const Glib::ustring& member_path)
 {
 	initialise_if_required();
 	const SWRaid_Member & memb = get_cache_entry_by_member( member_path );
 	return memb.array;
 }
 
+
 // Return array UUID for the specified member, or "" when failed to parse the UUID or
 // there is no such member.
-Glib::ustring SWRaid_Info::get_uuid( const Glib::ustring & member_path )
+const Glib::ustring& SWRaid_Info::get_uuid(const Glib::ustring& member_path)
 {
 	initialise_if_required();
 	const SWRaid_Member & memb = get_cache_entry_by_member( member_path );
 	return memb.uuid;
 }
 
+
 // Return array label (array name in mdadm terminology) for the specified member, or ""
 // when the array has no label or there is no such member.
 // (Metadata 0.90 arrays don't have names.  Metata 1.x arrays are always named, getting a
 // default of hostname ":" array number when not otherwise specified).
-Glib::ustring SWRaid_Info::get_label( const Glib::ustring & member_path )
+const Glib::ustring& SWRaid_Info::get_label(const Glib::ustring& member_path)
 {
 	initialise_if_required();
 	const SWRaid_Member & memb = get_cache_entry_by_member( member_path );

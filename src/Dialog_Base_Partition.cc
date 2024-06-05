@@ -21,6 +21,8 @@
 #include "Utils.h"
 
 #include <glibmm/ustring.h>
+#include <gtkmm/label.h>
+#include <atkmm/relation.h>
 
 
 namespace GParted
@@ -61,8 +63,9 @@ Dialog_Base_Partition::Dialog_Base_Partition(const Device& device)
 	vbox_resize_move.pack_start(hbox_grid, Gtk::PACK_SHRINK);
 
 	// Add spinbutton_before
-	grid_resize.attach(*Utils::mk_label(Glib::ustring(_("Free space preceding (MiB):")) + " \t"),
-	                   0, 0, 1, 1);
+	Gtk::Label *label_before = Utils::mk_label(Glib::ustring(_("Free space preceding (MiB):")) + " \t");
+	grid_resize.attach(*label_before, 0, 0, 1, 1);
+	spinbutton_before.get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY, label_before->get_accessible());
 
 	spinbutton_before .set_numeric( true );
 	spinbutton_before .set_increments( 1, 100 );
@@ -70,7 +73,9 @@ Dialog_Base_Partition::Dialog_Base_Partition(const Device& device)
 	grid_resize.attach(spinbutton_before, 1, 0, 1, 1);
 
 	// Add spinbutton_size
-	grid_resize.attach(*Utils::mk_label(_("New size (MiB):")), 0, 1, 1, 1);
+	Gtk::Label *label_size = Utils::mk_label(_("New size (MiB):"));
+	grid_resize.attach(*label_size, 0, 1, 1, 1);
+	spinbutton_size.get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY, label_size->get_accessible());
 
 	spinbutton_size .set_numeric( true );
 	spinbutton_size .set_increments( 1, 100 );
@@ -78,7 +83,9 @@ Dialog_Base_Partition::Dialog_Base_Partition(const Device& device)
 	grid_resize.attach(spinbutton_size, 1, 1, 1, 1);
 
 	// Add spinbutton_after
-	grid_resize.attach(*Utils::mk_label(_("Free space following (MiB):")), 0, 2, 1, 1);
+	Gtk::Label *label_after = Utils::mk_label(_("Free space following (MiB):"));
+	grid_resize.attach(*label_after, 0, 2, 1, 1);
+	spinbutton_after.get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY, label_after->get_accessible());
 
 	spinbutton_after .set_numeric( true );
 	spinbutton_after .set_increments( 1, 100 );
@@ -106,7 +113,9 @@ Dialog_Base_Partition::Dialog_Base_Partition(const Device& device)
 
 	// Add alignment
 	/* TO TRANSLATORS: used as label for a list of choices.  Align to: <combo box with choices> */
-	grid_resize.attach(*Utils::mk_label(Glib::ustring(_("Align to:")) + "\t"), 0, 3, 1, 1);
+	Gtk::Label *label_alignment = Utils::mk_label(Glib::ustring(_("Align to:")) + "\t");
+	grid_resize.attach(*label_alignment, 0, 3, 1, 1);
+	combo_alignment.get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY, label_alignment->get_accessible());
 
 	// Fill partition alignment combo
 	/* TO TRANSLATORS: Option for combo box "Align to:" */
@@ -490,19 +499,15 @@ void Dialog_Base_Partition::Set_MinMax_Text( Sector min, Sector max )
 	label_minmax .set_text( str_temp ) ; 
 }
 
+
 int Dialog_Base_Partition::MB_Needed_for_Boot_Record( const Partition & partition )
 {
-	//Determine if space is needed for the Master Boot Record or
-	//  the Extended Boot Record.  Generally an an additional track or MEBIBYTE
-	//  is required so for our purposes reserve a MEBIBYTE in front of the partition.
-	//  NOTE:  This logic also contained in Win_GParted::set_valid_operations
-	if (   (   partition .inside_extended
-	        && partition .type == TYPE_UNALLOCATED
-	       )
-	    || ( partition .type == TYPE_LOGICAL )
-	                                     /* Beginning of disk device */
-	    || ( partition .sector_start <= (MEBIBYTE / partition .sector_size) )
-	   )
+	// Determine if space needs reserving for the partition table or the EBR (Extended
+	// Boot Record).  Generally a track or MEBIBYTE is reserved.  For our purposes
+	// reserve a MEBIBYTE at the start of the partition.
+	// NOTE: This logic also contained in Win_GParted::set_valid_operations()
+	if (partition.inside_extended                                 ||
+	    partition.sector_start < MEBIBYTE / partition.sector_size   )
 		return 1 ;
 	else
 		return 0 ;

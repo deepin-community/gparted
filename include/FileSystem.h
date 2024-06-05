@@ -79,12 +79,13 @@ struct FS
 	Support online_read;        // Can and how to read sector usage while active
 	Support online_grow;
 	Support online_shrink;
+	Support online_write_label;
 
 	FS(FSType fstype_ = FS_UNSUPPORTED) : fstype(fstype_)
 	{
 		busy = read = read_label = write_label = read_uuid = write_uuid = create =
 		create_with_label = grow = shrink = move = check = copy = remove = online_read =
-		online_grow = online_shrink = NONE;
+		online_grow = online_shrink = online_write_label = NONE;
 	}
 };
 
@@ -146,6 +147,8 @@ protected:
 
 	int execute_command( const Glib::ustring & command, OperationDetail & operationdetail,
 	                     ExecFlags flags = EXEC_NONE );
+	int execute_command(const Glib::ustring& command, const char *input, OperationDetail& operationdetail,
+	                    ExecFlags flags = EXEC_NONE);
 	int execute_command( const Glib::ustring & command, OperationDetail & operationdetail,
 	                     ExecFlags flags,
 	                     StreamSlot stream_progress_slot );
@@ -167,10 +170,11 @@ protected:
 	int exit_status ;
 
 private:
-	int execute_command_internal( const Glib::ustring & command, OperationDetail & operationdetail,
-	                              ExecFlags flags,
-	                              StreamSlot stream_progress_slot,
-	                              TimedSlot timed_progress_slot );
+	int execute_command_internal(const Glib::ustring& command, const char *input,
+	                             OperationDetail& operationdetail,
+	                             ExecFlags flags,
+	                             StreamSlot stream_progress_slot,
+	                             TimedSlot timed_progress_slot);
 	void store_exit_status( GPid pid, int status );
 	bool running;
 	int pipecount;

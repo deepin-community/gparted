@@ -49,6 +49,7 @@ public:
 	static void load_cache();
 	static bool is_dev_mounted( const Glib::ustring & path );
 	static bool is_dev_mounted( const BlockSpecial & bs );
+	static bool is_dev_mounted_at(const Glib::ustring& path, const Glib::ustring& mountpoint);
 	static bool is_dev_mounted_readonly( const Glib::ustring & path );
 	static bool is_dev_mounted_readonly( const BlockSpecial & bs );
 	static std::vector<Glib::ustring> get_all_mountpoints();
@@ -57,16 +58,17 @@ public:
 
 private:
 	static void read_mountpoints_from_file( const Glib::ustring & filename, MountMapping & map );
-	static void add_mountpoint_entry( MountMapping & map,
-	                                  Glib::ustring & node,
-	                                  Glib::ustring & mountpoint,
-	                                  bool readonly );
+	static void add_mountpoint_entry(MountMapping& map,
+	                                 const Glib::ustring& node,
+	                                 bool readonly,
+	                                 const Glib::ustring& mountpoint);
 	static bool parse_readonly_flag( const Glib::ustring & str );
 	static void read_mountpoints_from_file_swaps( const Glib::ustring & filename,
 	                                              MountMapping & map );
 	static bool have_rootfs_dev( MountMapping & map );
 	static void read_mountpoints_from_mount_command( MountMapping & map );
-	static const MountEntry & find( const MountMapping & map, const Glib::ustring & path );
+	static const MountEntry& find(MountMapping& map, const Glib::ustring& path);
+	static Glib::ustring lookup_uuid_or_label(const Glib::ustring& ref);
 };
 
 } //GParted
