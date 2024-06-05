@@ -14,15 +14,17 @@
  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #include "FS_Info.h"
 #include "BlockSpecial.h"
-#include "Proc_Partitions_Info.h"
 #include "Utils.h"
 
+#include <iostream>
 #include <glibmm/ustring.h>
 #include <glibmm/miscutils.h>
 #include <glibmm/shell.h>
 #include <vector>
+
 
 namespace GParted
 {
@@ -37,44 +39,41 @@ bool FS_Info::need_blkid_vfat_cache_update_workaround = true;
 // Vector of file system information.
 // E.g.
 // (Note BS(path) is a short hand for constructor BlockSpecial(path)).
-//     //path                         , type         , sec_type, uuid                                    , have_label, label
-//     [{BS("/dev/sda1")              , "xfs"        , ""      , "f828ee8c-1e16-4ca9-b234-e4949dcd4bd1"  , false     , ""          },
-//      {BS("/dev/sda2")              , "LVM2_member", ""      , "p31pR5-qPLm-YICz-O09i-sB4u-mAH2-GVSNWG", false     , ""          },
-//      {BS("/dev/block/8:2")         , "LVM2_member", ""      , "p31pR5-qPLm-YICz-O09i-sB4u-mAH2-GVSNWG", false     , ""          },
-//      {BS("/dev/mapper/centos-root"), "xfs"        , ""      , "a195605d-22c1-422d-9213-1ed67f1eee46"  , false     , ""          },
-//      {BS("/dev/mapper/centos-swap"), "swap"       , ""      , "8d419cb6-c663-4db7-b91c-6bcef8418a4d"  , false     , ""          },
-//      {BS("/dev/sdb1")              , "ext3"       , "ext2"  , "f218c3b8-237e-4fbe-92c5-76623bba4062"  , true      , "test-ext3" },
-//      {BS("/dev/sdb2")              , "vfat"       , "msdos" , "9F87-1061"                             , true      , "TEST-FAT16"},
-//      {BS("/dev/sdb3")              , ""           , ""      , ""                                      , false     , ""          }
+//     //path           , type         , sec_type, uuid                                    , have_label, label
+//     [{BS("/dev/sda") , ""           , ""      , ""                                      , false     , ""          },
+//      {BS("/dev/sda1"), "xfs"        , ""      , "f828ee8c-1e16-4ca9-b234-e4949dcd4bd1"  , false     , ""          },
+//      {BS("/dev/sda2"), "LVM2_member", ""      , "p31pR5-qPLm-YICz-O09i-sB4u-mAH2-GVSNWG", false     , ""          },
+//      {BS("/dev/sdb") , ""           , ""      , ""                                      , false     , ""          },
+//      {BS("/dev/sdb1"), "ext3"       , "ext2"  , "f218c3b8-237e-4fbe-92c5-76623bba4062"  , true      , "test-ext3" },
+//      {BS("/dev/sdb2"), "vfat"       , "msdos" , "9F87-1061"                             , true      , "TEST-FAT16"},
+//      {BS("/dev/sdb3"), ""           , ""      , ""                                      , false     , ""          }
 //     ]
 std::vector<FS_Entry> FS_Info::fs_info_cache;
 
-void FS_Info::load_cache()
+
+void FS_Info::clear_cache()
 {
 	set_commands_found();
-	load_fs_info_cache();
+	fs_info_cache.clear();
 	fs_info_cache_initialized = true;
 }
 
-void FS_Info::load_cache_for_paths( const std::vector<Glib::ustring> &device_paths )
+
+void FS_Info::load_cache_for_paths(const std::vector<Glib::ustring>& paths)
 {
-	initialize_if_required();
-	const BlockSpecial empty_bs = BlockSpecial();
-	for ( unsigned int i = 0 ; i < device_paths.size() ; i ++ )
-	{
-		const FS_Entry & fs_entry = get_cache_entry_by_path( device_paths[i] );
-		if ( fs_entry.path == empty_bs )
-		{
-			// Run "blkid PATH" and load entry into cache for missing entries.
-			load_fs_info_cache_extra_for_path( device_paths[i] );
-		}
-	}
+	if (not_initialised_then_error())
+		return;
+
+	run_blkid_load_cache(paths);
 }
+
 
 // Retrieve the file system type for the path
 Glib::ustring FS_Info::get_fs_type( const Glib::ustring & path )
 {
-	initialize_if_required();
+	if (not_initialised_then_error())
+		return "";
+
 	const FS_Entry & fs_entry = get_cache_entry_by_path( path );
 	Glib::ustring fs_type = fs_entry.type;
 	Glib::ustring fs_sec_type = fs_entry.sec_type;
@@ -106,7 +105,12 @@ Glib::ustring FS_Info::get_fs_type( const Glib::ustring & path )
 // Retrieve the label and set found indicator for the path
 Glib::ustring FS_Info::get_label( const Glib::ustring & path, bool & found )
 {
-	initialize_if_required();
+	if (not_initialised_then_error())
+	{
+		found = false;
+		return "";
+	}
+
 	BlockSpecial bs = BlockSpecial( path );
 	for ( unsigned int i = 0 ; i < fs_info_cache.size() ; i ++ )
 		if ( bs == fs_info_cache[i].path )
@@ -115,8 +119,7 @@ Glib::ustring FS_Info::get_label( const Glib::ustring & path, bool & found )
 			{
 				// Already have the label or this is a blank cache entry
 				// for a whole disk device containing a partition table,
-				// so no label (as created by
-				// load_fs_info_cache_extra_for_path()).
+				// so no label.
 				found = fs_info_cache[i].have_label;
 				return fs_info_cache[i].label;
 			}
@@ -133,7 +136,9 @@ Glib::ustring FS_Info::get_label( const Glib::ustring & path, bool & found )
 // Retrieve the uuid given for the path
 Glib::ustring FS_Info::get_uuid( const Glib::ustring & path )
 {
-	initialize_if_required();
+	if (not_initialised_then_error())
+		return "";
+
 	const FS_Entry & fs_entry = get_cache_entry_by_path( path );
 	return fs_entry.uuid;
 }
@@ -141,7 +146,9 @@ Glib::ustring FS_Info::get_uuid( const Glib::ustring & path )
 // Retrieve the path given the uuid
 Glib::ustring FS_Info::get_path_by_uuid( const Glib::ustring & uuid )
 {
-	initialize_if_required();
+	if (not_initialised_then_error())
+		return "";
+
 	for ( unsigned int i = 0 ; i < fs_info_cache.size() ; i ++ )
 		if ( uuid == fs_info_cache[i].uuid )
 			return fs_info_cache[i].path.m_name;
@@ -152,7 +159,9 @@ Glib::ustring FS_Info::get_path_by_uuid( const Glib::ustring & uuid )
 // Retrieve the path given the label
 Glib::ustring FS_Info::get_path_by_label( const Glib::ustring & label )
 {
-	initialize_if_required();
+	if (not_initialised_then_error())
+		return "";
+
 	update_fs_info_cache_all_labels();
 	for ( unsigned int i = 0 ; i < fs_info_cache.size() ; i ++ )
 		if ( label == fs_info_cache[i].label )
@@ -163,15 +172,13 @@ Glib::ustring FS_Info::get_path_by_label( const Glib::ustring & label )
 
 // Private methods
 
-void FS_Info::initialize_if_required()
+bool FS_Info::not_initialised_then_error()
 {
-	if ( ! fs_info_cache_initialized )
-	{
-		set_commands_found();
-		load_fs_info_cache();
-		fs_info_cache_initialized = true;
-	}
+	if (! fs_info_cache_initialized)
+		std::cerr << "GParted Bug: FS_Info (blkid) cache not loaded before use" << std::endl;
+	return ! fs_info_cache_initialized;
 }
+
 
 void FS_Info::set_commands_found()
 {
@@ -207,83 +214,54 @@ const FS_Entry & FS_Info::get_cache_entry_by_path( const Glib::ustring & path )
 	return not_found;
 }
 
-void FS_Info::load_fs_info_cache()
-{
-	fs_info_cache.clear();
-	// Run "blkid" and load entries into the cache.
-	run_blkid_load_cache();
 
-	// (#771244) Ensure the cache has entries for all whole disk devices, even if
-	// those entries are blank.  Needed so that an ISO9660 image stored on a whole
-	// disk device is detected before any embedded partitions within the image.
-	const BlockSpecial empty_bs = BlockSpecial();
-	std::vector<Glib::ustring> all_devices = Proc_Partitions_Info::get_device_paths();
-	for ( unsigned int i = 0 ; i < all_devices.size() ; i ++ )
-	{
-		const FS_Entry & fs_entry = get_cache_entry_by_path( all_devices[i] );
-		if ( fs_entry.path == empty_bs )
-		{
-			// Run "blkid PATH" and load entry into cache for missing entries.
-			load_fs_info_cache_extra_for_path( all_devices[i] );
-		}
-	}
-}
-
-void FS_Info::load_fs_info_cache_extra_for_path( const Glib::ustring & path )
-{
-	bool entry_added = run_blkid_load_cache( path );
-	if ( ! entry_added )
-	{
-		// Ran "blkid PATH" but didn't find details suitable for loading as a
-		// cache entry so add a blank entry for PATH name here.
-		FS_Entry fs_entry = {BlockSpecial( path ), "", "", "", false, ""};
-		fs_info_cache.push_back( fs_entry );
-	}
-}
-
-bool FS_Info::run_blkid_load_cache( const Glib::ustring & path )
+void FS_Info::run_blkid_load_cache(const std::vector<Glib::ustring>& paths)
 {
 	// Parse blkid output line by line extracting mandatory field: path and optional
 	// fields: type, sec_type, uuid.  Label is not extracted here because of blkid's
 	// default non-reversible encoding of non printable ASCII bytes.
+	// Example command:
+	//     blkid /dev/sda /dev/sda1 /dev/sda2 /dev/sdb /dev/sdb1 /dev/sdb2 /dev/sdb3
 	// Example output:
+	//     /dev/sda: PTUUID="5012fb1f" PTTYPE="dos"
 	//     /dev/sda1: UUID="f828ee8c-1e16-4ca9-b234-e4949dcd4bd1" TYPE="xfs"
 	//     /dev/sda2: UUID="p31pR5-qPLm-YICz-O09i-sB4u-mAH2-GVSNWG" TYPE="LVM2_member"
-	//     /dev/block/8:2: UUID="p31pR5-qPLm-YICz-O09i-sB4u-mAH2-GVSNWG" TYPE="LVM2_member"
-	//     /dev/mapper/centos-root: UUID="a195605d-22c1-422d-9213-1ed67f1eee46" TYPE="xfs"
-	//     /dev/mapper/centos-swap: UUID="8d419cb6-c663-4db7-b91c-6bcef8418a4d" TYPE="swap"
+	//     /dev/sdb: PTUUID="f57595e1-c0ae-40ee-be64-00851b2a9977" PTTYPE="gpt"
 	//     /dev/sdb1: LABEL="test-ext3" UUID="f218c3b8-237e-4fbe-92c5-76623bba4062" SEC_TYPE="ext2" TYPE="ext3" PARTUUID="71b3e059-30c5-492e-a526-9251dff7bbeb"
 	//     /dev/sdb2: SEC_TYPE="msdos" LABEL="TEST-FAT16" UUID="9F87-1061" TYPE="vfat" PARTUUID="9d07ad9a-d468-428f-9bfd-724f5efae4fb"
 	//     /dev/sdb3: PARTUUID="bb8438e1-d9f1-45d3-9888-e990b598900d"
+
+	if (! blkid_found)
+		return;
+
 	Glib::ustring cmd = "blkid";
-	if ( path.size() )
-		cmd = cmd + " " + Glib::shell_quote( path );
+	for (unsigned int i = 0; i < paths.size(); i++)
+		cmd.append(" " + Glib::shell_quote(paths[i]));
+
 	Glib::ustring output;
 	Glib::ustring error;
-	bool loaded_entries = false;
-	if ( blkid_found                                          &&
-	     ! Utils::execute_command( cmd, output, error, true )    )
+	if (Utils::execute_command(cmd, output, error, true) != 0)
+		return;
+
+	std::vector<Glib::ustring> lines;
+	Utils::split(output, lines, "\n");
+	for (unsigned int i = 0; i < lines.size(); i++)
 	{
-		std::vector<Glib::ustring> lines;
-		Utils::split( output, lines, "\n" );
-		for ( unsigned int i = 0 ; i < lines.size() ; i ++ )
+		FS_Entry fs_entry = {BlockSpecial(), "", "", "", false, ""};
+		Glib::ustring entry_path = Utils::regexp_label(lines[i], "^(.*): ");
+		if (entry_path.length() > 0)
 		{
-			FS_Entry fs_entry = {BlockSpecial(), "", "", "", false, ""};
-			Glib::ustring entry_path = Utils::regexp_label( lines[i], "^(.*): " );
-			if ( entry_path.length() > 0 )
-			{
-				fs_entry.path = BlockSpecial( entry_path );
-				fs_entry.type = Utils::regexp_label( lines[i], " TYPE=\"([^\"]*)\"" );
-				fs_entry.sec_type = Utils::regexp_label( lines[i], " SEC_TYPE=\"([^\"]*)\"" );
-				fs_entry.uuid = Utils::regexp_label( lines[i], " UUID=\"([^\"]*)\"" );
-				fs_info_cache.push_back( fs_entry );
-				loaded_entries = true;
-			}
+			fs_entry.path     = BlockSpecial(entry_path);
+			fs_entry.type     = Utils::regexp_label(lines[i], " TYPE=\"([^\"]*)\"");
+			fs_entry.sec_type = Utils::regexp_label(lines[i], " SEC_TYPE=\"([^\"]*)\"");
+			fs_entry.uuid     = Utils::regexp_label(lines[i], " UUID=\"([^\"]*)\"");
+			fs_info_cache.push_back(fs_entry);
 		}
 	}
 
-	return loaded_entries;
+	return;
 }
+
 
 void FS_Info::update_fs_info_cache_all_labels()
 {
@@ -311,17 +289,12 @@ bool FS_Info::run_blkid_update_cache_one_label( FS_Entry & fs_entry )
 	if ( ! success )
 		return false;
 
-	size_t len = output.length();
-	if ( len > 0 && output[len-1] == '\n' )
-	{
-		// Output is either the label with a terminating new line or zero bytes
-		// when the file system has no label.  Strip optional trailing new line
-		// from blkid output.
-		output.resize( len-1 );
-	}
-	// Update cache entry with the read label.
+	// Output from blkid is either the label with a trailing new line character or
+	// zero bytes when the file system has no label.  Update the cache entry in both
+	// cases as the label was successfully read even if it didn't exist so is zero
+	// characters long.
 	fs_entry.have_label = true;
-	fs_entry.label = output;
+	fs_entry.label = Utils::trim_trailing_new_line(output);
 	return true;
 }
 

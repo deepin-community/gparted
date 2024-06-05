@@ -792,7 +792,7 @@
                 <para>Klicka-och-håll mitten av partitionen i grafiska området. Dra partitionen vänster eller höger inom visningsområdet.</para>
               </listitem>
               <listitem>
-                <para>Klicka på snurrknappens pilar eller skriv in siffervärden för att justera följande fält: <itemizedlist>
+                <para>Klicka på stegningsrutans pilar eller skriv in siffervärden för att justera följande fält: <itemizedlist>
                     <listitem>
                       <para><guilabel>Ledigt utrymme före</guilabel></para>
                     </listitem>
@@ -1250,7 +1250,7 @@
                     <para>Om du vill ändra standardfilnamnet, skriv in ett filnamn i textrutan <guilabel>Namn</guilabel>.</para>
                   </listitem>
                   <listitem>
-                    <para>Om du vill spara en fil i en mapp annat än /root, klicka <guibutton>Bläddra efter andra mappar</guibutton>. Programmet visar en filsystemsnavigator.</para>
+                    <para>Om du vill spara filen i en annan mapp än /root, klicka <guibutton>Bläddra efter andra mappar</guibutton>. Programmet visar en filsystemsnavigator.</para>
                     <para>Använd filsystemsnavigatorn för att välja en mapp.</para>
                   </listitem>
                   <listitem>
@@ -1291,7 +1291,7 @@
           <para>GParted live-cd <ulink type="http" url="https://gparted.org/livecd.php"/></para>
         </listitem>
         <listitem>
-          <para>Systemräddnings-cd <ulink type="http" url="http://www.system-rescue-cd.org"/></para>
+          <para>SystemRescue (även känt som SystemRescueCD) <ulink type="http" url="https://www.system-rescue.org"/></para>
         </listitem>
       </itemizedlist></para>
     <tip>

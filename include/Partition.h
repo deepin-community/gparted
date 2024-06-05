@@ -110,16 +110,16 @@ public:
 	void set_path( const Glib::ustring & path );
 	Byte_Value get_byte_length() const ;
 	Sector get_sector_length() const ; 
-	Glib::ustring get_path() const ;
+	const Glib::ustring& get_path() const;
 	void add_mountpoint( const Glib::ustring & mountpoint );
 	void add_mountpoints( const std::vector<Glib::ustring> & mountpoints );
-	Glib::ustring get_mountpoint() const ; 
+	const Glib::ustring& get_mountpoint() const;
 	void clear_mountpoints() ;
-	std::vector<Glib::ustring> get_mountpoints() const ;
+	const std::vector<Glib::ustring>& get_mountpoints() const;
 	Sector get_sector() const ;
 	bool test_overlap( const Partition & partition ) const ;
 	bool filesystem_label_known() const;
-	Glib::ustring get_filesystem_label() const;
+	const Glib::ustring& get_filesystem_label() const;
 	void set_filesystem_label( const Glib::ustring & filesystem_label );
 
 	// Message accessors.  Messages are stored locally and accessed globally.

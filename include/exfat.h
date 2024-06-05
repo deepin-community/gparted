@@ -31,10 +31,17 @@ class exfat : public FileSystem
 {
 public:
 	FS get_filesystem_support();
+	void set_used_sectors(Partition& partition);
 	bool create(const Partition& new_partition, OperationDetail& operationdetail);
 	void read_label(Partition& partition);
 	bool write_label(const Partition& partition, OperationDetail& operationdetail);
+	void read_uuid(Partition& partition);
+	bool write_uuid(const Partition& partition, OperationDetail& operationdetail);
 	bool check_repair(const Partition& partition, OperationDetail& operationdetail);
+
+private:
+	Glib::ustring serial_to_blkid_uuid(const Glib::ustring& serial);
+	Glib::ustring random_serial();
 };
 
 

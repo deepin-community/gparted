@@ -260,7 +260,8 @@ Sector Partition::get_sector_length() const
 		return -1 ;
 }
 
-Glib::ustring Partition::get_path() const
+
+const Glib::ustring& Partition::get_path() const
 {
 	return path;
 }
@@ -270,13 +271,17 @@ bool Partition::filesystem_label_known() const
 	return have_filesystem_label;
 }
 
+
 //Return the file system label or "" if unknown.
-Glib::ustring Partition::get_filesystem_label() const
+const Glib::ustring& Partition::get_filesystem_label() const
 {
 	if ( have_filesystem_label )
 		return filesystem_label;
-	return "";
+
+	static Glib::ustring unknown_label;
+	return unknown_label;
 }
+
 
 void Partition::set_filesystem_label( const Glib::ustring & filesystem_label )
 {
@@ -359,15 +364,18 @@ void Partition::add_mountpoints( const std::vector<Glib::ustring> & mountpoints 
 	this ->mountpoints .insert( this ->mountpoints .end(), mountpoints .begin(), mountpoints .end() ) ;
 }
 
-Glib::ustring Partition::get_mountpoint() const 
+
+const Glib::ustring& Partition::get_mountpoint() const
 {
 	if ( mountpoints .size() > 0 )
 		return mountpoints .front() ;
 
-	return "" ;
+	static Glib::ustring unknown_mountpoint;
+	return unknown_mountpoint;
 }
 
-std::vector<Glib::ustring> Partition::get_mountpoints() const 
+
+const std::vector<Glib::ustring>& Partition::get_mountpoints() const
 {
 	return mountpoints ;
 }

@@ -45,6 +45,7 @@
 #include "PartitionVector.h"
 #include "PasswordRAMStore.h"
 #include "LVM2_PV_Info.h"
+#include "LUKS_Info.h"
 #include "Utils.h"
 #include "../config.h"
 
@@ -57,6 +58,8 @@
 #include <gtkmm/main.h>
 #include <gtkmm/separator.h>
 #include <gtkmm/grid.h>
+#include <gtkmm/label.h>
+#include <atkmm/relation.h>
 #include <glibmm/ustring.h>
 #include <glibmm/miscutils.h>
 #include <glibmm/shell.h>
@@ -108,7 +111,7 @@ Win_GParted::Win_GParted( const std::vector<Glib::ustring> & user_devices )
 	init_toolbar() ;
 	vbox_main.pack_start( hbox_toolbar, Gtk::PACK_SHRINK );
 	
-	//drawingarea_visualdisk...  ( contains the visual represenation of the disks )
+	//drawingarea_visualdisk...  ( contains the visual representation of the disks )
 	drawingarea_visualdisk .signal_partition_selected .connect( 
 			sigc::mem_fun( this, &Win_GParted::on_partition_selected ) ) ;
 	drawingarea_visualdisk .signal_partition_activated .connect( 
@@ -548,7 +551,7 @@ Gtk::Menu * Win_GParted::create_format_menu()
 //Add one entry to the Partition --> Format to --> (file system list) menu
 void Win_GParted::create_format_menu_add_item(FSType fstype, bool activate)
 {
-	hbox = manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL));
+	Gtk::Box *hbox = manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL));
 	//the colored square
 	hbox->pack_start(*manage(new Gtk::Image(Utils::get_color_as_pixbuf(fstype, 16, 16))),
 	                 Gtk::PACK_SHRINK);
@@ -582,28 +585,36 @@ void Win_GParted::init_device_info()
 	grid->set_column_spacing(10);
 
 	// Model
-	grid->attach(*Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Model:")) + "</b>"),
-	             0, top, 1, 1);
+	Gtk::Label *label_model = Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Model:")) + "</b>");
+	grid->attach(*label_model, 0, top, 1, 1);
 	device_info .push_back( Utils::mk_label( "", true, false, true ) ) ;
 	grid->attach(*device_info.back(), 1, top++, 1, 1);
+	device_info.back()->get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                       label_model->get_accessible());
 
 	// Serial number
-	grid->attach(*Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Serial:")) + "</b>"),
-	             0, top, 1, 1);
+	Gtk::Label *label_serial = Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Serial:")) + "</b>");
+	grid->attach(*label_serial, 0, top, 1, 1);
 	device_info.push_back( Utils::mk_label( "", true, false, true ) );
 	grid->attach(*device_info.back(), 1, top++, 1, 1);
+	device_info.back()->get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                       label_serial->get_accessible());
 
 	// Size
-	grid->attach(*Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Size:")) + "</b>"),
-	             0, top, 1, 1);
+	Gtk::Label *label_size = Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Size:")) + "</b>");
+	grid->attach(*label_size, 0, top, 1, 1);
 	device_info .push_back( Utils::mk_label( "", true, false, true ) ) ;
 	grid->attach(*device_info.back(), 1, top++, 1, 1);
+	device_info.back()->get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                       label_size->get_accessible());
 
 	// Path
-	grid->attach(*Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Path:")) + "</b>"),
-	             0, top, 1, 1);
+	Gtk::Label *label_path = Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Path:")) + "</b>");
+	grid->attach(*label_path, 0, top, 1, 1);
 	device_info .push_back( Utils::mk_label( "", true, false, true ) ) ;
 	grid->attach(*device_info.back(), 1, top++, 1, 1);
+	device_info.back()->get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                       label_path->get_accessible());
 
 	vbox_info.pack_start(*grid, Gtk::PACK_SHRINK);
 
@@ -616,40 +627,52 @@ void Win_GParted::init_device_info()
 	grid->attach(*Utils::mk_label(""), 1, top++, 1, 1);
 
 	// Disktype
-	grid->attach(*Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Partition table:")) + "</b>"),
-	             0, top, 1, 1);
+	Gtk::Label *label_disktype = Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Partition table:")) + "</b>");
+	grid->attach(*label_disktype, 0, top, 1, 1);
 	device_info .push_back( Utils::mk_label( "", true, false, true ) ) ;
 	grid->attach(*device_info.back(), 1, top++, 1, 1);
+	device_info.back()->get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                       label_disktype->get_accessible());
 
 	// Heads
-	grid->attach(*Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Heads:")) + "</b>"),
-	             0, top, 1, 1);
+	Gtk::Label *label_heads = Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Heads:")) + "</b>");
+	grid->attach(*label_heads, 0, top, 1, 1);
 	device_info .push_back( Utils::mk_label( "", true, false, true ) ) ;
 	grid->attach(*device_info.back(), 1, top++, 1, 1);
+	device_info.back()->get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                       label_heads->get_accessible());
 
 	// Sectors / track
-	grid->attach(*Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Sectors/track:")) + "</b>"),
-	             0, top, 1, 1);
+	Gtk::Label *label_sectors_track = Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Sectors/track:")) + "</b>");
+	grid->attach(*label_sectors_track, 0, top, 1, 1);
 	device_info .push_back( Utils::mk_label( "", true, false, true ) ) ;
 	grid->attach(*device_info.back(), 1, top++, 1, 1);
+	device_info.back()->get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                       label_sectors_track->get_accessible());
 
 	// Cylinders
-	grid->attach(*Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Cylinders:")) + "</b>"),
-	             0, top, 1, 1);
+	Gtk::Label *label_cylinders = Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Cylinders:")) + "</b>");
+	grid->attach(*label_cylinders, 0, top, 1, 1);
 	device_info .push_back( Utils::mk_label( "", true, false, true ) ) ;
 	grid->attach(*device_info.back(), 1, top++, 1, 1);
+	device_info.back()->get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                       label_cylinders->get_accessible());
 
 	// Total sectors
-	grid->attach(*Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Total sectors:")) + "</b>"),
-	             0, top, 1, 1);
+	Gtk::Label *label_total_sectors = Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Total sectors:")) + "</b>");
+	grid->attach(*label_total_sectors, 0, top, 1, 1);
 	device_info .push_back( Utils::mk_label( "", true, false, true ) ) ;
 	grid->attach(*device_info.back(), 1, top++, 1, 1);
+	device_info.back()->get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                       label_total_sectors->get_accessible());
 
 	// Sector size
-	grid->attach(*Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Sector size:")) + "</b>"),
-	             0, top, 1, 1);
+	Gtk::Label *label_sector_size = Utils::mk_label(" <b>" + static_cast<Glib::ustring>(_("Sector size:")) + "</b>");
+	grid->attach(*label_sector_size, 0, top, 1, 1);
 	device_info .push_back( Utils::mk_label( "", true, false, true ) ) ;
 	grid->attach(*device_info.back(), 1, top++, 1, 1);
+	device_info.back()->get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                       label_sector_size->get_accessible());
 
 	vbox_info.pack_start(*grid, Gtk::PACK_SHRINK);
 }
@@ -730,7 +753,7 @@ void Win_GParted::refresh_combo_devices()
 		treerow[ treeview_devices_columns .size ] = "(" + Utils::format_size( devices[ i ] .length, devices[ i ] .sector_size ) + ")" ; 
 
 		// Devices submenu...
-		hbox = manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL));
+		Gtk::Box *hbox = manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL));
 		hbox ->pack_start( * Utils::mk_label( devices[ i ] .get_path() ), Gtk::PACK_EXPAND_WIDGET ) ;
 		hbox ->pack_start( * Utils::mk_label( "   (" + Utils::format_size( devices[ i ] .length, devices[ i ] .sector_size ) + ")" ),
 		                   Gtk::PACK_SHRINK ) ;
@@ -1101,22 +1124,19 @@ void Win_GParted::Refresh_Visual()
 
 	set_valid_operations() ;
 
-	// Process Gtk events to redraw visuals with reloaded partition details
-	while ( Gtk::Main::events_pending() )
-		Gtk::Main::iteration();
-
 	if ( largest_unalloc_size >= 0 )
 	{
-		// Flashing redraw work around.  Inform visuals of selection of the
-		// largest unallocated partition after drawing those visuals above.
+		// Inform visuals of selection of the largest unallocated partition.
 		drawingarea_visualdisk.set_selected( selected_partition_ptr );
 		treeview_detail.set_selected( selected_partition_ptr );
-
-		// Process Gtk events to draw selection
-		while ( Gtk::Main::events_pending() )
-			Gtk::Main::iteration();
 	}
+
+	// Process Gtk events to redraw visuals with reloaded partition details.
+	while (Gtk::Main::events_pending())
+		Gtk::Main::iteration();
+
 }
+
 
 // Confirms that the pointer points to one of the partition objects in the vector of
 // displayed partitions, Win_GParted::display_partitions[].
@@ -1244,6 +1264,8 @@ void Win_GParted::set_valid_operations()
 	     && selected_filesystem.fstype     != FS_LINUX_SWRAID
 	     && selected_filesystem.fstype     != FS_ATARAID
 	     && selected_filesystem.fstype     != FS_LUKS
+	     && selected_filesystem.fstype     != FS_BCACHE
+	     && selected_filesystem.fstype     != FS_JBD
 	     && (    selected_filesystem.busy
 	          || selected_filesystem.get_mountpoints().size() /* Have mount point(s) */
 	          || selected_filesystem.fstype == FS_LINUX_SWAP
@@ -1298,6 +1320,14 @@ void Win_GParted::set_valid_operations()
 	}
 #endif
 
+	// Allow labelling of mounted file systems that support it.
+	if (selected_filesystem.busy                    &&
+	    selected_partition_ptr->status == STAT_REAL &&
+	    fs_cap.online_write_label                     )
+	{
+		allow_label_filesystem(true);
+	}
+
 	// Only unmount/swapoff/VG deactivate or online actions allowed if busy
 	if ( selected_filesystem.busy )
 		return ;
@@ -1326,17 +1356,12 @@ void Win_GParted::set_valid_operations()
 			else
 				required_size = copied_filesystem_ptn.get_byte_length();
 
-			//Determine if space is needed for the Master Boot Record or
-			//  the Extended Boot Record.  Generally an an additional track or MEBIBYTE
-			//  is required so for our purposes reserve a MEBIBYTE in front of the partition.
-			//  NOTE:  This logic also contained in Dialog_Base_Partition::MB_Needed_for_Boot_Record
-			if (   (   selected_partition_ptr->inside_extended
-			        && selected_partition_ptr->type == TYPE_UNALLOCATED
-			       )
-			    || ( selected_partition_ptr->type == TYPE_LOGICAL )
-			                                     /* Beginning of disk device */
-			    || ( selected_partition_ptr->sector_start <= (MEBIBYTE / selected_partition_ptr->sector_size) )
-			   )
+			// Determine if space needs reserving for the partition table or the EBR (Extended
+			// Boot Record).  Generally a track or MEBIBYTE is reserved.  For our purposes
+			// reserve a MEBIBYTE at the start of the partition.
+			// NOTE: This logic also contained in Dialog_Base_Partition::MB_Needed_for_Boot_Record()
+			if (selected_partition_ptr->inside_extended                                               ||
+			    selected_partition_ptr->sector_start < MEBIBYTE / selected_partition_ptr->sector_size   )
 				required_size += MEBIBYTE;
 
 			//Determine if space is needed for the Extended Boot Record for a logical partition
@@ -1392,8 +1417,7 @@ void Win_GParted::set_valid_operations()
 	{
 		allow_format( true ) ;
 
-		// only allow deletion of partitions within a partition table
-		// Also exclude open LUKS mappings until open/close is supported
+		// Only allow deletion of inactive partitions within a partition table.
 		if ( ( selected_partition_ptr->type == TYPE_PRIMARY ||
 		       selected_partition_ptr->type == TYPE_LOGICAL    ) &&
 		     ! selected_partition_ptr->busy                         )
@@ -1445,7 +1469,7 @@ void Win_GParted::set_valid_operations()
 			partitionmenu_items[MENU_MOUNT]->unset_submenu();
 
 			Gtk::Menu *menu = manage(new Gtk::Menu());
-			std::vector<Glib::ustring> temp_mountpoints = selected_filesystem.get_mountpoints();
+			const std::vector<Glib::ustring>& temp_mountpoints = selected_filesystem.get_mountpoints();
 			for ( unsigned int t = 0 ; t < temp_mountpoints.size() ; t++ )
 			{
 				Gtk::MenuItem *item;
@@ -1738,7 +1762,8 @@ void Win_GParted::menu_view_operations()
 		close_operationslist() ;
 }
 
-void Win_GParted::show_disklabel_unrecognized ( Glib::ustring device_name )
+
+void Win_GParted::show_disklabel_unrecognized (const Glib::ustring& device_name)
 {
 	//Display dialog box indicating that no partition table was found on the device
 	Gtk::MessageDialog dialog( *this,
@@ -1778,52 +1803,55 @@ void Win_GParted::show_resize_readonly( const Glib::ustring & path )
 void Win_GParted::show_help(const Glib::ustring & filename /* E.g., "gparted" */,
                             const Glib::ustring & link_id  /* For context sensitive help */)
 {
-	GError *error1 = NULL;
-	GdkScreen *gscreen = NULL ;
-
+	// Build uri string
 	Glib::ustring uri = "help:" + filename;
 	if (link_id.size() > 0)
 		uri = uri + "/" + link_id;
 
-	gscreen = get_window()->get_screen()->gobj();
-	gtk_show_uri(gscreen, uri.c_str(), gtk_get_current_event_time(), &error1);
-	if (error1 != NULL)
+	// Check if yelp is available to provide a useful error message.
+	// Missing yelp is the most common cause of failure to display help.
+	//
+	// This early check is performed because failure of gtk_show_uri*()
+	// method only provides a generic "Operation not permitted" message.
+	if (Glib::find_program_in_path("yelp").empty())
 	{
-		//Try opening yelp application directly
-
-		Glib::RefPtr<Gio::AppInfo> yelp
-			= Gio::AppInfo::create_from_commandline("yelp", "", Gio::APP_INFO_CREATE_SUPPORTS_URIS);
-
-		Glib::RefPtr<Gdk::AppLaunchContext> context
-			= get_window()->get_display()->get_app_launch_context();
-
-		context->set_timestamp(gtk_get_current_event_time());
-
-		bool launched = false;
-		Glib::ustring error2_msg;
-		try
-		{
-			launched = yelp->launch_uris(std::vector<std::string>(1, uri), context);
-		}
-		catch (Glib::Error& e)
-		{
-			error2_msg = e.what();
-		}
-
-		if (!launched)
-		{
-			Gtk::MessageDialog dialog(*this,
-			                          _( "Unable to open GParted Manual help file" ),
-			                          false,
-			                          Gtk::MESSAGE_ERROR,
-			                          Gtk::BUTTONS_OK,
-			                          true);
-			dialog.set_secondary_text(error2_msg);
-			dialog.run();
-		}
-
-		g_clear_error(&error1);
+		Gtk::MessageDialog errorDialog(*this,
+		                               _("Unable to open GParted Manual help file"),
+		                               false, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, true);
+		Glib::ustring sec_text(_("Command yelp not found."));
+		sec_text.append("\n");
+		sec_text.append("\n");
+		sec_text.append(_("Install yelp and try again."));
+		errorDialog.set_secondary_text(sec_text, true);
+		errorDialog.run();
+		return;
 	}
+
+	GError *error = NULL;
+
+	// Display help window
+#if HAVE_GTK_SHOW_URI_ON_WINDOW
+	// NULL is provided for the gtk_show_uri_on_window() parent window
+	// so that failures to launch yelp are reported.
+	// https://gitlab.gnome.org/GNOME/gparted/-/merge_requests/82#note_1106114
+	gtk_show_uri_on_window(NULL, uri.c_str(), gtk_get_current_event_time(), &error);
+#else
+	GdkScreen *gscreen = gdk_screen_get_default();
+	gtk_show_uri(gscreen, uri.c_str(), gtk_get_current_event_time(), &error);
+#endif
+	if (error != NULL)
+	{
+		Gtk::MessageDialog errorDialog(*this,
+		                               _("Failed to open GParted Manual help file"),
+		                               false,
+		                               Gtk::MESSAGE_ERROR,
+		                               Gtk::BUTTONS_OK,
+		                               true);
+		errorDialog.set_secondary_text(error->message);
+		errorDialog.run();
+	}
+
+	g_clear_error(&error);
 }
 
 void Win_GParted::menu_help_contents()
@@ -1863,8 +1891,8 @@ void Win_GParted::menu_help_about()
 	dialog .set_comments( _( "GNOME Partition Editor" ) ) ;
 	std::string names ;
 	names =    "Copyright © 2004-2006 Bart Hakvoort" ;
-	names += "\nCopyright © 2008-2021 Curtis Gedak" ;
-	names += "\nCopyright © 2011-2021 Mike Fleetwood" ;
+	names += "\nCopyright © 2008-2023 Curtis Gedak" ;
+	names += "\nCopyright © 2011-2023 Mike Fleetwood" ;
 	dialog .set_copyright( names ) ;
 
 	//authors
@@ -2039,7 +2067,8 @@ void Win_GParted::activate_resize()
 	delete working_ptn;
 	working_ptn = NULL;
 
-	if ( dialog .run() == Gtk::RESPONSE_OK )
+	if (dialog.run() == Gtk::RESPONSE_OK                                           &&
+	    ask_for_password_for_encrypted_resize_as_required(*selected_partition_ptr)   )
 	{
 		dialog .hide() ;
 
@@ -2107,6 +2136,79 @@ void Win_GParted::activate_resize()
 
 	show_operationslist() ;
 }
+
+
+bool Win_GParted::ask_for_password_for_encrypted_resize_as_required(const Partition& partition)
+{
+	if (partition.fstype != FS_LUKS || ! partition.busy)
+		// Not active LUKS so won't need a password.
+		return true;
+
+	LUKS_Mapping mapping = LUKS_Info::get_cache_entry(partition.get_path());
+	if (mapping.name.empty() || mapping.key_loc == KEYLOC_DMCrypt)
+		// LUKS volume key stored in crypt Device-Mapper target so won't require a
+		// password for encryption mapping resize.
+		return true;
+
+	const char *pw = PasswordRAMStore::lookup(partition.uuid);
+	if (pw != NULL)
+		// GParted already has a password for this encryption mapping which was
+		// previously used successfully or tested for correctness.
+		//
+		// The password will still be correct, unless it was changed by someone
+		// outside GParted while running and since the last time the password was
+		// used.  Re-testing the password takes 2-3 seconds which would pause the
+		// UI after the [Resize/Move] button was pressed in the Resize/Move dialog
+		// but before the dialog closes.  With no trivial way to provide feedback
+		// that the password is being re-tested, don't spend coding effort to
+		// support this use case.  So just assume the known password is still
+		// correct and don't re-prompt when it will be correct 99.9% of the time.
+		return true;
+
+	DialogPasswordEntry dialog(partition,
+	                           /* TO TRANSLATORS: looks like   Enter LUKS passphrase to resize /dev/sda1 */
+	                           Glib::ustring::compose(_("Enter LUKS passphrase to resize %1"),
+	                                                  partition.get_path()));
+	dialog.set_transient_for(*this);
+	bool success = false;
+	do
+	{
+		if (dialog.run() != Gtk::RESPONSE_OK)
+			// Password dialog cancelled or closed without having confirmed
+			// the LUKS mapping passphrase.
+			return false;
+
+		pw = dialog.get_password();
+		if (strlen(pw) == 0)
+		{
+			// cryptsetup won't accept a zero length password.
+			dialog.set_error_message("");
+			continue;
+		}
+
+		// Test the password can open the encryption mapping.
+		const Glib::ustring mapping_name = Utils::generate_encryption_mapping_name(
+		                                           selected_partition_ptr->get_path());
+		Glib::ustring cmd = "cryptsetup luksOpen --test-passphrase " +
+		                    Glib::shell_quote(partition.get_path()) + " " +
+		                    Glib::shell_quote(mapping_name);
+		Glib::ustring output;
+		Glib::ustring error;
+		success = ! Utils::execute_command(cmd, pw, output, error);
+
+		Glib::ustring message = (success) ? "" : _("LUKS encryption passphrase check failed");
+		dialog.set_error_message(message);
+	}
+	while (! success);
+
+	// Save the password just entered and successfully tested on the LUKS mapping.
+	PasswordRAMStore::store(partition.uuid, pw);
+
+	dialog.hide();
+
+	return true;
+}
+
 
 void Win_GParted::activate_copy()
 {
@@ -2626,14 +2728,7 @@ bool Win_GParted::open_encrypted_partition( const Partition & partition,
 		}
 	}
 
-	// Create LUKS mapping name from partition name:
-	// "/dev/sdb1" -> "sdb1_crypt"
-	Glib::ustring mapping_name = selected_partition_ptr->get_path();
-	Glib::ustring::size_type last_slash = mapping_name.rfind( "/" );
-	if ( last_slash != Glib::ustring::npos )
-		mapping_name = mapping_name.substr( last_slash + 1 );
-	mapping_name += "_crypt";
-
+	const Glib::ustring mapping_name = Utils::generate_encryption_mapping_name(selected_partition_ptr->get_path());
 	Glib::ustring cmd = "cryptsetup luksOpen " +
 	                    Glib::shell_quote( partition.get_path() ) + " " +
 	                    Glib::shell_quote( mapping_name );
@@ -2717,7 +2812,12 @@ void Win_GParted::toggle_crypt_busy_state()
 				break;
 
 			// Open password dialog and attempt to unlock LUKS mapping.
-			DialogPasswordEntry dialog( *selected_partition_ptr );
+			DialogPasswordEntry dialog(*selected_partition_ptr,
+			                           /* TO TRANSLATORS: looks like
+						    * Enter LUKS passphrase to open /dev/sda1
+						    */
+			                           Glib::ustring::compose(_("Enter LUKS passphrase to open %1"),
+			                                                  selected_partition_ptr->get_path()));
 			dialog.set_transient_for( *this );
 			do
 			{
@@ -2745,7 +2845,7 @@ void Win_GParted::toggle_crypt_busy_state()
 
 bool Win_GParted::unmount_partition( const Partition & partition, Glib::ustring & error )
 {
-	const std::vector<Glib::ustring> fs_mountpoints = partition.get_mountpoints();
+	const std::vector<Glib::ustring>& fs_mountpoints = partition.get_mountpoints();
 	const std::vector<Glib::ustring> all_mountpoints = Mount_Info::get_all_mountpoints();
 
 	std::vector<Glib::ustring> skipped_mountpoints;
@@ -2764,11 +2864,19 @@ bool Win_GParted::unmount_partition( const Partition & partition, Glib::ustring 
 		}
 		else
 		{
-			Glib::ustring cmd = "umount -v " + Glib::shell_quote( fs_mountpoints[i] );
-			Glib::ustring dummy;
-			Glib::ustring umount_error;
-			if ( Utils::execute_command( cmd, dummy, umount_error ) )
-				umount_errors.push_back( "# " + cmd + "\n" + umount_error );
+			// Unmounting below a duplicating bind mount, unmounts all copies
+			// in one go so check if the file system is still mounted at this
+			// mount point before trying to unmount it.
+			Mount_Info::load_cache();
+			if (Mount_Info::is_dev_mounted_at(partition.get_path(), fs_mountpoints[i]))
+			{
+				Glib::ustring cmd = "umount -v " + Glib::shell_quote(fs_mountpoints[i]);
+				Glib::ustring dummy;
+				Glib::ustring umount_error;
+
+				if (Utils::execute_command(cmd, dummy, umount_error))
+					umount_errors.push_back("# " + cmd + "\n" + umount_error);
+			}
 		}
 	}
 
@@ -3174,11 +3282,17 @@ void Win_GParted::activate_manage_flags()
 	if ( dialog .any_change )
 		menu_gparted_refresh_devices() ;
 }
-	
+
+
 void Win_GParted::activate_check() 
 {
 	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
+
+	if (! ask_for_password_for_encrypted_resize_as_required(*selected_partition_ptr))
+		// Open encryption mapping needing a passphrase to resize but the password
+		// dialog was cancelled or closed without providing a working passphrase.
+		return;
 
 	// FIXME: Consider constructing new partition object with zero unallocated and
 	// messages cleared to represent how applying a check operation also grows the
@@ -3485,7 +3599,7 @@ bool Win_GParted::remove_non_empty_lvm2_pv_dialog( const OperationType optype )
 	tmp_msg += "\n\n" ;
 	tmp_msg += _( "Do you want to continue to forcibly delete the Physical Volume?" ) ;
 
-	Glib::ustring vgname = LVM2_PV_Info::get_vg_name( selected_partition_ptr->get_path() );
+	const Glib::ustring& vgname = LVM2_PV_Info::get_vg_name(selected_partition_ptr->get_path());
 	std::vector<Glib::ustring> members ;
 	if ( ! vgname .empty() )
 		members = LVM2_PV_Info::get_vg_members( vgname );
@@ -3508,15 +3622,17 @@ bool Win_GParted::remove_non_empty_lvm2_pv_dialog( const OperationType optype )
 	msg_area->pack_start(*grid);
 
 	// Volume Group
-	grid->attach(*Utils::mk_label("<b>" + Glib::ustring(vgname_label) + "</b>"),
-	             0, 0, 1, 1);
-	grid->attach(*Utils::mk_label(vgname, true, false, true),
-	             1, 0, 1, 1);
+	Gtk::Label *label_vgname = Utils::mk_label("<b>" + Glib::ustring(vgname_label) + "</b>");
+	grid->attach(*label_vgname, 0, 0, 1, 1);
+	Gtk::Label *value_vgname = Utils::mk_label(vgname, true, false, true);
+	grid->attach(*value_vgname, 1, 0, 1, 1);
+	value_vgname->get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                 label_vgname->get_accessible());
 
 	// Members
-	grid->attach(*Utils::mk_label("<b>" + Glib::ustring(members_label) + "</b>",
-	                              true, false, false, Gtk::ALIGN_START),
-	             0, 1, 1, 1);
+	Gtk::Label *label_members = Utils::mk_label("<b>" + Glib::ustring(members_label) + "</b>",
+	                                            true, false, false, Gtk::ALIGN_START);
+	grid->attach(*label_members, 0, 1, 1, 1);
 
 	Glib::ustring members_str = "" ;
 	if ( ! members .empty() )
@@ -3528,8 +3644,10 @@ bool Win_GParted::remove_non_empty_lvm2_pv_dialog( const OperationType optype )
 			members_str += members[i] ;
 		}
 	}
-	grid->attach(*Utils::mk_label(members_str, true, false, true, Gtk::ALIGN_START),
-	             1, 1, 1, 1);
+	Gtk::Label *value_members = Utils::mk_label(members_str, true, false, true, Gtk::ALIGN_START);
+	grid->attach(*value_members, 1, 1, 1, 1);
+	value_members->get_accessible()->add_relationship(Atk::RELATION_LABELLED_BY,
+	                                                  label_members->get_accessible());
 
 	dialog .add_button( Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL );
 	dialog .add_button( Gtk::Stock::DELETE, Gtk::RESPONSE_OK );

@@ -62,7 +62,7 @@ a. Pre-built Binary
 
       Debian or Ubuntu
       ----------------
-      sudo apt-get install gparted
+      sudo apt install gparted
 
       Fedora
       ------
@@ -93,32 +93,34 @@ b. Building from Source
       gnome-common
       gtkmm3
       gettext
-      intltool
+      polkit
       yelp-tools          - required if help documentation is to be built
 
    On CentOS/RHEL, these dependencies may be obtained by running the
    following command as root:
-      yum install gnome-common yelp-tools glib2-devel intltool gcc-c++ \
-                  libuuid-devel parted-devel gtkmm30-devel make
+      yum install gnome-common yelp-tools glib2-devel gcc-c++ \
+                  libuuid-devel parted-devel gtkmm30-devel make \
+                  polkit-devel gettext-devel
 
    On Debian or Ubuntu, these dependencies may be obtained by running
    one of the following commands:
      Either;
-      sudo apt-get build-dep gparted
+      sudo apt build-dep gparted
      Or;
-      sudo apt-get install build-essential gnome-common yelp-tools \
-                           libglib2.0-dev uuid-dev libparted-dev \
-                           libgtkmm-3.0-dev
+      sudo apt install build-essential gnome-common yelp-tools \
+                       libglib2.0-dev uuid-dev libparted-dev \
+                       libgtkmm-3.0-dev
 
    On Fedora, these dependencies may be obtained by running the
    following command as root:
-      dnf install gnome-common yelp-tools glib2-devel intltool gcc-c++ \
-                  libuuid-devel parted-devel gtkmm30-devel make
+      dnf install gnome-common yelp-tools glib2-devel gcc-c++ \
+                  libuuid-devel parted-devel gtkmm30-devel make \
+                  polkit-devel gettext-devel
 
    On openSUSE, these dependencies may be obtained by running the
    following commands:
       sudo zypper install gnome-common gcc-c++ libuuid-devel \
-                          parted-devel gtkmm3-devel make
+                          parted-devel gtkmm3-devel make polkit-devel
 
    Again, build GParted with the default configuration and install into
    the default location of /usr/local using:
@@ -318,7 +320,6 @@ system.  These commands include:
                      libparted doesn't, read UUIDs and volume labels
    hdparm          - used to query disk device serial numbers
    udisks          - used to prevent automounting of file systems
-   devkit-disks    - used to prevent automounting of file systems
    {filemanager}   - used in attempt data rescue to display discovered
                      file systems.  (e.g., nautilus, pcmanfm)
    hal-lock        - used to prevent automounting of file systems
@@ -339,6 +340,7 @@ system.  These commands include:
                      available when gparted source is configured
    udevadm         - used in dmraid to query udev name
    yelp            - used to display help manual
+                     (requires gvfs to be able to launch yelp)
    xhost           - used to grant root access to the X11 server, only
                      when configured to do so
 

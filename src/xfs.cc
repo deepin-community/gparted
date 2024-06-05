@@ -48,6 +48,15 @@ FS xfs::get_filesystem_support()
 		fs .write_uuid = FS::EXTERNAL ;
 	}
 
+	if (! Glib::find_program_in_path("xfs_io").empty())
+	{
+		// Check for online label support in xfs_io from xfsprogs >= 4.17 and
+		// for kernel >= 4.18 before enabling support.
+		Utils::execute_command("xfs_io -c help", output, error, true);
+		if (output.find("\nlabel") < output.length() && Utils::kernel_version_at_least(4, 18, 0))
+			fs.online_write_label = FS::EXTERNAL;
+	}
+
 	if ( ! Glib::find_program_in_path( "mkfs.xfs" ) .empty() )
 	{
 		fs.create = FS::EXTERNAL;
@@ -83,8 +92,8 @@ FS xfs::get_filesystem_support()
 		fs .online_grow = fs .grow ;
 #endif
 
-	// Official minsize = 16MB, but the smallest xfs_repair can handle is 32MB.
-	fs_limits.min_size = 32 * MEBIBYTE;
+	// From xfsprogs 5.19.0 the smallest creatable file system is 300 MiB.
+	fs_limits.min_size = 300 * MEBIBYTE;
 
 	return fs ;
 }
@@ -147,16 +156,40 @@ void xfs::read_label( Partition & partition )
 	}
 }
 
+
 bool xfs::write_label( const Partition & partition, OperationDetail & operationdetail )
 {
-	Glib::ustring cmd = "" ;
-	if( partition.get_filesystem_label().empty() )
-		cmd = "xfs_admin -L -- " + Glib::shell_quote( partition.get_path() );
+	Glib::ustring cmd;
+	bool empty_label = partition.get_filesystem_label().empty();
+
+	if (partition.busy)
+	{
+		if (empty_label)
+			cmd = "xfs_io -c " + Glib::shell_quote("label -c") + " " + partition.get_mountpoint();
+		else
+			cmd = "xfs_io -c " + Glib::shell_quote("label -s " + partition.get_filesystem_label()) +
+			      " " + partition.get_mountpoint();
+
+		execute_command(cmd, operationdetail);
+		// In some error situations xfs_io reports exit status zero and writes a
+		// failure message to stdout.  Therefore determine success based on the
+		// output starting with the fixed text, reporting the new label.
+		bool success = output.compare(0, 9, "label = \"") == 0;
+		set_status(operationdetail, success);
+		return success;
+	}
 	else
-		cmd = "xfs_admin -L " + Glib::shell_quote( partition.get_filesystem_label() ) +
-		      " " + partition.get_path();
-	return ! execute_command( cmd, operationdetail, EXEC_CHECK_STATUS );
+	{
+		if (empty_label)
+			cmd = "xfs_admin -L -- " + Glib::shell_quote(partition.get_path());
+		else
+			cmd = "xfs_admin -L " + Glib::shell_quote(partition.get_filesystem_label()) +
+			      " " + partition.get_path();
+
+		return ! execute_command(cmd, operationdetail, EXEC_CHECK_STATUS);
+	}
 }
+
 
 void xfs::read_uuid( Partition & partition )
 {
@@ -228,8 +261,10 @@ bool xfs::copy( const Partition & src_part,
 {
 	bool success = true ;
 
-	success &= ! execute_command( "mkfs.xfs -f " + Glib::shell_quote( dest_part.get_path() ),
-	                              operationdetail, EXEC_CHECK_STATUS|EXEC_CANCEL_SAFE );
+	success &= ! execute_command("mkfs.xfs -f -L " + Glib::shell_quote(dest_part.get_filesystem_label()) +
+	                             " -m uuid=" + Glib::shell_quote(dest_part.uuid) +
+	                             " " + Glib::shell_quote(dest_part.get_path()),
+	                             operationdetail, EXEC_CHECK_STATUS|EXEC_CANCEL_SAFE);
 	if ( ! success )
 		return false ;
 
@@ -258,9 +293,9 @@ bool xfs::copy( const Partition & src_part,
 
 	if ( success )
 	{
-		success &= ! execute_command( "mount -v -t xfs " + Glib::shell_quote( dest_part.get_path() ) +
-		                              " " + Glib::shell_quote( dest_mount_point ),
-		                              operationdetail, EXEC_CHECK_STATUS );
+		success &= ! execute_command("mount -v -t xfs -o nouuid " + Glib::shell_quote(dest_part.get_path()) +
+		                             " " + Glib::shell_quote(dest_mount_point),
+		                             operationdetail, EXEC_CHECK_STATUS);
 
 		if ( success )
 		{

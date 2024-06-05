@@ -159,7 +159,7 @@
     </othercredit>
     <copyright>
       
-        <year>2010-2020</year>
+        <year>2010-2021</year>
       
       <holder>Daniel Mustieles</holder>
     </copyright>
@@ -1261,7 +1261,7 @@
           <para>CD «Live» de GParted <ulink type="http" url="https://gparted.org/livecd.php"/></para>
         </listitem>
         <listitem>
-          <para>CD de rescate del sistema <ulink type="http" url="http://www.system-rescue-cd.org"/></para>
+          <para>CD de rescate del sistema (conocido también como SystemRescueCD) <ulink type="http" url="http://www.system-rescue-cd.org"/></para>
         </listitem>
       </itemizedlist></para>
     <tip>
@@ -1403,7 +1403,7 @@
             </listitem>
             <listitem>
               <para>Reinstale el cargador de arranque <application>grub</application> en el «Master Boot Record» (MBR) usando: <screen><prompt>grub&gt; </prompt>setup <replaceable>(hd0)</replaceable></screen></para>
-              <para>Si quiere reinstalar el cargador de arranque <application>grub</application> en el sector de arranque de una partición, indique la partición usando: <screen><prompt>grub&gt; </prompt>setup <replaceable>(hd0,0)</replaceable></screen></para>
+              <para>Si quiere instalar el cargador de arranque <application>grub</application> en el sector de arranque de una partición, indique la partición usando: <screen><prompt>grub&gt; </prompt>setup <replaceable>(hd0,0)</replaceable></screen></para>
             </listitem>
             <listitem>
               <para>Salga de <application>grub</application>. <screen><prompt>grub&gt; </prompt>quit</screen></para>

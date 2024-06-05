@@ -2169,7 +2169,7 @@
                     <para lang="en">
                     If you want to save the file in a folder
                     different than /root,
-                    Click <guibutton>Browse for other folders</guibutton>.
+                    click <guibutton>Browse for other folders</guibutton>.
                     The application displays a file system navigator.
                     </para>
                     <para lang="en">
@@ -2252,8 +2252,8 @@
         </listitem>
         <listitem>
           <para lang="en">
-          System Rescue CD
-          <ulink type="http" url="http://www.system-rescue-cd.org"/>
+          SystemRescue (also known as SystemRescueCD)
+          <ulink type="http" url="https://www.system-rescue.org"/>
           </para>
         </listitem>
       </itemizedlist>
@@ -2561,7 +2561,7 @@
               </para>
               <para lang="en">
               If you want to install the
-              <application>grub</application> boat loader into the
+              <application>grub</application> boot loader into the
               boot sector of a partition, instead specify a partition
               with:
               <screen lang="en"><prompt>grub&gt; </prompt>setup <replaceable>(hd0,0)</replaceable></screen>

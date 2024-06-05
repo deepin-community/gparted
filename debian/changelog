@@ -1,3 +1,21 @@
+gparted (1.5.0-1) unstable; urgency=medium
+
+  * Fix the watch file
+  * New upstream version 1.5.0
+  * build-depend on libpolkit-gobject-1-dev
+  * Switch dependency from transitional polkit-1 to pkexec package (Closes: #1025568)
+
+ -- Phillip Susi <phill@thesusis.net>  Thu, 10 Aug 2023 11:39:22 -0400
+
+gparted (1.3.1-1) unstable; urgency=medium
+
+  * New upstream version 1.3.1
+  * Suggest exfatprogs (Closes: #984714, #992224, #985451)
+  * d/control: bump debheler compat to 13
+  * Move libpartedbin to /usr/libexec (Closes: #950259)
+
+ -- Phillip Susi <phill@thesusis.net>  Wed, 12 Jan 2022 11:23:19 -0500
+
 gparted (1.2.0-1) unstable; urgency=medium
 
   [ nicoo ]

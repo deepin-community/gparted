@@ -191,13 +191,13 @@ void TreeView_Detail::create_row( const Gtk::TreeRow & treerow,
 	treerow[treeview_detail_columns.fsname] = partition.get_filesystem_string();
 
 	// mount point
-	std::vector<Glib::ustring> temp_mountpoints = filesystem_ptn.get_mountpoints();
+	const std::vector<Glib::ustring>& temp_mountpoints = filesystem_ptn.get_mountpoints();
 	treerow[treeview_detail_columns.mountpoint] = Glib::build_path( ", ", temp_mountpoints );
 	if ( ! temp_mountpoints.empty() )
 		show_mountpoints = true;
 
 	//label
-	Glib::ustring temp_filesystem_label = filesystem_ptn.get_filesystem_label();
+	const Glib::ustring& temp_filesystem_label = filesystem_ptn.get_filesystem_label();
 	treerow[treeview_detail_columns.label] = temp_filesystem_label;
 	if ( ! temp_filesystem_label.empty() )
 		show_labels = true;

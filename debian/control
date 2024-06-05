@@ -2,15 +2,16 @@ Source: gparted
 Section: gnome
 Priority: optional
 Maintainer: Phillip Susi <phill@thesusis.net>
-Build-Depends: debhelper-compat (= 11),
+Build-Depends: debhelper-compat (= 13),
  intltool,
  libgtkmm-3.0-dev,
  libparted-dev (>= 2.22),
  parted,
  pkg-config,
- policykit-1,
  uuid-dev,
- yelp-tools
+ yelp-tools,
+ pkexec,
+ libpolkit-gobject-1-dev
 Standards-Version: 4.5.0
 Homepage: https://gparted.org
 Vcs-Git: https://salsa.debian.org/debian/gparted.git
@@ -19,7 +20,7 @@ Vcs-Browser: https://salsa.debian.org/debian/gparted
 Package: gparted
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends},
-         gparted-common (= ${source:Version}), policykit-1
+         gparted-common (= ${source:Version}), pkexec
 Breaks: udisks2 (<< 2.1.5), gparted-common (= 1.0.0-0.1)
 Replaces: gparted-common (= 1.0.0-0.1)
 Suggests:
@@ -36,6 +37,7 @@ Suggests:
  reiserfsprogs,
  udftools,
  xfsprogs,
+ exfatprogs,
  yelp
 Description: GNOME partition editor
  GParted uses libparted to detect and manipulate devices and partition

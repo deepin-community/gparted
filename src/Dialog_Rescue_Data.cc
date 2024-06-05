@@ -263,8 +263,8 @@ void Dialog_Rescue_Data::check_overlaps(int nPart)
 
 		for(unsigned int i=0;i<this->overlappedPartitions.size(); i++)
 		{
-			Glib::ustring ovrDevPath=this->device->partitions[i].get_path();
-			Glib::ustring ovrDevMountPoint=this->device->partitions[i].get_mountpoint();
+			const Glib::ustring& ovrDevPath = this->device->partitions[i].get_path();
+			const Glib::ustring& ovrDevMountPoint = this->device->partitions[i].get_mountpoint();
 
 			sec_text+="\n"+ovrDevPath+" mounted on "+ovrDevMountPoint;
 		}
@@ -275,7 +275,7 @@ void Dialog_Rescue_Data::check_overlaps(int nPart)
 		{
 			for(unsigned int i=0;i<this->overlappedPartitions.size(); i++)
 			{
-				Glib::ustring mountP=this->device->partitions[i].get_mountpoint();
+				const Glib::ustring& mountP=this->device->partitions[i].get_mountpoint();
 
 				Glib::ustring commandUmount = "umount " + Glib::shell_quote(mountP);
 				Utils::execute_command(commandUmount);
@@ -436,7 +436,7 @@ void Dialog_Rescue_Data::read_partitions_from_buffer()
 
 
 /*
- * Checks if the guessed partition is overlaping some active partition
+ * Checks if the guessed partition is overlapping some active partition
  */
 bool Dialog_Rescue_Data::is_overlaping(int nPart)
 {

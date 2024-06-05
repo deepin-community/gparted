@@ -8,9 +8,10 @@ AM_CFLAGS = -Wall
 
 AM_CXXFLAGS = -Wall	
 
-sbin_PROGRAMS = gpartedbin
+libexec_PROGRAMS = gpartedbin
 
 gpartedbin_SOURCES = \
+	BCache_Info.cc			\
 	BlockSpecial.cc			\
 	CopyBlocks.cc			\
 	DMRaid.cc			\

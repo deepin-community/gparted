@@ -1201,8 +1201,8 @@
                     <para>Pokud chcete změnit výchozí název souboru, zapiště nový název souboru do textového pole <guilabel>Název</guilabel>.</para>
                   </listitem>
                   <listitem>
-                    <para>Pokud chcete soubor uložit do jiné složky než /root, klikněte na <guibutton>Procházet jiné složky</guibutton>. Aplikace zobrazí navigátor souborového systému.</para>
-                    <para>Použijte navigátor souborového systému k výběru složky.</para>
+                    <para>Pokud chcete soubor uložit do jiné složky než /root, klikněte na <guibutton>Procházet jiné složky</guibutton>. Aplikace zobrazí navigaci v souborovém systému.</para>
+                    <para>Použijte navigaci v souborovém systému k výběru složky.</para>
                   </listitem>
                   <listitem>
                     <para>Klikněte na <guibutton>Uložit</guibutton> a aplikace uloží podrobnosti do souboru.</para>
@@ -1242,7 +1242,7 @@
           <para>GParted Live CD <ulink type="http" url="https://gparted.org/livecd.php"/></para>
         </listitem>
         <listitem>
-          <para>System Rescue CD <ulink type="http" url="http://www.system-rescue-cd.org"/></para>
+          <para>SystemRescue (známý také jako System Rescue CD) <ulink type="http" url="https://www.system-rescue.org"/></para>
         </listitem>
       </itemizedlist></para>
     <tip>
