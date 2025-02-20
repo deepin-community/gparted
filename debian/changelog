@@ -1,3 +1,9 @@
+gparted (1.6.0-1deepin1) unstable; urgency=medium
+
+  * rebuild to fix i386
+
+ -- lhdjply <lhdjply@126.com>  Thu, 20 Feb 2024 13:59:24 +0800
+
 gparted (1.6.0-1) unstable; urgency=medium
 
   * New upstream version 1.6.0
