@@ -165,7 +165,7 @@ void Dialog_Progress::on_signal_update( const OperationDetail & operationdetail 
 		if ( operationdetail .get_status() == STATUS_EXECUTE )
 			label_current_sub_text = operationdetail .get_description() ;
 
-		ProgressBar & progressbar_src = operationdetail.get_progressbar();
+		const ProgressBar& progressbar_src = operationdetail.get_progressbar();
 		if ( progressbar_src.running() )
 		{
 			if ( pulsetimer.connected() )
@@ -488,7 +488,7 @@ void Dialog_Progress::write_partition_details(const Partition& partition, std::o
 	    << "<td class='number_col'>" << partition.sector_end << "</td>"
 	    << "<td>" << Glib::build_path(", ", partition.flags) << "</td>"
 	    << "<td>" << partition.name << "</td>"
-	    << "<td>" << Utils::get_filesystem_string(partition.fstype) << "</td>"
+	    << "<td>" << partition.get_filesystem_string() << "</td>"
 	    << "<td>" << partition.get_filesystem_label() << "</td>"
 	    << "<td>" << Glib::build_path(", ", partition.get_mountpoints()) << "</td>"
 	    << "</tr>" << std::endl;

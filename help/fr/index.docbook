@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY appversion "0.31.0">
-<!ENTITY manrevision "1.12">
-<!ENTITY date "May 2018">
+<!ENTITY appversion "1.6.0">
+<!ENTITY manrevision "1.13">
+<!ENTITY date "September 2023">
 <!ENTITY app "gparted">
 <!ENTITY appname "GParted">
 <!-- Information about the entities:
@@ -36,7 +36,10 @@
     </abstract>
 
     <copyright><year>2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017</year> <holder>Curtis Gedak</holder></copyright>
-    <copyright><year>2014, 2015, 2017, 2018</year> <holder>Mike Fleetwood</holder></copyright>
+    <copyright lang="en">
+      <year>2014, 2015, 2017, 2018, 2023</year>
+      <holder>Mike Fleetwood</holder>
+    </copyright>
 
 <!-- translators: uncomment this:
     <copyright>
@@ -70,6 +73,15 @@
 <!-- According to GNU FDL, revision history is mandatory if you are -->
 <!-- modifying/reusing someone else's document.  If not, you can omit it. -->
     <revhistory>
+      <revision lang="en">
+        <revnumber>GParted Manual V1.13</revnumber>
+        <date>September 2023</date>
+        <revdescription>
+          <para role="author" lang="en">Mike Fleetwood</para>
+          <para role="publisher" lang="en">GParted Project</para>
+          <para role="annotations" lang="en">Describes version 1.6.0 of GParted</para>
+        </revdescription>
+      </revision>
       <revision><revnumber>Manuel de GParted v1.12</revnumber> <date>Mai 2018</date> <revdescription>
           <para role="author">Mike Fleetwood</para>
           <para role="publisher">Projet GParted</para>
@@ -142,7 +154,9 @@
         </revdescription></revision>
     </revhistory>
 
-    <releaseinfo>Ce manuel documente la version 0.31.0 de GParted</releaseinfo>
+    <releaseinfo lang="en">
+    This manual describes version 1.6.0 of GParted
+    </releaseinfo>
 
     <legalnotice>
       <title>Votre avis</title>
@@ -357,62 +371,6 @@
         <para>AVERTISSEMENT : ceci va SUPPRIMER TOUTES LES DONNÉES sur l’ENSEMBLE DU DISQUE.</para>
         <para>Si vous écrasez accidentellement votre table de partitions, consultez <xref linkend="gparted-recover-partition-table"/>.</para>
       </caution>
-    </sect2>
-
-<!-- ============= To Attempt Data Rescue =================== -->
-    <sect2 id="gparted-attempt-data-rescue">
-      <title>Tenter une récupération de données</title>
-      <para>Pour tenter de récupérer des données depuis un périphérique disque : <orderedlist>
-          <listitem>
-            <para>Sélectionnez un périphérique disque. Voir <xref linkend="gparted-select-device"/>.</para>
-          </listitem>
-          <listitem>
-            <para>Choisissez <menuchoice><guimenu>Périphérique</guimenu><guimenuitem>Tenter une récupération de données</guimenuitem></menuchoice>. L’application affiche alors la boîte de dialogue <guilabel>Rechercher des systèmes de fichiers sur <replaceable>/chemin-vers-périphérique</replaceable></guilabel>.</para>
-          </listitem>
-          <listitem>
-            <para>Cliquez sur le bouton <guibutton>Valider</guibutton> pour lancer le balayage de tout le disque.</para>
-            <tip>
-              <para>Le balayage des grands disques peut être très long. Si vous ne pouvez pas attendre jusqu’à la fin, cliquez sur le bouton <guibutton>Annuler</guibutton>.</para>
-            </tip>
-            <note>
-              <para>Vous pouvez trouver 4 partitions au maximum. Si vous voulez en trouver plus et restaurer la table de partition, consultez <xref linkend="gparted-recover-partition-table"/>.</para>
-            </note>
-          </listitem>
-          <listitem>
-            <para>Quand le balayage de tout le disque est terminé, une des deux boîtes de dialogue possibles est affichée : <itemizedlist>
-                <listitem>
-                  <para><guilabel>Aucun système de fichiers trouvé sur <replaceable>/chemin-vers-périph</replaceable> </guilabel></para>
-                  <para>Si aucun système de fichiers n’a été trouvé, vous disposez d’autres possibilités pour récupérer vos données. L’application <application>photorec</application>, par exemple, est conçue pour faciliter la récupération de nombreux types de fichiers perdus. Pour plus d’explications sur <application>photorec</application>, reportez-vous à <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.</para>
-                  <para>Cliquez sur le bouton <guibutton>Valider</guibutton> pour fermer la boîte de dialogue et mettre fin à cette tentative de récupération de données.</para>
-                </listitem>
-                <listitem>
-                  <para><guilabel>Systèmes de fichiers trouvés sur <replaceable>/chemin-vers-périph</replaceable> </guilabel></para>
-                  <para>Si des systèmes de fichiers ont été trouvés, le contenu de chacun d’eux peut être affiché grâce au bouton <guibutton>Afficher</guibutton>. La boîte de dialogue indique alors s’il existe des incohérences. Ces incohérences risquent de vous empêcher de visualiser les données.</para>
-                </listitem>
-              </itemizedlist></para>
-          </listitem>
-          <listitem>
-            <para>Pour récupérer des données, respectez les étapes suivantes pour chaque système de fichiers : <orderedlist numeration="upperalpha">
-                <listitem>
-                  <para>Cliquez sur le bouton <guibutton>Afficher</guibutton> pour monter et afficher le système de fichiers. Votre gestionnaire de fichiers s’ouvre et affiche une vue, en lecture seulement, du système de fichiers.</para>
-                  <note>
-                    <para>Si la boîte de dialogue <guilabel>Impossible d’ouvrir le gestionnaire de fichiers par défaut</guilabel> s’affiche, vous devrez ouvrir un gestionnaire de fichiers et naviguer jusqu’au point de montage du système de fichiers.</para>
-                    <para>Le point de montage est affiché dans la boîte de dialogue, par exemple « /tmp/gparted-roview-XXXXXX ».</para>
-                    <para>Cliquez sur <guibutton>Valider</guibutton> pour fermer la boîte de dialogue <guilabel>Impossible d’ouvrir le gestionnaire de fichiers par défaut</guilabel>.</para>
-                  </note>
-                </listitem>
-                <listitem>
-                  <para>Utilisez le gestionnaire de fichiers pour copier vos données sur un autre moyen de stockage.</para>
-                </listitem>
-                <listitem>
-                  <para>Quand vous avez fini de copier vos données, fermez le gestionnaire de fichiers.</para>
-                </listitem>
-              </orderedlist></para>
-          </listitem>
-          <listitem>
-            <para>Quand vous avez fini de récupérer les données, cliquez sur <guibutton>Fermer</guibutton>. L’application démonte alors les systèmes de fichiers montés pour l’affichage. Elle re-balaye tous les périphériques disques et met à jour l’agencement des partitions des périphériques dans la fenêtre <application>gparted</application>.</para>
-          </listitem>
-        </orderedlist></para>
     </sect2>
 
   </sect1>
@@ -1404,7 +1362,18 @@
     <title>Récupération des tables de partitions</title>
     <para>Si vous écrasez accidentellement votre table de partitions, il vous reste une chance de la récupérer.</para>
     <para>L’application  <application>testdisk</application> est destinée à vous aider à récupérer les partitions perdues. Pour en savoir plus sur <application>testdisk</application>, consultez <ulink type="http" url="https://www.cgsecurity.org/wiki/TestDisk"/>.</para>
-    <para>L’application <application>testdisk</application> est incluse dans tous les CD autonomes figurant dans la liste <xref linkend="gparted-acquire-livecd"/></para>
+    <para lang="en">
+    If no partitions are found, you have other options to try to rescue
+    your data.  The <application>photorec</application> application is
+    designed to help recover many different types of lost files.  For
+    more information about <application>photorec</application>, see
+    <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.
+    </para>
+    <para lang="en">
+    Both <application>testdisk</application> and
+    <application>photorec</application> applications are included on
+    each Live CD listed in <xref linkend="gparted-acquire-livecd"/>.
+    </para>
   </sect1>
 
 </article>

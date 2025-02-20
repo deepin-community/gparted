@@ -81,15 +81,16 @@ bool lvm2_pv::is_busy( const Glib::ustring & path )
 	return LVM2_PV_Info::has_active_lvs( path );
 }
 
+
 void lvm2_pv::set_used_sectors( Partition & partition )
 {
-	T = (Sector) LVM2_PV_Info::get_size_bytes( partition.get_path() );
-	N = (Sector) LVM2_PV_Info::get_free_bytes( partition.get_path() );
-	if ( T > -1 && N > -1 )
+	Byte_Value size_bytes = LVM2_PV_Info::get_size_bytes(partition.get_path());
+	Byte_Value free_bytes = LVM2_PV_Info::get_free_bytes(partition.get_path());
+	if (size_bytes > -1 && free_bytes > -1)
 	{
-		T = Utils::round( T / double(partition .sector_size) ) ;
-		N = Utils::round( N / double(partition .sector_size) ) ;
-		partition .set_sector_usage( T, N ) ;
+		Sector fs_size = size_bytes / partition.sector_size;
+		Sector fs_free = free_bytes / partition.sector_size;
+		partition.set_sector_usage(fs_size, fs_free);
 	}
 
 	std::vector<Glib::ustring> error_messages = LVM2_PV_Info::get_error_messages( partition.get_path() );
@@ -107,8 +108,7 @@ bool lvm2_pv::resize( const Partition & partition_new, OperationDetail & operati
 	Glib::ustring size = "" ;
 	if ( ! fill_partition )
 		size = " --yes --setphysicalvolumesize " +
-			Utils::num_to_str( floor( Utils::sector_to_unit(
-				partition_new .get_sector_length(), partition_new .sector_size, UNIT_KIB ) ) ) + "K " ;
+		       Utils::num_to_str(partition_new.get_byte_length() / KIBIBYTE) + "K ";
 	return ! execute_command( "lvm pvresize -v " + size + Glib::shell_quote( partition_new.get_path() ),
 	                          operationdetail, EXEC_CHECK_STATUS );
 }

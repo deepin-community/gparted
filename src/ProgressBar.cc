@@ -23,7 +23,7 @@ namespace GParted
 {
 
 ProgressBar::ProgressBar() : m_running( false ), m_target( 1.0 ), m_progress( 0.0 ), m_fraction( 0.0 ),
-                             m_text_mode( PROGRESSBAR_TEXT_NONE )
+                             m_text_mode(PROGRESSBAR_TEXT_TIME_REMAINING)
 {
 }
 
@@ -37,6 +37,7 @@ void ProgressBar::start( double target, ProgressBar_Text text_mode )
 	m_target = target;
 	m_progress = 0.0;
 	m_text_mode = text_mode;
+	m_text.clear();
 	m_timer.start();
 	do_update();
 }
@@ -67,7 +68,8 @@ double ProgressBar::get_fraction() const
 	return m_fraction;
 }
 
-Glib::ustring ProgressBar::get_text() const
+
+const Glib::ustring& ProgressBar::get_text() const
 {
 	return m_text;
 }
@@ -83,14 +85,14 @@ void ProgressBar::do_update()
 	else if ( m_fraction > 1.0 )
 		m_fraction = 1.0;
 
+	double elapsed = m_timer.elapsed();
 	if ( m_text_mode == PROGRESSBAR_TEXT_COPY_BYTES )
 	{
-		double elapsed = m_timer.elapsed();
 		if ( m_running && elapsed >= 5.0 )
 		{
 			/* Only show "(00:01:59 remaining)" when a progress bar has been
 			 * running for at least 5 seconds to allow the data copying rate
-			 * to settle down a little before estimating the remaining time.
+			 * to settle down a little before estimating the time remaining.
 			 */
 			std::time_t remaining = Utils::round( (m_target - m_progress) /
 			                                      (m_progress / elapsed) );
@@ -106,6 +108,25 @@ void ProgressBar::do_update()
 			                         _("%1 of %2 copied"),
 			                         Utils::format_size( m_progress, 1 ),
 			                         Utils::format_size( m_target, 1 ) );
+		}
+	}
+	else /* (m_text_mode == PROGRESSBAR_TEXT_TIME_REMAINING) */
+	{
+		if (m_running && elapsed >= 5.0)
+		{
+			/* Only show "(00:01:59 remaining)" when a progress bar has been
+			 * running for at least 5 seconds to allow the progress rate to
+			 * settle down a little before estimating the time remaining.
+			 */
+			std::time_t remaining = Utils::round((m_target - m_progress) /
+			                                     (m_progress / elapsed)   );
+			m_text = Glib::ustring::compose( /* TO TRANSLATORS: looks like   (00:01:59 remaining) */
+			                _("(%1 remaining)"),
+			                Utils::format_time(remaining));
+		}
+		else
+		{
+			m_text.clear();
 		}
 	}
 }

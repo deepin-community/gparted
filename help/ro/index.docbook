@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY appversion "0.31.0">
-<!ENTITY manrevision "1.12">
-<!ENTITY date "May 2018">
+<!ENTITY appversion "1.6.0">
+<!ENTITY manrevision "1.13">
+<!ENTITY date "September 2023">
 <!ENTITY app "gparted">
 <!ENTITY appname "GParted">
 <!-- Information about the entities:
@@ -36,7 +36,10 @@
     </abstract>
 
     <copyright><year>2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017</year> <holder>Curtis Gedak</holder></copyright>
-    <copyright><year>2014, 2015, 2017, 2018</year> <holder>Mike Fleetwood</holder></copyright>
+    <copyright lang="en">
+      <year>2014, 2015, 2017, 2018, 2023</year>
+      <holder>Mike Fleetwood</holder>
+    </copyright>
 
 <!-- translators: uncomment this:
     <copyright>
@@ -70,6 +73,15 @@
 <!-- According to GNU FDL, revision history is mandatory if you are -->
 <!-- modifying/reusing someone else's document.  If not, you can omit it. -->
     <revhistory>
+      <revision lang="en">
+        <revnumber>GParted Manual V1.13</revnumber>
+        <date>September 2023</date>
+        <revdescription>
+          <para role="author" lang="en">Mike Fleetwood</para>
+          <para role="publisher" lang="en">GParted Project</para>
+          <para role="annotations" lang="en">Describes version 1.6.0 of GParted</para>
+        </revdescription>
+      </revision>
       <revision><revnumber>GParted Manual V1.12</revnumber> <date>Mai 2018</date> <revdescription>
           <para role="author">Mike Fleetwood</para>
           <para role="publisher">Proiectul GParted</para>
@@ -142,7 +154,9 @@
         </revdescription></revision>
     </revhistory>
 
-    <releaseinfo>Acest manual descrie versiunea 0.31.0 a lui GParted</releaseinfo>
+    <releaseinfo lang="en">
+    This manual describes version 1.6.0 of GParted
+    </releaseinfo>
 
     <legalnotice>
       <title>Sugestii</title>
@@ -387,62 +401,6 @@
         <para>AVERTISMENT: Această acțiune va ȘTERGE TOATE DATELE de pe ÎNTREGUL DISPOZITIV DISC.</para>
         <para>Dacă din greșeală suprascrieți tabela de partiții, consultați <xref linkend="gparted-recover-partition-table"/>.</para>
       </caution>
-    </sect2>
-
-<!-- ============= To Attempt Data Rescue =================== -->
-    <sect2 id="gparted-attempt-data-rescue">
-      <title>Încercarea recuperării datelor</title>
-      <para>Pentru a încerca recuperarea datelor de pe un disc: <orderedlist>
-          <listitem>
-            <para>Selectați un dispozitiv disc. Consultați <xref linkend="gparted-select-device"/>.</para>
-          </listitem>
-          <listitem>
-            <para>Selectați: <menuchoice><guimenu>Dispozitiv</guimenu><guimenuitem>Încearcă recuperarea datelor</guimenuitem></menuchoice>. Aplicația va afișa dialogul <guilabel>Căutarea sistemelor de fișiere de pe <replaceable>/cale-spre-dispozitiv</replaceable></guilabel>.</para>
-          </listitem>
-          <listitem>
-            <para>Apăsați <guibutton>OK</guibutton> pentru a începe scanarea completă.</para>
-            <tip>
-              <para>Pentru discurile mari scanarea poate dura un timp îndelungat. Dacă nu aveți timp să așteptați pentru o scanare completă atunci apăsați <guibutton>Anulează</guibutton>.</para>
-            </tip>
-            <note>
-              <para>Un maxim de 4 partiții cu sisteme de fișiere pot fi descoperite. Dacă doriți să descoperiți mai mult de 4 partiții și să restaurați tabela de partiții, consultați <xref linkend="gparted-recover-partition-table"/>.</para>
-            </note>
-          </listitem>
-          <listitem>
-            <para>Când scanarea completă a discului se încheie unul din cele două dialoguri vor fi afișate: <itemizedlist>
-                <listitem>
-                  <para><guilabel>Nu s-au găsit sisteme de fișiere pe <replaceable>/cale-către-dispozitiv</replaceable> </guilabel></para>
-                  <para>Dacă nu se găsesc sisteme de fișiere, puteți încerca alte opțiuni pentru a încerca recuperarea datelor. Aplicația <application>photorec</application> este proiectată pentru a ajuta la recuperarea mai multor tipuri de fișiere pierdute. Pentru mai multe informații despre <application>photorec</application>, consultați <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.</para>
-                  <para>Apăsați <guibutton>OK</guibutton> pentru a închide caseta de dialog, și a încheia încercarea recuperării datelor.</para>
-                </listitem>
-                <listitem>
-                  <para><guilabel>S-au găsit sisteme de fișiere pe <replaceable>/cale-către dispozitiv</replaceable> </guilabel></para>
-                  <para>Dacă sunt găsite sisteme de fișiere, fiecare sistem de fișiere este afișat în listă împreună cu un buton <guibutton>Vizualizare</guibutton>. Dialogul va indica dacă sunt inconsecvențe în date. Inconsecvențele în date vă pot împiedica să vizualizați datele.</para>
-                </listitem>
-              </itemizedlist></para>
-          </listitem>
-          <listitem>
-            <para>Pentru a recupera date, utilizați pașii următori pentru fiecare sistem de fișiere: <orderedlist numeration="upperalpha">
-                <listitem>
-                  <para>Apăsați <guibutton>Vizualizare</guibutton> pentru a monta și afișa sistemul de fișiere. Administratorul de fișiere implicit al dumneavoastră este deschis și afișează o vizualizare doar pentru citire a sistemului de fișiere.</para>
-                  <note>
-                    <para>Dacă dialogul <guilabel>Nu s-a putut deschide administratorul de fișiere implicit</guilabel> este afișat, atunci va trebui să deschideți un administrator de fișier și să navigați la punctul de montare pentru al sistemului de fișiere.</para>
-                    <para>Punctul de montare este afișat în dialog, de exemplu „/tmp/gparted-roview-XXXXXX”.</para>
-                    <para>Apăsați <guibutton>OK</guibutton> pentru a închide dialogul<guilabel>Nu s-a putut deschide administratorul de fișiere implicit</guilabel>.</para>
-                  </note>
-                </listitem>
-                <listitem>
-                  <para>Utilizați administratorul de fișiere pentru a copia datele dumneavoastră pe alte medii de stocare.</para>
-                </listitem>
-                <listitem>
-                  <para>Când ați finalizat copierea datelor, închideți administratorul de fișiere.</para>
-                </listitem>
-              </orderedlist></para>
-          </listitem>
-          <listitem>
-            <para>Când ați finalizat recuperarea datelor, apăsați <guibutton>Închide</guibutton> pentru a încheia această încercare de a recupera datele. Aplicația demontează sistemele de fișiere care au fost montate pentru vizualizare. Apoi aplicația rescanează toate discurile și reîmprospătează aranjamentul partițiilor dispozitivului în fereastra <application>gparted</application>.</para>
-          </listitem>
-        </orderedlist></para>
     </sect2>
 
   </sect1>
@@ -1434,7 +1392,18 @@
     <title>Recuperarea tabelelor de partiții</title>
     <para>Dacă suprascrieți accidental tabela de partiții, e posibil să nu o puteți recupera.</para>
     <para>Aplicația <application>testdisk</application> este proiectată pentru a ajuta la recuperarea partițiilor pierdute. Pentru mai multe informații despre <application>testdisk</application>, consultați <ulink type="http" url="https://www.cgsecurity.org/wiki/TestDisk"/>.</para>
-    <para>Aplicația <application>testdisk</application> este inclusă pe fiecare CD Live afișat în lista <xref linkend="gparted-acquire-livecd"/></para>
+    <para lang="en">
+    If no partitions are found, you have other options to try to rescue
+    your data.  The <application>photorec</application> application is
+    designed to help recover many different types of lost files.  For
+    more information about <application>photorec</application>, see
+    <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.
+    </para>
+    <para lang="en">
+    Both <application>testdisk</application> and
+    <application>photorec</application> applications are included on
+    each Live CD listed in <xref linkend="gparted-acquire-livecd"/>.
+    </para>
   </sect1>
 
 </article>

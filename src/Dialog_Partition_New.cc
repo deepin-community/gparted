@@ -51,7 +51,7 @@ Dialog_Partition_New::Dialog_Partition_New( const Device & device,
 Dialog_Partition_New::~Dialog_Partition_New()
 {
 	delete new_partition;
-	new_partition = NULL;
+	new_partition = nullptr;
 
 	// Work around a Gtk issue fixed in 3.24.0.
 	// https://gitlab.gnome.org/GNOME/gtk/issues/125
@@ -183,7 +183,7 @@ void Dialog_Partition_New::set_data( const Device & device,
 	//set some widely used values...
 	MIN_SPACE_BEFORE_MB = Dialog_Base_Partition::MB_Needed_for_Boot_Record( selected_partition );
 	START = selected_partition.sector_start;
-	total_length = selected_partition.sector_end - selected_partition.sector_start;
+	total_length = selected_partition.get_sector_length();
 	TOTAL_MB = Utils::round( Utils::sector_to_unit( selected_partition.get_sector_length(),
 	                                                selected_partition.sector_size, UNIT_MIB ) );
 	MB_PER_PIXEL = TOTAL_MB / 500.00 ;
@@ -212,7 +212,7 @@ void Dialog_Partition_New::set_data( const Device & device,
 
 const Partition & Dialog_Partition_New::Get_New_Partition()
 {
-	g_assert( new_partition != NULL );  // Bug: Not initialised by constructor calling set_data()
+	g_assert(new_partition != nullptr);  // Bug: Not initialised by constructor calling set_data()
 
 	PartitionType part_type ;
 	Sector new_start, new_end;
@@ -339,7 +339,7 @@ const Partition & Dialog_Partition_New::Get_New_Partition()
 
 void Dialog_Partition_New::combobox_changed(bool combo_type_changed)
 {
-	g_assert( new_partition != NULL );  // Bug: Not initialised by constructor calling set_data()
+	g_assert(new_partition != nullptr);  // Bug: Not initialised by constructor calling set_data()
 
 	// combo_type
 	if (combo_type_changed)
@@ -414,7 +414,8 @@ void Dialog_Partition_New::combobox_changed(bool combo_type_changed)
 
 void Dialog_Partition_New::build_filesystems_combo(bool only_unformatted)
 {
-	g_assert( new_partition != NULL );  // Bug: Not initialised by constructor calling set_data()
+	g_assert(new_partition != nullptr);  // Bug: Not initialised by constructor calling set_data()
+
 	combo_filesystem.items().clear();
 
 	// Fill the file system combobox

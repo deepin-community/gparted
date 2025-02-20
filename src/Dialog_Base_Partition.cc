@@ -31,7 +31,7 @@ namespace GParted
 Dialog_Base_Partition::Dialog_Base_Partition(const Device& device)
  : m_device(device)
 {
-	frame_resizer_base = NULL;
+	frame_resizer_base = nullptr;
 	GRIP = false ;
 	this ->fixed_start = false ;
 	this ->set_resizable( false );
@@ -165,7 +165,7 @@ void Dialog_Base_Partition::Set_Resizer( bool extended )
 
 const Partition & Dialog_Base_Partition::Get_New_Partition()
 {
-	g_assert( new_partition != NULL );  // Bug: Not initialised by derived Dialog_Partition_*() constructor calling set_data()
+	g_assert(new_partition != nullptr);  // Bug: Not initialised by derived Dialog_Partition_*() constructor calling set_data()
 
 	prepare_new_partition();
 	return *new_partition;
@@ -173,7 +173,7 @@ const Partition & Dialog_Base_Partition::Get_New_Partition()
 
 void Dialog_Base_Partition::prepare_new_partition()
 {
-	g_assert( new_partition != NULL );  // Bug: Not initialised by derived Dialog_Partition_*() constructor calling set_data()
+	g_assert(new_partition != nullptr);  // Bug: Not initialised by derived Dialog_Partition_*() constructor calling set_data()
 
 	Sector old_size = new_partition->get_sector_length();
 
@@ -210,14 +210,13 @@ void Dialog_Base_Partition::prepare_new_partition()
 		case 1:
 			new_partition->alignment = ALIGN_MEBIBYTE;
 			{
-				// If partition size is not an integer multiple of MiB or
-				// the start or end sectors are not MiB aligned, and space
-				// is available, then add 1 MiB to partition so requested
-				// size is kept after snap_to_mebibyte() method rounding.
+				// If partition start or end sectors are not MiB aligned,
+				// and space is available, then add 1 MiB to partition so
+				// requesting size is kept after snap_to_mebibyte() method
+				// rounding.
 				Sector partition_size = new_partition->sector_end - new_partition->sector_start + 1;
 				Sector sectors_in_mib = MEBIBYTE / new_partition->sector_size;
-				if (    (    ( partition_size % sectors_in_mib                    > 0 )
-				          || ( new_partition->sector_start % sectors_in_mib       > 0 )
+				if (    (    ( new_partition->sector_start % sectors_in_mib       > 0 )
 				          || ( ( new_partition->sector_end + 1 ) % sectors_in_mib > 0 )
 				        )
 				     && ( partition_size + sectors_in_mib < total_length )
@@ -331,12 +330,9 @@ void Dialog_Base_Partition::snap_to_mebibyte(const Device& device, Partition& pa
 		// (A) the Master Boot Record sector and the first primary/extended partition, and
 		// (B) the Extended Boot Record sector and the logical partition.
 
-		// If strict_start is set then do not adjust sector start.
-		// If this partition is not simply queued for a reformat then
-		// add space minimum to force alignment to next mebibyte.
-		if (! partition.strict_start                        &&
-		      partition.free_space_before == 0              &&
-		      partition.status            != STAT_FORMATTED   )
+		// If moving the starting sector and no preceding space then add minimum
+		// space to force alignment to next mebibyte.
+		if (! partition.strict_start && partition.free_space_before == 0)
 		{
 			// Unless specifically told otherwise, the Linux kernel considers extended
 			// boot records to be two sectors long, in order to "leave room for LILO".

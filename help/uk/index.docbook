@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY appversion "0.31.0">
-<!ENTITY manrevision "1.12">
-<!ENTITY date "May 2018">
+<!ENTITY appversion "1.6.0">
+<!ENTITY manrevision "1.13">
+<!ENTITY date "September 2023">
 <!ENTITY app "gparted">
 <!ENTITY appname "GParted">
 <!-- Information about the entities:
@@ -36,7 +36,7 @@
     </abstract>
 
     <copyright><year>2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017</year> <holder>Curtis Gedak</holder></copyright>
-    <copyright><year>2014, 2015, 2017, 2018</year> <holder>Mike Fleetwood</holder></copyright>
+    <copyright><year>2014, 2015, 2017, 2018, 2023</year> <holder>Mike Fleetwood</holder></copyright>
 
 <!-- translators: uncomment this:
     <copyright>
@@ -70,6 +70,11 @@
 <!-- According to GNU FDL, revision history is mandatory if you are -->
 <!-- modifying/reusing someone else's document.  If not, you can omit it. -->
     <revhistory>
+      <revision><revnumber>Підручник з GParted, версія 1.13</revnumber> <date>вересень 2023 року</date> <revdescription>
+          <para role="author">Mike Fleetwood</para>
+          <para role="publisher">Проєкт GParted</para>
+          <para role="annotations">Описано версію 1.6.0 GParted</para>
+        </revdescription></revision>
       <revision><revnumber>Підручник з GParted, версія 1.12</revnumber> <date>травень 2018 року</date> <revdescription>
           <para role="author">Mike Fleetwood</para>
           <para role="publisher">Проєкт GParted</para>
@@ -142,7 +147,7 @@
         </revdescription></revision>
     </revhistory>
 
-    <releaseinfo>У цьому підручнику описано версію 0.31.0 GParted</releaseinfo>
+    <releaseinfo>У цьому підручнику описано версію 1.6.0 GParted</releaseinfo>
 
     <legalnotice>
       <title>Відгуки</title>
@@ -370,62 +375,6 @@
         <para>УВАГА: Ця дія ЗНИЩИТЬ ВСІ ДАНІ на ВСЬОМУ ДИСКОВОМУ ПРИСТРОЇ.</para>
         <para>Якщо ви випадково перезаписали вашу таблицю розділів, див. <xref linkend="gparted-recover-partition-table"/>.</para>
       </caution>
-    </sect2>
-
-<!-- ============= To Attempt Data Rescue =================== -->
-    <sect2 id="gparted-attempt-data-rescue">
-      <title>Спроби порятунку даних</title>
-      <para>Щоб спробувати врятувати дані з дискового пристрою, виконайте такі дії: <orderedlist>
-          <listitem>
-            <para>Виберіть дисковий пристрій. Див. <xref linkend="gparted-select-device"/>.</para>
-          </listitem>
-          <listitem>
-            <para>Виберіть пункт меню <menuchoice><guimenu>Пристрій</guimenu><guimenuitem>Допомогти врятувати дані</guimenuitem></menuchoice>. Програма покаже діалогове вікно <guilabel>Пошук файлових систем на <replaceable>/шлях-до-пристрою</replaceable></guilabel>.</para>
-          </listitem>
-          <listitem>
-            <para>Натисніть кнопку <guibutton>Гаразд</guibutton>, щоб розпочати повне сканування диска.</para>
-            <tip>
-              <para>Сканування великих дискових пристроїв може бути дуже тривалим. Якщо у вас немає часу на повне сканування диска, натисніть кнопку <guibutton>Скасувати</guibutton>.</para>
-            </tip>
-            <note>
-              <para>Може бути виявлено до 4 розділів із файловими системами. Якщо ви хочете виявити понад 4 розділів і відновити таблицю розділів, ознайомтеся із вмістом розділу <xref linkend="gparted-recover-partition-table"/>.</para>
-            </note>
-          </listitem>
-          <listitem>
-            <para>Після завершення повного сканування диска може бути показано одне із двох можливих діалогових вікон: <itemizedlist>
-                <listitem>
-                  <para><guilabel>Не знайдено жодної файлової системи на <replaceable>/шлях-до-пристрою</replaceable> </guilabel></para>
-                  <para>Якщо не буде знайдено жодної файлової системи, вам доведеться скористатися іншими варіантами дій у спробі врятувати ваші дані. Програму <application>photorec</application> розроблено для того, щоб допомогти у відновленні вмісту файлів багатьох різних типів. Докладніші відомості щодо <application>photorec</application> наведено тут: <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.</para>
-                  <para>Натисніть кнопку <guibutton>Гаразд</guibutton> для закриття діалогового вікна і завершення цієї спроби врятувати дані.</para>
-                </listitem>
-                <listitem>
-                  <para><guilabel>Файлові системи знайдено на <replaceable>/шлях-до-пристрою</replaceable> </guilabel></para>
-                  <para>Якщо буде знайдено файлові системи, кожну файлову систему буде показано у списку разом із кнопкою <guibutton>Переглянути</guibutton>. У діалоговому вікні буде показано індикатори, якщо дані є неузгодженими. Неузгодженості у даних можуть заважати перегляду даних.</para>
-                </listitem>
-              </itemizedlist></para>
-          </listitem>
-          <listitem>
-            <para>Щоб врятувати дані, скористайтеся такими кроками для кожної з файлових систем: <orderedlist numeration="upperalpha">
-                <listitem>
-                  <para>Натисніть кнопку <guibutton>Переглянути</guibutton>, щоб наказати програмі змонтувати і показати файлову систему. У відповідь буде відкрито вікно типової програми для керування файлами із показаним лише для читання переглядом вмісту файлової системи.</para>
-                  <note>
-                    <para>Якщо буде показано діалогове вікно <guilabel>Не вдалось відкрити типового менеджера файлів</guilabel>, вам доведеться вікдрити вікно програми для керування файлами і перейти до точки монтування файлової системи.</para>
-                    <para>Точку монтування буде показано у діалоговому вікні. Приклад: «/tmp/gparted-roview-XXXXXX».</para>
-                    <para>Натисніть кнопку <guibutton>Гаразд</guibutton>, щоб закрити діалогове вікно <guilabel>Не вдалось відкрити типового менеджера файлів</guilabel>.</para>
-                  </note>
-                </listitem>
-                <listitem>
-                  <para>Скористайтеся програмою для керування файлами для копіювання ваших даних на інші носії для зберігання даних.</para>
-                </listitem>
-                <listitem>
-                  <para>Коли копіювання ваших даних буде завершено, закрийте вікно програми для керування файлами.</para>
-                </listitem>
-              </orderedlist></para>
-          </listitem>
-          <listitem>
-            <para>Після завершення порятунку даних натисніть кнопку <guibutton>Закрити</guibutton>, щоб завершити спробу порятунку даних. Програма демонтує усі файлові системи, які було змонтовано для перегляду. Далі, програма виконає повторне сканування усіх дискових пристроїв і освіжить компонування розділів на пристрої у вікні <application>gparted</application>.</para>
-          </listitem>
-        </orderedlist></para>
     </sect2>
 
   </sect1>
@@ -1417,7 +1366,8 @@
     <title>Відновлення таблиць розділів</title>
     <para>Якщо ви випадково перезаписали вашу таблицю розділів, ймовірно, її можна відновити.</para>
     <para>Програму <application>testdisk</application> створено для полегшення відновлення втрачених розділів. Щоб дізнатися більше про <application>testdisk</application>, ознайомтеся із вмістом <ulink type="http" url="https://www.cgsecurity.org/wiki/TestDisk"/>.</para>
-    <para>Програму <application>testdisk</application> включено до усіх образів портативних систем зі списку у розділі <xref linkend="gparted-acquire-livecd"/></para>
+    <para>Якщо не буде знайдено жодного розділу, вам доведеться скористатися іншими варіантами дій у спробі врятувати ваші дані. Програму <application>photorec</application> розроблено для того, щоб допомогти у відновленні вмісту файлів багатьох різних типів. Докладніші відомості щодо <application>photorec</application> наведено тут: <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.</para>
+    <para>Обидві програми, <application>testdisk</application> і <application>photorec</application>, включено до усіх образів портативних систем зі списку у розділі <xref linkend="gparted-acquire-livecd"/></para>
   </sect1>
 
 </article>

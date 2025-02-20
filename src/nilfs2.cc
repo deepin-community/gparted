@@ -76,48 +76,46 @@ FS nilfs2::get_filesystem_support()
 	return fs ;
 }
 
-void nilfs2::set_used_sectors( Partition & partition )
+
+void nilfs2::set_used_sectors(Partition& partition)
 {
-	if ( ! Utils::execute_command( "nilfs-tune -l " + Glib::shell_quote( partition.get_path() ),
-	                               output, error, true )                                         )
+	exit_status = Utils::execute_command("nilfs-tune -l " + Glib::shell_quote(partition.get_path()),
+	                                     output, error, true);
+	if (exit_status != 0)
 	{
-		//File system size in bytes
-		Glib::ustring::size_type index = output .find( "Device size:" ) ;
-		if (   index == Glib::ustring::npos
-		    || sscanf( output.substr( index ).c_str(), "Device size: %lld", &T ) != 1
-		   )
-			T = -1 ;
-
-		//Free space in blocks
-		index = output .find( "Free blocks count:" ) ;
-		if (   index == Glib::ustring::npos
-		    || sscanf( output.substr( index ).c_str(), "Free blocks count: %lld", &N ) != 1
-		   )
-			N = -1 ;
-
-		index = output .find( "Block size:" ) ;
-		if (   index == Glib::ustring::npos
-		    || sscanf( output.substr( index ).c_str(), "Block size: %lld", &S ) != 1
-		   )
-			S = -1 ;
-
-		if ( T > -1 && N > -1 && S > -1 )
-		{
-			T = Utils::round( T / double(partition .sector_size) ) ;
-			N = Utils::round( N * ( S / double(partition .sector_size) ) ) ;
-			partition .set_sector_usage( T, N ) ;
-			partition.fs_block_size = S;
-		}
+		if (! output.empty())
+			partition.push_back_message(output);
+		if (! error.empty())
+			partition.push_back_message(error);
+		return;
 	}
-	else
-	{
-		if ( ! output .empty() )
-			partition.push_back_message( output );
 
-		if ( ! error .empty() )
-			partition.push_back_message( error );
+	// File system size in bytes
+	long long device_size = -1;
+	Glib::ustring::size_type index = output.find("\nDevice size:");
+	if (index < output.length())
+		sscanf(output.substr(index).c_str(), "\nDevice size: %lld", &device_size);
+
+	// Free space in blocks
+	long long free_blocks = -1;
+	index = output.find("\nFree blocks count:");
+	if (index < output.length())
+		sscanf(output.substr(index).c_str(), "\nFree blocks count: %lld", &free_blocks);
+
+	long long block_size = -1;
+	index = output.find("\nBlock size:");
+	if (index < output.length())
+		sscanf(output.substr(index).c_str(), "\nBlock size: %lld", &block_size);
+
+	if (device_size > -1 && free_blocks > -1 && block_size > -1)
+	{
+		Sector fs_size = device_size / partition.sector_size;
+		Sector fs_free = free_blocks * block_size / partition.sector_size;
+		partition.set_sector_usage(fs_size, fs_free);
+		partition.fs_block_size = block_size;
 	}
 }
+
 
 void nilfs2::read_label( Partition & partition )
 {
@@ -196,14 +194,11 @@ bool nilfs2::resize( const Partition & partition_new, OperationDetail & operatio
 
 	if ( success )
 	{
-		Glib::ustring cmd = "nilfs-resize -v -y " + Glib::shell_quote( partition_new.get_path() );
+		Glib::ustring size;
 		if ( ! fill_partition )
-		{
-			Glib::ustring size = Utils::num_to_str( floor( Utils::sector_to_unit(
-					partition_new .get_sector_length(), partition_new .sector_size, UNIT_KIB ) ) ) + "K" ;
-			cmd += " " + size ;
-		}
-		success &= ! execute_command( cmd, operationdetail, EXEC_CHECK_STATUS );
+			size = " " + Utils::num_to_str(partition_new.get_byte_length() / KIBIBYTE) + "K";
+		success &= ! execute_command("nilfs-resize -v -y " + Glib::shell_quote(partition_new.get_path()) + size,
+		                             operationdetail, EXEC_CHECK_STATUS);
 
 		if ( ! partition_new. busy )
 			success &= ! execute_command( "umount -v " + Glib::shell_quote( mount_point ),

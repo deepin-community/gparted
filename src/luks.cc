@@ -121,14 +121,14 @@ void luks::set_used_sectors( Partition & partition )
 	if ( mapping.name.empty() )
 	{
 		// Inactive LUKS partition
-		T = partition.get_sector_length();
-		partition.set_sector_usage( T, 0 );
+		Sector fs_size = partition.get_sector_length();
+		partition.set_sector_usage(fs_size, 0);
 	}
 	else
 	{
 		// Active LUKS partition
-		T = Utils::round( ( mapping.offset + mapping.length ) / double(partition.sector_size) );
-		partition.set_sector_usage( T, 0 );
+		Sector fs_size = (mapping.offset + mapping.length) / partition.sector_size;
+		partition.set_sector_usage(fs_size, 0);
 	}
 }
 
@@ -159,7 +159,7 @@ bool luks::resize( const Partition & partition_new, OperationDetail & operationd
 		// device sector size.
 		size = "--size " + Utils::num_to_str( ( partition_new.get_byte_length() - mapping.offset ) / 512LL ) + " ";
 
-	const char *pw = NULL;
+	const char* pw = nullptr;
 	if (mapping.key_loc == KEYLOC_KeyRing)
 		pw = PasswordRAMStore::lookup(partition_new.uuid);
 

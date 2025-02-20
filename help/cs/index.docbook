@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY appversion "0.31.0">
-<!ENTITY manrevision "1.12">
-<!ENTITY date "May 2018">
+<!ENTITY appversion "1.6.0">
+<!ENTITY manrevision "1.13">
+<!ENTITY date "September 2023">
 <!ENTITY app "gparted">
 <!ENTITY appname "GParted">
 <!-- Information about the entities:
@@ -36,7 +36,10 @@
     </abstract>
 
     <copyright><year>2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017</year> <holder>Curtis Gedak</holder></copyright>
-    <copyright><year>2014, 2015, 2017, 2018</year> <holder>Mike Fleetwood</holder></copyright>
+    <copyright lang="en">
+      <year>2014, 2015, 2017, 2018, 2023</year>
+      <holder>Mike Fleetwood</holder>
+    </copyright>
 
 <!-- translators: uncomment this:
     <copyright>
@@ -70,6 +73,15 @@
 <!-- According to GNU FDL, revision history is mandatory if you are -->
 <!-- modifying/reusing someone else's document.  If not, you can omit it. -->
     <revhistory>
+      <revision lang="en">
+        <revnumber>GParted Manual V1.13</revnumber>
+        <date>September 2023</date>
+        <revdescription>
+          <para role="author" lang="en">Mike Fleetwood</para>
+          <para role="publisher" lang="en">GParted Project</para>
+          <para role="annotations" lang="en">Describes version 1.6.0 of GParted</para>
+        </revdescription>
+      </revision>
       <revision><revnumber>Příručka V1.12 k aplikaci GParted</revnumber> <date>květen 2018</date> <revdescription>
           <para role="author">Mike Fleetwood</para>
           <para role="publisher">Projekt GParted</para>
@@ -142,7 +154,9 @@
         </revdescription></revision>
     </revhistory>
 
-    <releaseinfo>Tato příručka popisuje aplikaci GParted ve verzi 0.31.0</releaseinfo>
+    <releaseinfo lang="en">
+    This manual describes version 1.6.0 of GParted
+    </releaseinfo>
 
     <legalnotice>
       <title>Zpětné ohlasy</title>
@@ -357,62 +371,6 @@
         <para>VAROVÁNÍ: Tímto se ODSTRANÍ VŠECHNA DATA na CELÉM DISKOVÉM ZAŘÍZENÍ.</para>
         <para>Pokud svoji tabulku oddílů přepíšete nešťastnou náhodou, podívejte se na <xref linkend="gparted-recover-partition-table"/></para>
       </caution>
-    </sect2>
-
-<!-- ============= To Attempt Data Rescue =================== -->
-    <sect2 id="gparted-attempt-data-rescue">
-      <title>Pokus o záchranu dat</title>
-      <para>Když chcete zkusit zachránit data z diskového zařízení: <orderedlist>
-          <listitem>
-            <para>Vyberte diskové zařízení. Viz <xref linkend="gparted-select-device"/>.</para>
-          </listitem>
-          <listitem>
-            <para>Zvolte <menuchoice><guimenu>Zařízení</guimenu><guimenuitem>Zkusit zachránit data</guimenuitem></menuchoice>. Aplikace zobrazí dialogové okno <guilabel>Hledání souborových systémů na  <replaceable>/cesta-k-zařízení</replaceable></guilabel>.</para>
-          </listitem>
-          <listitem>
-            <para>Klikněte na <guibutton>Budiž</guibutton> a aplikace započne procházení celého disku.</para>
-            <tip>
-              <para>U velkých diskových zařízení může jejich úplná prohlídka zabrat dlouhou dobu. Pokud na to nemáte dostatek času, klikněte na <guibutton>Zrušit</guibutton>.</para>
-            </tip>
-            <note>
-              <para>V souborovém systému mohou být objeveny maximálně 4 oddíly. Pokud chcete objevit více než 4 oddíly a obnovit tabulku oddílů, podívejte se na <xref linkend="gparted-recover-partition-table"/>.</para>
-            </note>
-          </listitem>
-          <listitem>
-            <para>Až je úplné procházení disku dokončeno, zobrazí se jedno ze dvou možných dialogových oken: <itemizedlist>
-                <listitem>
-                  <para><guilabel>Na <replaceable>/cesta-k-zařízení</replaceable> nebyl nalezen žádný souborový systém</guilabel></para>
-                  <para>Pokud není nalezen žádný souborový systém, máte ještě další možnosti, jak zkusit zachránit svá data. Pro pomoc se záchranou řady různých typů ztracených souborů je navržena aplikace <application>photorec</application>. Více informací o ní najdete na <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.</para>
-                  <para>Kliknutím na <guibutton>Budiž</guibutton> zavřete dialogové okno a ukončíte tento pokus o záchranu dat.</para>
-                </listitem>
-                <listitem>
-                  <para><guilabel>Na <replaceable>/cesta-k-zařízení</replaceable> byly nalezeny souborové systémy</guilabel></para>
-                  <para>Pokud jsou souborové systémy nalezeny, je každý z nich zobrazen v seznamu pod tlačítkem <guibutton>Zobrazit</guibutton>. Dialogové okno signalizuje, jestli se objevily nějaké nekonzistence v datech. Nekonzistence v datech vám může zabránit data zobrazit.</para>
-                </listitem>
-              </itemizedlist></para>
-          </listitem>
-          <listitem>
-            <para>Pro záchranu dat postupujte v následujících krocích pro každý ze souborových systémů: <orderedlist numeration="upperalpha">
-                <listitem>
-                  <para>Klikněte na tlačítko <guibutton>Zobrazit</guibutton>, aby se souborový systém připojil a zobrazil. Otevře se váš výchozí správce souborů a obsah souborového systému zobrazí pouze ke čtení.</para>
-                  <note>
-                    <para>Jestliže se objeví dialogové okno <guilabel>Nelze otevřít výchozího správce souborů</guilabel>, budete muset správce souborů otevřít sami a přejít do přípojného bodu pro souborový systém.</para>
-                    <para>Přípojný bod je zobrazen v dialogovém okně, například „/tmp/gparted-roview-XXXXXX“.</para>
-                    <para>Kliknutím na <guibutton>Budiž</guibutton> dialogové okno <guilabel>Nelze otevřít výchozího správce souborů</guilabel> zavřete.</para>
-                  </note>
-                </listitem>
-                <listitem>
-                  <para>Použijte správce souborů k překopírování svých dat na jiné úložné médium.</para>
-                </listitem>
-                <listitem>
-                  <para>Po dokončení kopírování svých data správce souborů zavřete.</para>
-                </listitem>
-              </orderedlist></para>
-          </listitem>
-          <listitem>
-            <para>Po dokončení záchrany dat klikněte na <guibutton>Zavřít</guibutton> a tím celý pokus o záchranu ukončíte. Aplikace odpojí případné souborové systémy připojené kvůli zobrazení. Po té znovu projde všechna disková zařízení a aktualizuje rozložení oddílů zařízení v okně <application>gparted</application>.</para>
-          </listitem>
-        </orderedlist></para>
     </sect2>
 
   </sect1>
@@ -1404,7 +1362,18 @@
     <title>Obnovení tabulky oddílů</title>
     <para>Pokud nešťastnou náhodou přepíšete svoji tabulku oddílu, je ještě šance, že ji můžete obnovit.</para>
     <para>Aplikace <application>testdisk</application> je navržená, aby vám pomohla obnovit ztracené oddíly. Více informací o aplikaci <application>testdisk</application> najdete na <ulink type="http" url="https://www.cgsecurity.org/wiki/TestDisk"/>.</para>
-    <para>Aplikace <application>testdisk</application> je součástí každého spustitelného CD, jak je uvádí <xref linkend="gparted-acquire-livecd"/>.</para>
+    <para lang="en">
+    If no partitions are found, you have other options to try to rescue
+    your data.  The <application>photorec</application> application is
+    designed to help recover many different types of lost files.  For
+    more information about <application>photorec</application>, see
+    <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.
+    </para>
+    <para lang="en">
+    Both <application>testdisk</application> and
+    <application>photorec</application> applications are included on
+    each Live CD listed in <xref linkend="gparted-acquire-livecd"/>.
+    </para>
   </sect1>
 
 </article>
