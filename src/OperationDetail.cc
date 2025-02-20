@@ -90,13 +90,13 @@ void OperationDetail::set_status( OperationDetailStatus status )
 		{
 			case STATUS_EXECUTE:
 				time_elapsed = -1 ;
-				time_start = std::time( NULL ) ;
+				time_start = std::time(nullptr);
 				break ;
 			case STATUS_ERROR:
 			case STATUS_WARNING:
 			case STATUS_SUCCESS:
 				if( time_start != -1 )
-					time_elapsed = std::time( NULL ) - time_start ;
+					time_elapsed = std::time(nullptr) - time_start;
 				break ;
 
 			default:
@@ -227,7 +227,7 @@ void OperationDetail::cancel( bool force )
 	signal_cancel.emit( force );
 }
 
-ProgressBar & OperationDetail::get_progressbar() const
+const ProgressBar& OperationDetail::get_progressbar() const
 {
 	return single_progressbar;
 }

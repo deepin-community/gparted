@@ -111,6 +111,10 @@ b. Building from Source
                        libglib2.0-dev uuid-dev libparted-dev \
                        libgtkmm-3.0-dev
 
+   Debian 13 and later and Ubuntu 24.04 LTS and later also require this
+   dependency installing:
+      sudo apt install libpolkit-gobject-1-dev
+
    On Fedora, these dependencies may be obtained by running the
    following command as root:
       dnf install gnome-common yelp-tools glib2-devel gcc-c++ \
@@ -308,11 +312,6 @@ For LUKS support the following commands are required:
    dmsetup         - Device-mapper administration tool
 
 
-For attempt data rescue for lost partitions, the following package
-is required:
-   gpart           - guesses PC-type hard disk partitions
-
-
 Several more commands are optionally used by GParted if found on the
 system.  These commands include:
 
@@ -320,8 +319,6 @@ system.  These commands include:
                      libparted doesn't, read UUIDs and volume labels
    hdparm          - used to query disk device serial numbers
    udisks          - used to prevent automounting of file systems
-   {filemanager}   - used in attempt data rescue to display discovered
-                     file systems.  (e.g., nautilus, pcmanfm)
    hal-lock        - used to prevent automounting of file systems
    pkexec          - used to acquire root privileges in gparted shell
                      script wrapper, but only if available when gparted

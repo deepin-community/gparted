@@ -1,8 +1,9 @@
-gparted (1.5.0-1deepin0) unstable; urgency=medium
+gparted (1.6.0-1) unstable; urgency=medium
 
-  * No source change upload against GCC 12.
+  * New upstream version 1.6.0
+  * Switch dependency from pkg-config to pkgconf
 
- -- Tianyu Chen <sweetyfish@deepin.org>  Thu, 19 Sep 2024 22:48:43 +0800
+ -- Phillip Susi <phill@thesusis.net>  Fri, 24 May 2024 11:20:27 -0400
 
 gparted (1.5.0-1) unstable; urgency=medium
 

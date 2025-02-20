@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY appversion "0.31.0">
-<!ENTITY manrevision "1.12">
-<!ENTITY date "May 2018">
+<!ENTITY appversion "1.6.0">
+<!ENTITY manrevision "1.13">
+<!ENTITY date "September 2023">
 <!ENTITY app "gparted">
 <!ENTITY appname "GParted">
 <!-- Information about the entities:
@@ -36,7 +36,10 @@
     </abstract>
 
     <copyright><year>2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017</year> <holder>Curtis Gedak</holder></copyright>
-    <copyright><year>2014, 2015, 2017, 2018</year> <holder>Mike Fleetwood</holder></copyright>
+    <copyright lang="en">
+      <year>2014, 2015, 2017, 2018, 2023</year>
+      <holder>Mike Fleetwood</holder>
+    </copyright>
 
 <!-- translators: uncomment this:
     <copyright>
@@ -70,6 +73,15 @@
 <!-- According to GNU FDL, revision history is mandatory if you are -->
 <!-- modifying/reusing someone else's document.  If not, you can omit it. -->
     <revhistory>
+      <revision lang="en">
+        <revnumber>GParted Manual V1.13</revnumber>
+        <date>September 2023</date>
+        <revdescription>
+          <para role="author" lang="en">Mike Fleetwood</para>
+          <para role="publisher" lang="en">GParted Project</para>
+          <para role="annotations" lang="en">Describes version 1.6.0 of GParted</para>
+        </revdescription>
+      </revision>
       <revision><revnumber>Manual GParted V1.12</revnumber> <date>Mei 2018</date> <revdescription>
           <para role="author">Mike Fleetwood</para>
           <para role="publisher">Proyek GParted</para>
@@ -142,7 +154,9 @@
         </revdescription></revision>
     </revhistory>
 
-    <releaseinfo>Manual ini menjelaskan versi 0.31.0 dari GParted</releaseinfo>
+    <releaseinfo lang="en">
+    This manual describes version 1.6.0 of GParted
+    </releaseinfo>
 
     <legalnotice>
       <title>Umpan balik</title>
@@ -372,62 +386,6 @@
         <para>PERINGATAN: Ini akan MENGHAPUS SEMUA DATA pada SELURUH PERANGKAT DISK.</para>
         <para>Jika Anda secara tidak sengaja menimpa tabel partisi Anda, lihat <xref linkend="gparted-recover-partition-table"/>.</para>
       </caution>
-    </sect2>
-
-<!-- ============= To Attempt Data Rescue =================== -->
-    <sect2 id="gparted-attempt-data-rescue">
-      <title>Mencoba Penyelamatan Data</title>
-      <para>Untuk mencoba penyelamatan data dari perangkat disk: <orderedlist>
-          <listitem>
-            <para>Pilih perangkat cakram. Lihat <xref linkend="gparted-select-device"/>.</para>
-          </listitem>
-          <listitem>
-            <para>Pilih: <menuchoice><guimenu>Perangkat</guimenu><guimenuitem>Upayakan Penyelamatan Data</guimenuitem></menuchoice>. Aplikasi menampilkan dialog <guilabel>Cari sistem berkas pada <replaceable>/path-ke-perangkat</replaceable></guilabel>.</para>
-          </listitem>
-          <listitem>
-            <para>Klik <guibutton>OK</guibutton> untuk memulai pemindaian disk lengkap.</para>
-            <tip>
-              <para>Perangkat disk besar dapat memakan waktu sangat lama untuk dipindai. Jika Anda tidak memiliki waktu untuk menunggu pemindaian disk lengkap, maka klik <guibutton>Batalkan</guibutton>.</para>
-            </tip>
-            <note>
-              <para>Maksimum 4 partisi dengan sistem berkas mungkin ditemukan. Jika Anda ingin menemukan lebih dari 4 partisi dan memulihkan tabel partisi, lihat <xref linkend="gparted-recover-partition-table"/>.</para>
-            </note>
-          </listitem>
-          <listitem>
-            <para>Ketika pemindaian disk lengkap selesai, salah satu dari dua dialog yang mungkin akan ditampilkan: <itemizedlist>
-                <listitem>
-                  <para><guilabel>Tidak ada sistem berkas yang ditemukan pada <replaceable>/path-ke-perangkat</replaceable> </guilabel></para>
-                  <para>Jika tidak ada sistem berkas yang ditemukan, Anda memiliki opsi lain untuk mencoba menyelamatkan data Anda. Aplikasi <application>photorec</application> dirancang untuk membantu memulihkan berbagai jenis berkas yang hilang. Untuk informasi selengkapnya tentang <application>photorec</application>, lihat <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.</para>
-                  <para>Klik <guibutton>OK</guibutton> untuk menutup kotak dialog, dan akhiri upaya ini untuk menyelamatkan data.</para>
-                </listitem>
-                <listitem>
-                  <para><guilabel>Sistem berkas ditemukan pada <replaceable>/path-ke-perangkat</replaceable> </guilabel></para>
-                  <para>Jika sistem berkas ditemukan, setiap sistem berkas ditampilkan dalam daftar bersama dengan tombol <guibutton>Lihat</guibutton>. Dialog akan menunjukkan apakah ada inkonsistensi data. Inkonsistensi dalam data mungkin mencegah Anda melihat data.</para>
-                </listitem>
-              </itemizedlist></para>
-          </listitem>
-          <listitem>
-            <para>Untuk menyelamatkan data, gunakan langkah-langkah berikut bagi setiap sistem berkas: <orderedlist numeration="upperalpha">
-                <listitem>
-                  <para>Klik <guibutton>Tampilan</guibutton> untuk mengait dan menampilkan sistem berkas. Manajer berkas baku Anda dibuka dan menampilkan tilikan sistem berkas hanya-baca.</para>
-                  <note>
-                    <para>Jika dialog <guilabel>Tidak bisa membuka manajer berkas baku</guilabel> ditampilkan, maka Anda perlu membuka suatu manajer berkas dan menavigasi ke titik kait bagi sistem berkas.</para>
-                    <para>Titik kait ditampilkan dalam dialog, misalnya "/tmp/gparted-roview-XXXXXX".</para>
-                    <para>Klik <guibutton>OK</guibutton> untuk menutup dialog <guilabel>Tidak bisa membuka manajer berkas baku</guilabel>.</para>
-                  </note>
-                </listitem>
-                <listitem>
-                  <para>Gunakan manajer berkas untuk menyalin data Anda ke media penyimpanan lain.</para>
-                </listitem>
-                <listitem>
-                  <para>Setelah selesai menyalin data, tutup manajer berkas.</para>
-                </listitem>
-              </orderedlist></para>
-          </listitem>
-          <listitem>
-            <para>Ketika Anda selesai menyelamatkan data, klik <guibutton>Tutup</guibutton> untuk mengakhiri upaya ini untuk menyelamatkan data. Aplikasi ini melepas kait sistem berkas apa pun yang dikait untuk dilihat. Kemudian aplikasi memindai ulang semua perangkat disk dan menyegarkan tata letak partisi perangkat dalam jendela <application>gparted</application>.</para>
-          </listitem>
-        </orderedlist></para>
     </sect2>
 
   </sect1>
@@ -1419,7 +1377,18 @@
     <title>Memulihkan Tabel Partisi</title>
     <para>Jika Anda secara tidak sengaja menimpa tabel partisi Anda, ada kemungkinan Anda mungkin dapat memulihkannya.</para>
     <para>Aplikasi <application>testdisk</application> dirancang untuk membantu memulihkan partisi yang hilang. Untuk informasi selengkapnya tentang <application>testdisk</application>, lihat <ulink type="http" url="https://www.cgsecurity.org/wiki/TestDisk"/>.</para>
-    <para>Aplikasi <application>testdisk</application> disertakan pada setiap Live CD yang tercantum di <xref linkend="gparted-acquire-livecd"/></para>
+    <para lang="en">
+    If no partitions are found, you have other options to try to rescue
+    your data.  The <application>photorec</application> application is
+    designed to help recover many different types of lost files.  For
+    more information about <application>photorec</application>, see
+    <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.
+    </para>
+    <para lang="en">
+    Both <application>testdisk</application> and
+    <application>photorec</application> applications are included on
+    each Live CD listed in <xref linkend="gparted-acquire-livecd"/>.
+    </para>
   </sect1>
 
 </article>

@@ -70,7 +70,7 @@ public:
 	std::vector<OperationDetail*> & get_childs() ;
 	const std::vector<OperationDetail*> & get_childs() const ;
 	OperationDetail & get_last_child() ;
-	void run_progressbar( double progress, double target, ProgressBar_Text text_mode = PROGRESSBAR_TEXT_NONE );
+	void run_progressbar(double progress, double target, ProgressBar_Text text_mode = PROGRESSBAR_TEXT_TIME_REMAINING);
 	void stop_progressbar();
 
 	sigc::signal< void, const OperationDetail & > signal_update ;
@@ -82,7 +82,7 @@ private:
 	void add_child_implement( const OperationDetail & operationdetail );
 	void on_update( const OperationDetail & operationdetail ) ;
 	void cancel( bool force );
-	ProgressBar & get_progressbar() const;
+	const ProgressBar& get_progressbar() const;
 
 	Glib::ustring description ;
 	OperationDetailStatus status ; 

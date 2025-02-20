@@ -141,7 +141,7 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(appdatadir)" \
+am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(appstreamdir)" \
 	"$(DESTDIR)$(desktopdir)" "$(DESTDIR)$(polkit_actiondir)"
 SCRIPTS = $(bin_SCRIPTS)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -171,7 +171,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-DATA = $(appdata_DATA) $(desktop_DATA) $(polkit_action_DATA)
+DATA = $(appstream_DATA) $(desktop_DATA) $(polkit_action_DATA)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 am__recursive_targets = \
@@ -416,10 +416,10 @@ DESKTOP_IN_FILES = gparted.desktop.in
 DESKTOP_FILES = $(DESKTOP_IN_FILES:.desktop.in=.desktop)
 desktopdir = $(datadir)/applications
 desktop_DATA = $(DESKTOP_FILES)
-APPDATA_IN_FILES = gparted.appdata.xml.in
-APPDATA_FILES = $(APPDATA_IN_FILES:.xml.in=.xml)
-appdatadir = $(datadir)/appdata
-appdata_DATA = $(APPDATA_FILES)
+APPSTREAM_IN_FILES = gparted.appdata.xml.in
+APPSTREAM_FILES = $(APPSTREAM_IN_FILES:.xml.in=.xml)
+appstreamdir = $(datadir)/metainfo
+appstream_DATA = $(APPSTREAM_FILES)
 polkit_action_in_in_FILES = org.gnome.gparted.policy.in.in
 polkit_action_in_FILES = org.gnome.gparted.policy.in
 polkit_action_FILES = $(polkit_action_in_FILES:.policy.in=.policy)
@@ -433,15 +433,15 @@ do_subst = sed -e 's,[@]libexecdir[@],$(libexecdir),g' \
 	-e 's,[@]enable_xhost_root[@],$(ENABLE_XHOST_ROOT),g'
 
 EXTRA_DIST = \
-	$(APPDATA_IN_FILES)	\
-	$(APPDATA_FILES)	\
+	$(APPSTREAM_IN_FILES)	\
+	$(APPSTREAM_FILES)	\
 	$(DESKTOP_IN_IN_FILES)	\
 	$(DESKTOP_FILES)	\
 	$(polkit_action_in_in_FILES)  \
 	gparted.in
 
 DISTCLEANFILES = \
-	$(appdata_DATA)		\
+	$(appstream_DATA)	\
 	$(desktop_DATA)		\
 	$(polkit_action_DATA)
 
@@ -541,27 +541,27 @@ clean-libtool:
 
 distclean-libtool:
 	-rm -f libtool config.lt
-install-appdataDATA: $(appdata_DATA)
+install-appstreamDATA: $(appstream_DATA)
 	@$(NORMAL_INSTALL)
-	@list='$(appdata_DATA)'; test -n "$(appdatadir)" || list=; \
+	@list='$(appstream_DATA)'; test -n "$(appstreamdir)" || list=; \
 	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(appdatadir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(appdatadir)" || exit 1; \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(appstreamdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(appstreamdir)" || exit 1; \
 	fi; \
 	for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  echo "$$d$$p"; \
 	done | $(am__base_list) | \
 	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(appdatadir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(appdatadir)" || exit $$?; \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(appstreamdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(appstreamdir)" || exit $$?; \
 	done
 
-uninstall-appdataDATA:
+uninstall-appstreamDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(appdata_DATA)'; test -n "$(appdatadir)" || list=; \
+	@list='$(appstream_DATA)'; test -n "$(appstreamdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(appdatadir)'; $(am__uninstall_files_from_dir)
+	dir='$(DESTDIR)$(appstreamdir)'; $(am__uninstall_files_from_dir)
 install-desktopDATA: $(desktop_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(desktop_DATA)'; test -n "$(desktopdir)" || list=; \
@@ -910,7 +910,7 @@ check: check-recursive
 all-am: Makefile $(SCRIPTS) $(DATA) config.h
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(appdatadir)" "$(DESTDIR)$(desktopdir)" "$(DESTDIR)$(polkit_actiondir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(appstreamdir)" "$(DESTDIR)$(desktopdir)" "$(DESTDIR)$(polkit_actiondir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -967,7 +967,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-appdataDATA install-desktopDATA \
+install-data-am: install-appstreamDATA install-desktopDATA \
 	install-polkit_actionDATA
 
 install-dvi: install-dvi-recursive
@@ -1014,7 +1014,7 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-appdataDATA uninstall-binSCRIPTS \
+uninstall-am: uninstall-appstreamDATA uninstall-binSCRIPTS \
 	uninstall-desktopDATA uninstall-polkit_actionDATA
 
 .MAKE: $(am__recursive_targets) all install-am install-strip
@@ -1027,7 +1027,7 @@ uninstall-am: uninstall-appdataDATA uninstall-binSCRIPTS \
 	distclean-generic distclean-hdr distclean-libtool \
 	distclean-tags distcleancheck distdir distuninstallcheck dvi \
 	dvi-am html html-am info info-am install install-am \
-	install-appdataDATA install-binSCRIPTS install-data \
+	install-appstreamDATA install-binSCRIPTS install-data \
 	install-data-am install-desktopDATA install-dvi install-dvi-am \
 	install-exec install-exec-am install-html install-html-am \
 	install-info install-info-am install-man install-pdf \
@@ -1036,7 +1036,7 @@ uninstall-am: uninstall-appdataDATA uninstall-binSCRIPTS \
 	installdirs installdirs-am maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-generic \
 	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-appdataDATA uninstall-binSCRIPTS \
+	uninstall-am uninstall-appstreamDATA uninstall-binSCRIPTS \
 	uninstall-desktopDATA uninstall-polkit_actionDATA
 
 .PRECIOUS: Makefile
@@ -1045,7 +1045,7 @@ uninstall-am: uninstall-appdataDATA uninstall-binSCRIPTS \
 $(DESKTOP_FILES): $(DESKTOP_IN_FILES)
 	$(AM_V_GEN)$(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
-$(APPDATA_FILES): $(APPDATA_IN_FILES)
+$(APPSTREAM_FILES): $(APPSTREAM_IN_FILES)
 	$(AM_V_GEN)$(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
 
 $(polkit_action_FILES): $(polkit_action_in_FILES)

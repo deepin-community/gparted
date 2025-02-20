@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY appversion "0.31.0">
-<!ENTITY manrevision "1.12">
-<!ENTITY date "May 2018">
+<!ENTITY appversion "1.6.0">
+<!ENTITY manrevision "1.13">
+<!ENTITY date "September 2023">
 <!ENTITY app "gparted">
 <!ENTITY appname "GParted">
 <!-- Information about the entities:
@@ -36,7 +36,7 @@
     </abstract>
 
     <copyright><year>2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017</year> <holder>Curtis Gedak</holder></copyright>
-    <copyright><year>2014, 2015, 2017, 2018</year> <holder>Mike Fleetwood</holder></copyright>
+    <copyright><year>2014, 2015, 2017, 2018, 2023</year> <holder>Mike Fleetwood</holder></copyright>
 
 <!-- translators: uncomment this:
     <copyright>
@@ -70,6 +70,11 @@
 <!-- According to GNU FDL, revision history is mandatory if you are -->
 <!-- modifying/reusing someone else's document.  If not, you can omit it. -->
     <revhistory>
+      <revision><revnumber>Руководство по GParted V1.13</revnumber> <date>Сентябрь 2023</date> <revdescription>
+          <para role="author">Mike Fleetwood</para>
+          <para role="publisher">Проект GParted</para>
+          <para role="annotations">Описывает версию GParted 1.6.0</para>
+        </revdescription></revision>
       <revision><revnumber>Руководство по GParted V1.12</revnumber> <date>Май 2018</date> <revdescription>
           <para role="author">Mike Fleetwood</para>
           <para role="publisher">Проект GParted</para>
@@ -142,7 +147,7 @@
         </revdescription></revision>
     </revhistory>
 
-    <releaseinfo>Это руководство пользователя описывает GParted версии 0.31.0</releaseinfo>
+    <releaseinfo>Это руководство пользователя описывает GParted версии 1.6.0</releaseinfo>
 
     <legalnotice>
       <title>Обратная связь</title>
@@ -194,11 +199,11 @@
       <personname>
         <firstname>Ser82-png</firstname>
       </personname>
-      <email>sw@atrus.ru</email>
+      <email>asvmail.as@gmail.com</email>
     </othercredit>
     <copyright>
       
-        <year>2022</year>
+        <year>2022-2023</year>
       
       <holder>Ser82-png</holder>
     </copyright>
@@ -409,62 +414,6 @@
         <para>ОСТОРОЖНО: эта операция УДАЛИТ ВСЕ ДАННЫЕ СО ВСЕГО ДИСКОВОГО УСТРОЙСТВА.</para>
         <para>Если таблица разделов была случайно перезаписана, см. <xref linkend="gparted-recover-partition-table"/>.</para>
       </caution>
-    </sect2>
-
-<!-- ============= To Attempt Data Rescue =================== -->
-    <sect2 id="gparted-attempt-data-rescue">
-      <title>Попытка восстановления данных</title>
-      <para>Чтобы попытаться восстановить данные на дисковом устройстве: <orderedlist>
-          <listitem>
-            <para>Выберите устройство. См. <xref linkend="gparted-select-device"/>.</para>
-          </listitem>
-          <listitem>
-            <para>Выберите в меню <menuchoice><guimenu>Устройство</guimenu><guimenuitem>Попробовать восстановить данные</guimenuitem></menuchoice>. Приложение откроет диалоговое окно <guilabel>Найти файловые системы на <replaceable>/путь-к-устройству</replaceable></guilabel>.</para>
-          </listitem>
-          <listitem>
-            <para>Нажмите <guibutton>OK</guibutton>, чтобы начать полное сканирование диска.</para>
-            <tip>
-              <para>Большие дисковые устройства могут сканироваться очень долго. Сканирование можно остановить в любой момент, нажав кнопку <guibutton>Отмена</guibutton>.</para>
-            </tip>
-            <note>
-              <para>Эта операция может обнаружить не более 4-х разделов с файловыми системами. Чтобы обнаружить больше 4-х разделов и восстановить таблицу разделов, см. <xref linkend="gparted-recover-partition-table"/>.</para>
-            </note>
-          </listitem>
-          <listitem>
-            <para>После завершения процесса полного сканирования диска будет открыто одно из двух диалоговых окон: <itemizedlist>
-                <listitem>
-                  <para><guilabel>Нет файловых систем на <replaceable>/путь-к-устройству</replaceable> </guilabel></para>
-                  <para>Если не было обнаружено ни одной файловой системы, можно попробовать другие способы восстановления данных. В частности, в этом может помочь программа <application>photorec</application>, которая позволяет решать множество различных проблем с потерянными файлами. Подробнее о приложении <application>photorec</application> можно узнать по адресу <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.</para>
-                  <para>Нажмите <guibutton>OK</guibutton>, чтобы закрыть диалоговое окно и завершить попытку восстановления данных.</para>
-                </listitem>
-                <listitem>
-                  <para><guilabel>Обнаружены файловые системы на <replaceable>/путь-к-устройству</replaceable> </guilabel></para>
-                  <para>При обнаружении файловых систем они будут отображены в списке вместе с кнопкой <guibutton>Обзор</guibutton>. Диалоговое окно покажет оповещение в случае нарушения целостности данных. При наличии нарушений целостности данных приложение может не позволить просмотреть данные.</para>
-                </listitem>
-              </itemizedlist></para>
-          </listitem>
-          <listitem>
-            <para>Чтобы восстановить данные, следуйте следующим инструкциям для каждой файловой системы: <orderedlist numeration="upperalpha">
-                <listitem>
-                  <para>Нажмите <guibutton>Обзор</guibutton>, чтобы подключить и показать файловую систему. Откроется используемый по умолчанию файловый менеджер, который покажет файловую систему, доступную только для чтения.</para>
-                  <note>
-                    <para>Если откроется диалоговое окно <guilabel>Не удалось открыть файловый менеджер по умолчанию</guilabel>, необходимо открыть файловый менеджер и перейти к точке монтирования файловой системы.</para>
-                    <para>Точка монтирования показана в диалоговом окне, например «/tmp/gparted-roview-XXXXXX».</para>
-                    <para>Нажмите <guibutton>OK</guibutton>, чтобы закрыть диалоговое окно<guilabel>Не удалось открыть файловый менеджер по умолчанию</guilabel>.</para>
-                  </note>
-                </listitem>
-                <listitem>
-                  <para>Используйте файловый менеджер, чтобы скопировать ваши данные на другой носитель.</para>
-                </listitem>
-                <listitem>
-                  <para>После завершения копирования данных, закройте файловый менеджер.</para>
-                </listitem>
-              </orderedlist></para>
-          </listitem>
-          <listitem>
-            <para>После завершения восстановления данных нажмите кнопку <guibutton>Закрыть</guibutton>, чтобы завершить попытку восстановления данных. Приложение отмонтирует все обнаруженные файловые системы. Затем, оно пересканирует все дисковые устройства и обновит информацию о разделах в окне <application>gparted</application>.</para>
-          </listitem>
-        </orderedlist></para>
     </sect2>
 
   </sect1>
@@ -1456,7 +1405,8 @@
     <title>Восстановление таблиц разделов</title>
     <para>Если таблица разделов была случайно перезаписана, возможно её получится восстановить.</para>
     <para>Для восстановления потерянных разделов может помочь приложение <application>testdisk</application>, о котором можно узнать на странице <ulink type="http" url="https://www.cgsecurity.org/wiki/TestDisk"/>.</para>
-    <para>Приложение <application>testdisk</application> есть на каждом из Live CD, которые перечислены в <xref linkend="gparted-acquire-livecd"/></para>
+    <para>Если не было обнаружено ни одного раздела, можно попробовать другие способы восстановления данных. В частности, в этом может помочь приложение <application>photorec</application>, которое позволяет решать множество различных проблем с потерянными файлами. Подробнее о приложении <application>photorec</application> можно узнать по адресу <ulink type="http" url="https://www.cgsecurity.org/wiki/PhotoRec"/>.</para>
+    <para>Оба приложения, и <application>testdisk</application>, и <application>photorec</application> включены во все Live CD из списка на <xref linkend="gparted-acquire-livecd"/>.</para>
   </sect1>
 
 </article>

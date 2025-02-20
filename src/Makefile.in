@@ -119,17 +119,16 @@ am_gpartedbin_OBJECTS = BCache_Info.$(OBJEXT) BlockSpecial.$(OBJEXT) \
 	Dialog_Partition_Info.$(OBJEXT) \
 	Dialog_Partition_Name.$(OBJEXT) Dialog_Partition_New.$(OBJEXT) \
 	Dialog_Partition_Resize_Move.$(OBJEXT) \
-	Dialog_Progress.$(OBJEXT) Dialog_Rescue_Data.$(OBJEXT) \
-	DrawingAreaVisualDisk.$(OBJEXT) FS_Info.$(OBJEXT) \
-	FileSystem.$(OBJEXT) Frame_Resizer_Base.$(OBJEXT) \
-	Frame_Resizer_Extended.$(OBJEXT) GParted_Core.$(OBJEXT) \
-	HBoxOperations.$(OBJEXT) LVM2_PV_Info.$(OBJEXT) \
-	LUKS_Info.$(OBJEXT) MenuHelpers.$(OBJEXT) Mount_Info.$(OBJEXT) \
-	Operation.$(OBJEXT) OperationChangeUUID.$(OBJEXT) \
-	OperationCheck.$(OBJEXT) OperationCopy.$(OBJEXT) \
-	OperationCreate.$(OBJEXT) OperationDelete.$(OBJEXT) \
-	OperationDetail.$(OBJEXT) OperationFormat.$(OBJEXT) \
-	OperationLabelFileSystem.$(OBJEXT) \
+	Dialog_Progress.$(OBJEXT) DrawingAreaVisualDisk.$(OBJEXT) \
+	FS_Info.$(OBJEXT) FileSystem.$(OBJEXT) \
+	Frame_Resizer_Base.$(OBJEXT) Frame_Resizer_Extended.$(OBJEXT) \
+	GParted_Core.$(OBJEXT) HBoxOperations.$(OBJEXT) \
+	LVM2_PV_Info.$(OBJEXT) LUKS_Info.$(OBJEXT) \
+	MenuHelpers.$(OBJEXT) Mount_Info.$(OBJEXT) Operation.$(OBJEXT) \
+	OperationChangeUUID.$(OBJEXT) OperationCheck.$(OBJEXT) \
+	OperationCopy.$(OBJEXT) OperationCreate.$(OBJEXT) \
+	OperationDelete.$(OBJEXT) OperationDetail.$(OBJEXT) \
+	OperationFormat.$(OBJEXT) OperationLabelFileSystem.$(OBJEXT) \
 	OperationNamePartition.$(OBJEXT) OperationResizeMove.$(OBJEXT) \
 	OptionComboBox.$(OBJEXT) Partition.$(OBJEXT) \
 	PartitionLUKS.$(OBJEXT) PartitionVector.$(OBJEXT) \
@@ -180,7 +179,6 @@ am__depfiles_remade = ./$(DEPDIR)/BCache_Info.Po \
 	./$(DEPDIR)/Dialog_Partition_New.Po \
 	./$(DEPDIR)/Dialog_Partition_Resize_Move.Po \
 	./$(DEPDIR)/Dialog_Progress.Po \
-	./$(DEPDIR)/Dialog_Rescue_Data.Po \
 	./$(DEPDIR)/DrawingAreaVisualDisk.Po ./$(DEPDIR)/FS_Info.Po \
 	./$(DEPDIR)/FileSystem.Po ./$(DEPDIR)/Frame_Resizer_Base.Po \
 	./$(DEPDIR)/Frame_Resizer_Extended.Po \
@@ -443,7 +441,6 @@ gpartedbin_SOURCES = \
 	Dialog_Partition_New.cc		\
 	Dialog_Partition_Resize_Move.cc	\
 	Dialog_Progress.cc		\
-	Dialog_Rescue_Data.cc		\
 	DrawingAreaVisualDisk.cc	\
 	FS_Info.cc			\
 	FileSystem.cc			\
@@ -610,7 +607,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Dialog_Partition_New.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Dialog_Partition_Resize_Move.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Dialog_Progress.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Dialog_Rescue_Data.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DrawingAreaVisualDisk.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FS_Info.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FileSystem.Po@am__quote@ # am--include-marker
@@ -847,7 +843,6 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/Dialog_Partition_New.Po
 	-rm -f ./$(DEPDIR)/Dialog_Partition_Resize_Move.Po
 	-rm -f ./$(DEPDIR)/Dialog_Progress.Po
-	-rm -f ./$(DEPDIR)/Dialog_Rescue_Data.Po
 	-rm -f ./$(DEPDIR)/DrawingAreaVisualDisk.Po
 	-rm -f ./$(DEPDIR)/FS_Info.Po
 	-rm -f ./$(DEPDIR)/FileSystem.Po
@@ -964,7 +959,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/Dialog_Partition_New.Po
 	-rm -f ./$(DEPDIR)/Dialog_Partition_Resize_Move.Po
 	-rm -f ./$(DEPDIR)/Dialog_Progress.Po
-	-rm -f ./$(DEPDIR)/Dialog_Rescue_Data.Po
 	-rm -f ./$(DEPDIR)/DrawingAreaVisualDisk.Po
 	-rm -f ./$(DEPDIR)/FS_Info.Po
 	-rm -f ./$(DEPDIR)/FileSystem.Po

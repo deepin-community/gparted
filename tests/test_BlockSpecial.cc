@@ -50,11 +50,14 @@
 #include <fstream>
 #include <stdio.h>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
 #include <dirent.h>
 #include <limits.h>
 #include <stdlib.h>
 #include <string.h>
 #include <glibmm/ustring.h>
+
 
 namespace GParted
 {
@@ -95,6 +98,19 @@ std::ostream& operator<<( std::ostream & out, const BlockSpecial & bs )
 	"   Where: " << #b1 << " = " << (b1) << "\n"  \
 	"     And: " << #b2 << " = " << (b2);
 
+
+#define SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(name)                                      \
+{                                                                                    \
+	struct stat sb;                                                              \
+	if (stat(name.c_str(), &sb) != 0 && errno == ENOENT)                         \
+	{                                                                            \
+		std::cout << __FILE__ << ":" << __LINE__ << ": Skip test.  Block "   \
+		          << "device '" << name << "' does not exist" << std::endl;  \
+		return;                                                              \
+	}                                                                            \
+}
+
+
 // Return block device names numbered 0 upwards like "/dev/sda" by reading entries from
 // /proc/partitions.
 static std::string get_block_name( unsigned want )
@@ -132,7 +148,7 @@ static std::string get_block_name( unsigned want )
 static std::string get_link_name()
 {
 	DIR * dir = opendir( "/dev/disk/by-id" );
-	if ( dir == NULL )
+	if (dir == nullptr)
 	{
 		ADD_FAILURE() << __func__ << "(): Failed to open directory '/dev/disk/by-id'";
 		return "";
@@ -164,8 +180,8 @@ static std::string get_link_name()
 // Follow symbolic link return real path.
 static std::string follow_link_name( std::string link )
 {
-	char * rpath = realpath( link.c_str(), NULL );
-	if ( rpath == NULL )
+	char* rpath = realpath(link.c_str(), nullptr);
+	if (rpath == nullptr)
 	{
 		ADD_FAILURE() << __func__ << "(): Failed to resolve symbolic link '" << link << "'";
 		return "";
@@ -208,6 +224,7 @@ TEST( BlockSpecialTest, NamedBlockSpecialObjectPlainFileDuplicate )
 TEST( BlockSpecialTest, NamedBlockSpecialObjectBlockDevice )
 {
 	std::string bname = get_block_name( 0 );
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(bname);
 
 	// Test any block special name produces BlockSpecial object (name, major, minor).
 	BlockSpecial::clear_cache();
@@ -219,6 +236,7 @@ TEST( BlockSpecialTest, NamedBlockSpecialObjectBlockDevice )
 TEST( BlockSpecialTest, NamedBlockSpecialObjectBlockDeviceDuplicate )
 {
 	std::string bname = get_block_name( 0 );
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(bname);
 
 	// Test that a second object with the same name of a block device produces the
 	// same (name, major, minor).  Checking internal BlockSpecial caching again.
@@ -233,7 +251,9 @@ TEST( BlockSpecialTest, NamedBlockSpecialObjectBlockDeviceDuplicate )
 TEST( BlockSpecialTest, TwoNamedBlockSpecialObjectBlockDevices )
 {
 	std::string bname1 = get_block_name( 0 );
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(bname1);
 	std::string bname2 = get_block_name( 1 );
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(bname2);
 
 	// Test that two different named block devices produce different
 	// (name, major, minor).
@@ -247,7 +267,9 @@ TEST( BlockSpecialTest, TwoNamedBlockSpecialObjectBlockDevices )
 TEST( BlockSpecialTest, NamedBlockSpecialObjectBySymlinkMatches )
 {
 	std::string lname = get_link_name();
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(lname);
 	std::string bname = follow_link_name( lname );
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(bname);
 
 	// Test that a symbolic link to a block device and the named block device produce
 	// BlockSpecial objects with different names but the same major, minor pair.
@@ -309,6 +331,7 @@ TEST( BlockSpecialTest, OperatorEqualsDifferentPlainFiles )
 TEST( BlockSpecialTest, OperatorEqualsSameBlockDevices )
 {
 	std::string bname = get_block_name( 0 );
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(bname);
 
 	// Test equality of two BlockSpecial objects using the same named block device.
 	BlockSpecial::clear_cache();
@@ -320,6 +343,7 @@ TEST( BlockSpecialTest, OperatorEqualsSameBlockDevices )
 TEST( BlockSpecialTest, OperatorEqualsEmptyObjectAndBlockDevice )
 {
 	std::string bname = get_block_name( 0 );
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(bname);
 
 	// Test inequality of empty and named block device BlockSpecial objects.
 	BlockSpecial::clear_cache();
@@ -331,6 +355,7 @@ TEST( BlockSpecialTest, OperatorEqualsEmptyObjectAndBlockDevice )
 TEST( BlockSpecialTest, OperatorEqualsPlainFileAndBlockDevice )
 {
 	std::string bname = get_block_name( 0 );
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(bname);
 
 	// Test inequality of plain file and block device BlockSpecial objects.
 	BlockSpecial::clear_cache();
@@ -342,7 +367,9 @@ TEST( BlockSpecialTest, OperatorEqualsPlainFileAndBlockDevice )
 TEST( BlockSpecialTest, OperatorEqualsTwoDifferentBlockDevices )
 {
 	std::string bname1 = get_block_name( 0 );
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(bname1);
 	std::string bname2 = get_block_name( 1 );
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(bname2);
 
 	// Test inequality of two different named block device BlockSpecial objects.
 	BlockSpecial::clear_cache();
@@ -406,6 +433,7 @@ TEST( BlockSpecialTest, OperatorLessThanEmptyObjectAndPlainFile )
 TEST( BlockSpecialTest, OperatorLessThanSameBlockDevices )
 {
 	std::string bname = get_block_name( 0 );
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(bname);
 
 	// Test one name block device BlockSpecial object is not ordered before another
 	// from the same name.
@@ -418,6 +446,7 @@ TEST( BlockSpecialTest, OperatorLessThanSameBlockDevices )
 TEST( BlockSpecialTest, OperatorLessThanEmptyObjectAndBlockDevice )
 {
 	std::string bname = get_block_name( 0 );
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(bname);
 
 	// Test empty BlockSpecial object with name "" is before any block device.
 	BlockSpecial::clear_cache();
@@ -429,6 +458,7 @@ TEST( BlockSpecialTest, OperatorLessThanEmptyObjectAndBlockDevice )
 TEST( BlockSpecialTest, OperatorLessThanPlainFileAndBlockDevice )
 {
 	std::string bname = get_block_name( 0 );
+	SKIP_IF_BLOCK_DEVICE_DOESNT_EXIST(bname);
 
 	// Test one plain file BlockSpecial object is ordered before any block device.
 	BlockSpecial::clear_cache();

@@ -21,7 +21,6 @@
 #include "DialogFeatures.h"
 #include "DialogPasswordEntry.h"
 #include "Dialog_Disklabel.h"
-#include "Dialog_Rescue_Data.h"
 #include "Dialog_Partition_Resize_Move.h"
 #include "Dialog_Partition_Copy.h"
 #include "Dialog_Partition_New.h"
@@ -71,8 +70,8 @@ namespace GParted
 	
 Win_GParted::Win_GParted( const std::vector<Glib::ustring> & user_devices )
 {
-	copied_partition = NULL;
-	selected_partition_ptr = NULL;
+	copied_partition = nullptr;
+	selected_partition_ptr = nullptr;
 	new_count = 1;
 	current_device = 0 ;
 	OPERATIONSLIST_OPEN = true ;
@@ -156,7 +155,7 @@ Win_GParted::Win_GParted( const std::vector<Glib::ustring> & user_devices )
 Win_GParted::~Win_GParted()
 {
 	delete copied_partition;
-	copied_partition = NULL;
+	copied_partition = nullptr;
 }
 
 void Win_GParted::init_menubar() 
@@ -252,11 +251,6 @@ void Win_GParted::init_menubar()
 	item = manage(new GParted::Menu_Helpers::MenuElem(
 		Glib::ustring(_("_Create Partition Table") ) + "...",
 		sigc::mem_fun(*this, &Win_GParted::activate_disklabel)));
-	menu->append(*item);
-
-	item = manage(new GParted::Menu_Helpers::MenuElem(
-		Glib::ustring(_("_Attempt Data Rescue") ) + "...",
-		sigc::mem_fun(*this, &Win_GParted::activate_attempt_rescue_data)));
 	menu->append(*item);
 
 	item = manage(new GParted::Menu_Helpers::MenuElem(
@@ -979,10 +973,10 @@ void Win_GParted::Refresh_Visual()
 	//                     devices.clear()
 	//                     etc.
 	//
-	// (2) Takes a copy of the partitions for the device currently being shown in the
-	//     GUI and visually applies pending operations.
+	// (2) Takes a copy of the device and partitions for the device currently being
+	//     shown in the GUI and visually applies pending operations.
 	//
-	//     Data owner: PartitionVector Win_GParted::display_partitions
+	//     Data owner: Device Win_GParted::m_display_device
 	//     Lifetime:   Valid until the next call to Refresh_Visual().
 	//     Function:   Refresh_Visual()
 	//
@@ -1046,13 +1040,13 @@ void Win_GParted::Refresh_Visual()
 	//                 Specifically longer than the next call to Refresh_Visual().
 	//     Function:   Win_GParted::activate_copy()
 
-	display_partitions = devices[current_device].partitions;
 
 	//make all operations visible
-	for ( unsigned int t = 0 ; t < operations .size(); t++ )
-		if ( operations[ t ] ->device == devices[ current_device ] )
-			operations[t]->apply_to_visual( display_partitions );
-			
+	m_display_device = devices[current_device];
+	for (unsigned int i = 0; i < operations.size(); i++)
+		if (operations[i]->device == m_display_device)
+			operations[i]->apply_to_visual(m_display_device.partitions);
+
 	hbox_operations .load_operations( operations ) ;
 
 	//set new statusbartext
@@ -1070,46 +1064,46 @@ void Win_GParted::Refresh_Visual()
 
 	// Refresh copy partition source as necessary and select the largest unallocated
 	// partition if there is one.
-	selected_partition_ptr = NULL;
+	selected_partition_ptr = nullptr;
 	Sector largest_unalloc_size = -1 ;
 	Sector current_size ;
 
-	for ( unsigned int t = 0 ; t < display_partitions.size() ; t++ )
+	for (unsigned int i = 0; i < m_display_device.partitions.size(); i++)
 	{
-		if ( copied_partition != NULL && display_partitions[t].get_path() == copied_partition->get_path() )
+		if (copied_partition != nullptr && m_display_device.partitions[i].get_path() == copied_partition->get_path())
 		{
 			delete copied_partition;
-			copied_partition = display_partitions[t].clone();
+			copied_partition = m_display_device.partitions[i].clone();
 		}
 
-		if (display_partitions[t].fstype == FS_UNALLOCATED)
+		if (m_display_device.partitions[i].fstype == FS_UNALLOCATED)
 		{
-			current_size = display_partitions[t].get_sector_length();
-			if ( current_size > largest_unalloc_size )
+			current_size = m_display_device.partitions[i].get_sector_length();
+			if (current_size > largest_unalloc_size)
 			{
 				largest_unalloc_size = current_size;
-				selected_partition_ptr = & display_partitions[t];
+				selected_partition_ptr = & m_display_device.partitions[i];
 			}
 		}
 
-		if ( display_partitions[t].type == TYPE_EXTENDED )
+		if (m_display_device.partitions[i].type == TYPE_EXTENDED)
 		{
-			for ( unsigned int u = 0 ; u < display_partitions[t].logicals.size() ; u ++ )
+			for (unsigned int j = 0; j < m_display_device.partitions[i].logicals.size(); j++)
 			{
-				if ( copied_partition != NULL &&
-				     display_partitions[t].logicals[u].get_path() == copied_partition->get_path() )
+				if (copied_partition != nullptr &&
+				    m_display_device.partitions[i].logicals[j].get_path() == copied_partition->get_path())
 				{
 					delete copied_partition;
-					copied_partition = display_partitions[t].logicals[u].clone();
+					copied_partition = m_display_device.partitions[i].logicals[j].clone();
 				}
 
-				if (display_partitions[t].logicals[u].fstype == FS_UNALLOCATED)
+				if (m_display_device.partitions[i].logicals[j].fstype == FS_UNALLOCATED)
 				{
-					current_size = display_partitions[t].logicals[u].get_sector_length();
+					current_size = m_display_device.partitions[i].logicals[j].get_sector_length();
 					if ( current_size > largest_unalloc_size )
 					{
 						largest_unalloc_size = current_size;
-						selected_partition_ptr = & display_partitions[t].logicals[u];
+						selected_partition_ptr = & m_display_device.partitions[i].logicals[j];
 					}
 				}
 			}
@@ -1117,10 +1111,10 @@ void Win_GParted::Refresh_Visual()
 	}
 
 	// frame visualdisk
-	drawingarea_visualdisk.load_partitions( display_partitions, devices[current_device].length );
+	drawingarea_visualdisk.load_partitions(m_display_device.partitions, m_display_device.length);
 
 	// treeview details
-	treeview_detail.load_partitions( display_partitions );
+	treeview_detail.load_partitions(m_display_device.partitions);
 
 	set_valid_operations() ;
 
@@ -1139,25 +1133,26 @@ void Win_GParted::Refresh_Visual()
 
 
 // Confirms that the pointer points to one of the partition objects in the vector of
-// displayed partitions, Win_GParted::display_partitions[].
-// Usage: g_assert( valid_display_partition_ptr( my_partition_ptr ) );
+// displayed partitions, Win_GParted::m_display_device.partitions[].
+// Usage: g_assert(valid_display_partition_ptr(my_partition_ptr));
 bool Win_GParted::valid_display_partition_ptr( const Partition * partition_ptr )
 {
-	for ( unsigned int i = 0 ; i < display_partitions.size() ; i++ )
+	for (unsigned int i = 0; i < m_display_device.partitions.size();i++)
 	{
-		if ( & display_partitions[i] == partition_ptr )
+		if (& m_display_device.partitions[i] == partition_ptr)
 			return true;
-		else if ( display_partitions[i].type == TYPE_EXTENDED )
+		else if (m_display_device.partitions[i].type == TYPE_EXTENDED)
 		{
-			for ( unsigned int j = 0 ; j < display_partitions[i].logicals.size() ; j++ )
+			for (unsigned int j = 0; j < m_display_device.partitions[i].logicals.size(); j++)
 			{
-				if ( & display_partitions[i].logicals[j] == partition_ptr )
+				if (& m_display_device.partitions[i].logicals[j] == partition_ptr)
 					return true;
 			}
 		}
 	}
 	return false;
 }
+
 
 bool Win_GParted::Quit_Check_Operations()
 {
@@ -1198,7 +1193,7 @@ void Win_GParted::set_valid_operations()
 
 	// Set default name for the open/close crypt menu item.
 	const FileSystem * luks_filesystem_object = gparted_core.get_filesystem_object( FS_LUKS );
-	g_assert( luks_filesystem_object != NULL );  // Bug: LUKS FileSystem object not found
+	g_assert(luks_filesystem_object != nullptr);  // Bug: LUKS FileSystem object not found
 	dynamic_cast<Gtk::Label *>(partitionmenu_items[MENU_TOGGLE_CRYPT_BUSY]->get_child())
 		->set_label( luks_filesystem_object->get_custom_text( CTEXT_ACTIVATE_FILESYSTEM ) );
 	// Set default name for the file system active/deactivate menu item.
@@ -1344,7 +1339,7 @@ void Win_GParted::set_valid_operations()
 		// Temporarily disable copying of encrypted content into new partitions
 		// which can't yet be encrypted, until full LUKS read-write support is
 		// implemented.
-		if ( copied_partition             != NULL    &&
+		if ( copied_partition             != nullptr &&
 		     ! devices[current_device].readonly      &&
 		     copied_partition->fstype     != FS_LUKS    )
 		{
@@ -1489,7 +1484,7 @@ void Win_GParted::set_valid_operations()
 		}
 
 		// See if there is a partition to be copied and it fits inside this selected partition
-		if ( copied_partition != NULL                                              &&
+		if ( copied_partition != nullptr                                           &&
 		     ( copied_partition->get_filesystem_partition().get_byte_length() <=
 		       selected_filesystem.get_byte_length()                             ) &&
 		     selected_partition_ptr->status == STAT_REAL                           &&
@@ -1827,19 +1822,19 @@ void Win_GParted::show_help(const Glib::ustring & filename /* E.g., "gparted" */
 		return;
 	}
 
-	GError *error = NULL;
+	GError* error = nullptr;
 
 	// Display help window
 #if HAVE_GTK_SHOW_URI_ON_WINDOW
-	// NULL is provided for the gtk_show_uri_on_window() parent window
+	// nullptr is provided for the gtk_show_uri_on_window() parent window
 	// so that failures to launch yelp are reported.
 	// https://gitlab.gnome.org/GNOME/gparted/-/merge_requests/82#note_1106114
-	gtk_show_uri_on_window(NULL, uri.c_str(), gtk_get_current_event_time(), &error);
+	gtk_show_uri_on_window(nullptr, uri.c_str(), gtk_get_current_event_time(), &error);
 #else
 	GdkScreen *gscreen = gdk_screen_get_default();
 	gtk_show_uri(gscreen, uri.c_str(), gtk_get_current_event_time(), &error);
 #endif
-	if (error != NULL)
+	if (error != nullptr)
 	{
 		Gtk::MessageDialog errorDialog(*this,
 		                               _("Failed to open GParted Manual help file"),
@@ -1891,8 +1886,8 @@ void Win_GParted::menu_help_about()
 	dialog .set_comments( _( "GNOME Partition Editor" ) ) ;
 	std::string names ;
 	names =    "Copyright © 2004-2006 Bart Hakvoort" ;
-	names += "\nCopyright © 2008-2023 Curtis Gedak" ;
-	names += "\nCopyright © 2011-2023 Mike Fleetwood" ;
+	names += "\nCopyright © 2008-2024 Curtis Gedak" ;
+	names += "\nCopyright © 2011-2024 Mike Fleetwood" ;
 	dialog .set_copyright( names ) ;
 
 	//authors
@@ -1961,28 +1956,29 @@ void Win_GParted::on_partition_popup_menu( unsigned int button, unsigned int tim
 bool Win_GParted::max_amount_prim_reached() 
 {
 	int primary_count = 0;
-	for ( unsigned int i = 0 ; i < display_partitions.size() ; i ++ )
+	for (unsigned int i = 0; i < m_display_device.partitions.size(); i++)
 	{
-		if ( display_partitions[i].type == TYPE_PRIMARY || display_partitions[i].type == TYPE_EXTENDED )
+		if (m_display_device.partitions[i].type == TYPE_PRIMARY  ||
+		    m_display_device.partitions[i].type == TYPE_EXTENDED   )
+		{
 			primary_count ++;
+		}
 	}
 
 	//Display error if user tries to create more primary partitions than the partition table can hold. 
-	if ( ! selected_partition_ptr->inside_extended && primary_count >= devices[current_device].max_prims )
+	if (! selected_partition_ptr->inside_extended && primary_count >= m_display_device.max_prims)
 	{
 		Gtk::MessageDialog dialog( 
 			*this,
-			Glib::ustring::compose( ngettext( "It is not possible to create more than %1 primary partition"
-			                          , "It is not possible to create more than %1 primary partitions"
-			                          , devices[ current_device ] .max_prims
-			                          )
-			                , devices[ current_device ] .max_prims
-			                ),
+			Glib::ustring::compose(ngettext("It is not possible to create more than %1 primary partition",
+			                                "It is not possible to create more than %1 primary partitions",
+			                                m_display_device.max_prims),
+			                       m_display_device.max_prims),
 			false,
 			Gtk::MESSAGE_ERROR,
 			Gtk::BUTTONS_OK,
-			true ) ;
-		
+			true);
+
 		dialog .set_secondary_text(
 			_( "If you want more partitions you should first create an extended partition. Such a partition can contain other partitions. Because an extended partition is also a primary partition it might be necessary to remove a primary partition first.") ) ;
 		
@@ -1996,7 +1992,7 @@ bool Win_GParted::max_amount_prim_reached()
 
 void Win_GParted::activate_resize()
 {
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	const Partition & selected_filesystem_ptn = selected_partition_ptr->get_filesystem_partition();
@@ -2008,12 +2004,12 @@ void Win_GParted::activate_resize()
 		return;
 	}
 
-	PartitionVector * display_partitions_ptr = &display_partitions;
+	PartitionVector* display_partitions_ptr = & m_display_device.partitions;
 	if ( selected_partition_ptr->type == TYPE_LOGICAL )
 	{
-		int index_extended = find_extended_partition( display_partitions );
+		int index_extended = find_extended_partition(m_display_device.partitions);
 		if ( index_extended >= 0 )
-			display_partitions_ptr = &display_partitions[index_extended].logicals;
+			display_partitions_ptr = & m_display_device.partitions[index_extended].logicals;
 	}
 
 	Partition * working_ptn;
@@ -2057,7 +2053,7 @@ void Win_GParted::activate_resize()
 		working_ptn = selected_partition_ptr->clone();
 	}
 
-	Dialog_Partition_Resize_Move dialog(devices[current_device],
+	Dialog_Partition_Resize_Move dialog(m_display_device,
 	                                    fs_cap,
 	                                    fs_limits,
 	                                    *working_ptn,
@@ -2065,7 +2061,7 @@ void Win_GParted::activate_resize()
 	dialog .set_transient_for( *this ) ;	
 
 	delete working_ptn;
-	working_ptn = NULL;
+	working_ptn = nullptr;
 
 	if (dialog.run() == Gtk::RESPONSE_OK                                           &&
 	    ask_for_password_for_encrypted_resize_as_required(*selected_partition_ptr)   )
@@ -2100,7 +2096,7 @@ void Win_GParted::activate_resize()
 		operation->icon = Utils::mk_pixbuf(*this, Gtk::Stock::GOTO_LAST, Gtk::ICON_SIZE_MENU);
 
 		delete resized_ptn;
-		resized_ptn = NULL;
+		resized_ptn = nullptr;
 
 		// Display warning if moving a non-extended partition which already exists
 		// on the disk.
@@ -2151,7 +2147,7 @@ bool Win_GParted::ask_for_password_for_encrypted_resize_as_required(const Partit
 		return true;
 
 	const char *pw = PasswordRAMStore::lookup(partition.uuid);
-	if (pw != NULL)
+	if (pw != nullptr)
 		// GParted already has a password for this encryption mapping which was
 		// previously used successfully or tested for correctness.
 		//
@@ -2212,7 +2208,7 @@ bool Win_GParted::ask_for_password_for_encrypted_resize_as_required(const Partit
 
 void Win_GParted::activate_copy()
 {
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	delete copied_partition;
@@ -2221,8 +2217,8 @@ void Win_GParted::activate_copy()
 
 void Win_GParted::activate_paste()
 {
-	g_assert( copied_partition != NULL );  // Bug: Paste called without partition to copy
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(copied_partition != nullptr);  // Bug: Paste called without partition to copy
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	// Unrecognised whole disk device (See GParted_Core::set_device_from_disk(), "unrecognized")
@@ -2250,13 +2246,13 @@ void Win_GParted::activate_paste()
 			part_temp->clear_mountpoints();
 			part_temp->name.clear();
 
-			Dialog_Partition_Copy dialog(devices[current_device],
+			Dialog_Partition_Copy dialog(m_display_device,
 			                             gparted_core.get_fs(copied_filesystem_ptn.fstype),
 			                             fs_limits,
 			                             *selected_partition_ptr,
 			                             *part_temp);
 			delete part_temp;
-			part_temp = NULL;
+			part_temp = nullptr;
 			dialog .set_transient_for( *this );
 		
 			if ( dialog .run() == Gtk::RESPONSE_OK )
@@ -2366,7 +2362,7 @@ void Win_GParted::activate_paste()
 		operation->icon = Utils::mk_pixbuf(*this, Gtk::Stock::COPY, Gtk::ICON_SIZE_MENU);
 
 		delete partition_new;
-		partition_new = NULL;
+		partition_new = nullptr;
 
 		Add_Operation( devices[current_device], operation );
 
@@ -2394,7 +2390,7 @@ void Win_GParted::activate_paste()
 
 void Win_GParted::activate_new()
 {
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	// Unrecognised whole disk device (See GParted_Core::set_device_from_disk(), "unrecognized")
@@ -2408,12 +2404,12 @@ void Win_GParted::activate_new()
 		// Check if an extended partition already exist; so that the dialog can
 		// decide whether to allow the creation of the only extended partition
 		// type or not.
-		bool any_extended = ( find_extended_partition( display_partitions ) >= 0 );
-		Dialog_Partition_New dialog( devices[current_device],
-		                             *selected_partition_ptr,
-		                             any_extended,
-		                             new_count,
-		                             gparted_core.get_filesystems() );
+		bool any_extended = find_extended_partition(m_display_device.partitions) >= 0;
+		Dialog_Partition_New dialog(m_display_device,
+		                            *selected_partition_ptr,
+		                            any_extended,
+		                            new_count,
+		                            gparted_core.get_filesystems());
 		dialog .set_transient_for( *this );
 		
 		if ( dialog .run() == Gtk::RESPONSE_OK )
@@ -2435,7 +2431,7 @@ void Win_GParted::activate_new()
 
 void Win_GParted::activate_delete()
 { 
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	// VGNAME from mount mount
@@ -2472,7 +2468,7 @@ void Win_GParted::activate_delete()
 	}
 	
 	//if partition is on the clipboard...(NOTE: we can't use Partition::== here..)
-	if ( copied_partition != NULL && selected_partition_ptr->get_path() == copied_partition->get_path() )
+	if (copied_partition != nullptr && selected_partition_ptr->get_path() == copied_partition->get_path())
 	{
 		Gtk::MessageDialog dialog( *this,
 		                           Glib::ustring::compose( _("Are you sure you want to delete %1?"),
@@ -2499,7 +2495,7 @@ void Win_GParted::activate_delete()
 
 		// Deleting partition on the clipboard.  Clear clipboard.
 		delete copied_partition;
-		copied_partition = NULL;
+		copied_partition = nullptr;
 	}
 
 	// If deleted one is NEW, it doesn't make sense to add it to the operationslist,
@@ -2548,7 +2544,7 @@ void Win_GParted::activate_delete()
 
 void Win_GParted::activate_info()
 {
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	Dialog_Partition_Info dialog( *selected_partition_ptr );
@@ -2558,7 +2554,7 @@ void Win_GParted::activate_info()
 
 void Win_GParted::activate_format( FSType new_fs )
 {
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	const Partition & filesystem_ptn = selected_partition_ptr->get_filesystem_partition();
@@ -2614,7 +2610,6 @@ void Win_GParted::activate_format( FSType new_fs )
 		// file system case apart from resize case.
 	}
 	temp_ptn->name = selected_partition_ptr->name;
-	temp_ptn->status = STAT_FORMATTED;
 
 	// Generate minimum and maximum partition size limits for the new file system.
 	FS_Limits fs_limits = gparted_core.get_filesystem_limits( new_fs, temp_ptn->get_filesystem_partition() );
@@ -2699,18 +2694,19 @@ void Win_GParted::activate_format( FSType new_fs )
 	}
 
 	delete temp_ptn;
-	temp_ptn = NULL;
+	temp_ptn = nullptr;
 }
+
 
 bool Win_GParted::open_encrypted_partition( const Partition & partition,
                                             const char * entered_password,
                                             Glib::ustring & message )
 {
-	const char * pw = NULL;
-	if ( entered_password == NULL )
+	const char* pw = nullptr;
+	if (entered_password == nullptr)
 	{
 		pw = PasswordRAMStore::lookup( partition.uuid );
-		if ( pw == NULL )
+		if (pw == nullptr)
 		{
 			// Internal documentation message never shown to user.
 			message = "No stored password available";
@@ -2738,7 +2734,7 @@ bool Win_GParted::open_encrypted_partition( const Partition & partition,
 	Glib::ustring error;
 	bool success = ! Utils::execute_command( cmd, pw, output, error );
 	hide_pulsebar();
-	if ( success && pw != NULL )
+	if (success && pw != nullptr)
 		// Save the password just entered and successfully used to open the LUKS
 		// mapping.
 		PasswordRAMStore::store( partition.uuid, pw );
@@ -2753,7 +2749,7 @@ bool Win_GParted::open_encrypted_partition( const Partition & partition,
 
 void Win_GParted::toggle_crypt_busy_state()
 {
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	enum Action
@@ -2807,7 +2803,7 @@ void Win_GParted::toggle_crypt_busy_state()
 		case LUKSOPEN:
 		{
 			// Attempt to unlock LUKS using stored passphrase first.
-			success = open_encrypted_partition( *selected_partition_ptr, NULL, error_msg );
+			success = open_encrypted_partition(*selected_partition_ptr, nullptr, error_msg);
 			if ( success )
 				break;
 
@@ -2940,7 +2936,7 @@ void Win_GParted::show_toggle_failure_dialog( const Glib::ustring & failure_summ
 
 void Win_GParted::toggle_fs_busy_state()
 {
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	enum Action
@@ -3053,7 +3049,7 @@ void Win_GParted::toggle_fs_busy_state()
 
 void Win_GParted::activate_mount_partition( unsigned int index ) 
 {
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	Glib::ustring disallowed_msg = _("The mount action cannot be performed when an operation is pending for the partition.");
@@ -3191,76 +3187,10 @@ void Win_GParted::activate_disklabel()
 	}
 }
 
-//Runs when the Device->Attempt Rescue Data is clicked
-void Win_GParted::activate_attempt_rescue_data()
-{
-	if(Glib::find_program_in_path( "gpart" ) .empty()) //Gpart must be installed to continue
-	{
-		Gtk::MessageDialog errorDialog(*this, "", true, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, true);
-		errorDialog.set_message(_("Command gpart was not found"));
-		errorDialog.set_secondary_text(_("This feature uses gpart. Please install gpart and try again."));
-
-		errorDialog.run();
-
-		return;
-	}
-
-	//Dialog information
-	Glib::ustring sec_text = _( "A full disk scan is needed to find file systems." ) ;
-	sec_text += "\n" ;
-	sec_text +=_("The scan might take a very long time.");
-	sec_text += "\n" ;
-	sec_text += _("After the scan you can mount any discovered file systems and copy the data to other media.") ;
-	sec_text += "\n" ;
-	sec_text += _("Do you want to continue?");
-
-	Gtk::MessageDialog messageDialog(*this, "", true, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK_CANCEL, true);
-	/*TO TRANSLATORS: looks like	Search for file systems on /deb/sdb */
-	messageDialog.set_message(Glib::ustring::compose(_("Search for file systems on %1"), devices[ current_device ] .get_path()));
-	messageDialog.set_secondary_text(sec_text);
-
-	if(messageDialog.run()!=Gtk::RESPONSE_OK)
-	{
-		return;
-	}
-
-	messageDialog.hide();
-
-	/*TO TRANSLATORS: looks like	Searching for file systems on /deb/sdb */
-	show_pulsebar(Glib::ustring::compose( _("Searching for file systems on %1"), devices[ current_device ] .get_path()));
-	Glib::ustring gpart_output;
-	gparted_core.guess_partition_table(devices[ current_device ], gpart_output);
-	hide_pulsebar();
-	Dialog_Rescue_Data dialog;
-	dialog .set_transient_for( *this );
-
-	//Reads the output of gpart
-	dialog.init_partitions( &devices[current_device], gpart_output );
-
-	if ( ! dialog.found_partitions() )
-	{
-		//Dialog information
-		Gtk::MessageDialog errorDialog(*this, "", true, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, true);
-		
-		/*TO TRANSLATORS: looks like	No file systems found on /deb/sdb */
-		errorDialog.set_message(Glib::ustring::compose(_("No file systems found on %1"), devices[ current_device ] .get_path()));
-		errorDialog.set_secondary_text(_("The disk scan by gpart did not find any recognizable file systems on this disk."));
-
-		errorDialog.run();
-		return;
-	}
-
-	dialog.run();
-	dialog.hide();
-
-	Utils::execute_command( "umount /tmp/gparted-roview*" );
-
-	menu_gparted_refresh_devices() ;
-}
 
 void Win_GParted::activate_manage_flags() 
 {
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	get_window()->set_cursor(Gdk::Cursor::create(Gdk::WATCH));
@@ -3286,7 +3216,7 @@ void Win_GParted::activate_manage_flags()
 
 void Win_GParted::activate_check() 
 {
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	if (! ask_for_password_for_encrypted_resize_as_required(*selected_partition_ptr))
@@ -3310,7 +3240,7 @@ void Win_GParted::activate_check()
 
 void Win_GParted::activate_label_filesystem()
 {
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	const Partition & filesystem_ptn = selected_partition_ptr->get_filesystem_partition();
@@ -3331,7 +3261,7 @@ void Win_GParted::activate_label_filesystem()
 		operation->icon = Utils::mk_pixbuf(*this, Gtk::Stock::EXECUTE, Gtk::ICON_SIZE_MENU);
 
 		delete part_temp;
-		part_temp = NULL;
+		part_temp = nullptr;
 
 		Add_Operation( devices[current_device], operation );
 		// Try to merge this label file system operation with all previous
@@ -3344,7 +3274,7 @@ void Win_GParted::activate_label_filesystem()
 
 void Win_GParted::activate_name_partition()
 {
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	Dialog_Partition_Name dialog( *selected_partition_ptr,
@@ -3365,7 +3295,7 @@ void Win_GParted::activate_name_partition()
 		operation->icon = Utils::mk_pixbuf(*this, Gtk::Stock::EXECUTE, Gtk::ICON_SIZE_MENU);
 
 		delete part_temp;
-		part_temp = NULL;
+		part_temp = nullptr;
 
 		Add_Operation( devices[current_device], operation );
 		// Try to merge this name partition operation with all previous
@@ -3378,7 +3308,7 @@ void Win_GParted::activate_name_partition()
 
 void Win_GParted::activate_change_uuid()
 {
-	g_assert( selected_partition_ptr != NULL );  // Bug: Partition callback without a selected partition
+	g_assert(selected_partition_ptr != nullptr);  // Bug: Partition callback without a selected partition
 	g_assert( valid_display_partition_ptr( selected_partition_ptr ) );  // Bug: Not pointing at a valid display partition object
 
 	const Partition & filesystem_ptn = selected_partition_ptr->get_filesystem_partition();
@@ -3423,7 +3353,7 @@ void Win_GParted::activate_change_uuid()
 	operation->icon = Utils::mk_pixbuf(*this, Gtk::Stock::EXECUTE, Gtk::ICON_SIZE_MENU);
 
 	delete temp_ptn;
-	temp_ptn = NULL;
+	temp_ptn = nullptr;
 
 	Add_Operation( devices[current_device], operation );
 	// Try to merge this change UUID operation with all previous operations.
