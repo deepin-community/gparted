@@ -24,8 +24,12 @@
 #include <glibmm/ustring.h>
 #include <glibmm/refptr.h>
 #include <glibmm/iochannel.h>
+#include <sigc++/signal.h>
 
-namespace GParted {
+
+namespace GParted
+{
+
 
 // captures output pipe of subprocess into a ustring and emits a signal on eof
 class PipeCapture
@@ -59,6 +63,8 @@ private:
 	bool callerbuf_uptodate;        // Has capturebuf changed since last copied to callerbuf?
 };
 
-} // namepace GParted
+
+}  // namespace GParted
+
 
 #endif /* GPARTED_PIPECAPTURE_H */

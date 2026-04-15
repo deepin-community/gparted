@@ -33,10 +33,12 @@
 #include <fstream>
 #include <glibmm/thread.h>
 #include <glibmm/ustring.h>
+#include <memory>
 
 
 namespace GParted
 {
+
 
 class GParted_Core
 {
@@ -46,7 +48,6 @@ friend class EraseFileSystemSignaturesTest;  // To allow unit testing to call pr
 public:
 	static Glib::Thread *mainthread;
 	GParted_Core() ;
-	~GParted_Core() ;
 
 	static Glib::ustring get_version_and_config_string();
 	static void find_supported_core();
@@ -80,6 +81,8 @@ public:
 	                                Sector end,
 	                                Byte_Value sector_size,
 	                                bool inside_extended );
+	static Glib::ustring check_logical_esp_warning(PartitionType ptntype, bool esp_flag);
+	static void compose_partition_flags(Partition& partition, const Glib::ustring& disktype);
 
 private:
 	//detectionstuff..
@@ -104,9 +107,7 @@ private:
 	bool is_busy(const Glib::ustring& device_path, FSType fstype, const Glib::ustring& partition_path);
 	void set_used_sectors( Partition & partition, PedDisk* lp_disk );
 	void mounted_fs_set_used_sectors(Partition& partition);
-#ifdef HAVE_LIBPARTED_FS_RESIZE
 	void LP_set_used_sectors( Partition & partition, PedDisk* lp_disk ) ;
-#endif
 	void set_flags( Partition & partition, PedPartition* lp_partition ) ;
 	
 	//operationstuff...
@@ -135,14 +136,12 @@ private:
 	bool move_filesystem( const Partition & partition_old,
 			      const Partition & partition_new,
 			      OperationDetail & operationdetail ) ;
-#ifdef HAVE_LIBPARTED_FS_RESIZE
 	bool resize_move_filesystem_using_libparted( const Partition & partition_old,
 				      		     const Partition & partition_new,
 					      	     OperationDetail & operationdetail ) ;
 	void thread_lp_ped_file_system_resize( PedFileSystem * fs,
 	                                       PedGeometry * lp_geom,
 	                                       bool * return_value );
-#endif
 	bool resize( const Partition & partition_old,
 		     const Partition & partition_new,
 		     OperationDetail & operationdetail ) ;
@@ -209,7 +208,16 @@ private:
 	bool check_repair_maximize( const Partition & partition,
 	                            OperationDetail & operationdetail );
 
-	bool set_partition_type( const Partition & partition, OperationDetail & operationdetail ) ;
+	bool set_partition_type(const Partition& partition, OperationDetail& operationdetail);
+	static bool set_partition_type_using_flag(PedPartition* lp_partition,
+					          PedPartitionFlag lp_flag,
+					          OperationDetail& operationdetail);
+	static bool set_partition_flag(PedPartition* lp_partition,
+	                               PedPartitionFlag lp_flag,
+	                               OperationDetail& operationdetail);
+	bool set_partition_type_using_fstype(PedPartition* lp_partition,
+	                                     FSType fstype,
+	                                     OperationDetail& operationdetail);
 
 	bool calibrate_partition( Partition & partition, OperationDetail & operationdetail ) ;
 	bool calculate_exact_geom( const Partition & partition_old,
@@ -222,11 +230,9 @@ private:
 	//general..	
 	void capture_libparted_messages( OperationDetail & operationdetail, bool success );
 
-	static bool flush_device( PedDevice * lp_device );
 	static bool get_device( const Glib::ustring & device_path, PedDevice *& lp_device, bool flush = false );
 	static bool get_disk(PedDevice *lp_device, PedDisk*& lp_disk);
-	static bool get_device_and_disk(const Glib::ustring& device_path,
-	                                PedDevice*& lp_device, PedDisk*& lp_disk, bool flush = false);
+	static bool get_device_and_disk(const Glib::ustring& device_path, PedDevice*& lp_device, PedDisk*& lp_disk);
 	static void destroy_device_and_disk( PedDevice*& lp_device, PedDisk*& lp_disk );
 	static bool commit( PedDisk* lp_disk );
 	static bool commit_to_os( PedDisk* lp_disk, std::time_t timeout );
@@ -236,13 +242,15 @@ private:
 
 	static PedExceptionOption ped_exception_handler( PedException * e ) ;
 
-	std::vector<PedPartitionFlag> flags;
+	std::vector<PedPartitionFlag> m_all_libparted_flags;
 	std::vector<Glib::ustring> device_paths ;
 	bool probe_devices ;
 	Glib::ustring thread_status_message;  //Used to pass data to show_pulsebar method
-	static SupportedFileSystems* supported_filesystems;
+	static std::unique_ptr<SupportedFileSystems> supported_filesystems;
 };
 
-} //GParted
+
+}  // namespace GParted
+
 
 #endif /* GPARTED_GPARTED_CORE_H */
