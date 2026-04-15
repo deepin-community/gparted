@@ -28,6 +28,7 @@
 namespace GParted
 {
 
+
 //Initialize static data elements
 bool Proc_Partitions_Info::proc_partitions_info_cache_initialized = false ;
 
@@ -160,6 +161,11 @@ bool Proc_Partitions_Info::is_whole_disk_device_name(const Glib::ustring& name)
 	if (Utils::regexp_label(name, "^(bcache[0-9]+)$") != "")
 		return true;
 
+	// Match Network Block Device names.
+	// E.g.: device = nbd0 (partition = nbd0p1)
+	if (Utils::regexp_label(name, "^(nbd[0-9]+)$") != "")
+		return true;
+
 	return false;
 }
 
@@ -235,4 +241,4 @@ bool Proc_Partitions_Info::is_partition_of_device(const Glib::ustring& partname,
 }
 
 
-} //GParted
+}  // namespace GParted

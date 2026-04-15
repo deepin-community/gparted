@@ -22,8 +22,11 @@
 
 #include <glibmm/ustring.h>
 #include <parted/parted.h>
+#include <vector>
+
 
 namespace GParted {
+
 
 class CopyBlocks
 {
@@ -34,7 +37,7 @@ class CopyBlocks
 	OperationDetail &operationdetail;
 	Byte_Value & total_done;
 	Byte_Value total_length;
-	char *buf;
+	std::vector<char> buf;
 	Byte_Value done;
 	PedDevice *lp_device_src;
 	PedDevice *lp_device_dst;
@@ -63,6 +66,8 @@ public:
 	bool copy();
 };
 
-} // namespace GParted
+
+}  // namespace GParted
+
 
 #endif /* GPARTED_COPYBLOCKS_H */
